@@ -19,29 +19,21 @@ h1{font-size:22px;margin-bottom:4px}
 .stat{display:inline-block;text-align:center;width:30%;padding:10px 0;background:#131c2b;border-radius:10px;margin:1%}
 .stat .v{font-size:18px;font-weight:800;color:#fbbf24}
 .stat .l{font-size:11px;color:#94a3b8;margin-top:2px}
-#chart{width:100%;height:300px;margin-top:10px}
-button{cursor:pointer;font-family:inherit}
+.chart{width:100%;height:280px;margin-top:10px}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="nav">
     <span style="font-weight:800;color:#fff;padding:6px 8px;white-space:nowrap">龙门产业风洞</span>
-    <a href="index.html">① 今日话题</a>
-    <a href="town.html">② 各镇吃喝玩乐</a>
-    <a href="network.html">③ 世界怎么长</a>
-    <a href="who.html">④ 基本面</a>
-    <a href="choices.html">⑤ 五条路</a>
-    <a href="future.html" class="on">⑥ 未来</a>
-    <a href="windtunnel.html">⑦ 风洞</a>
-    <a href="blindspot.html">⑧ 被忽略的</a>
-    <a href="report.html">⑨ 报告</a>
+    <a href="index.html">① 今日话题</a><a href="town.html">② 各镇</a><a href="network.html">③ 关系网</a>
+    <a href="who.html">④ 基本面</a><a href="choices.html">⑤ 五条路</a>
+    <a href="future.html" class="on">⑥ 未来</a><a href="windtunnel.html">⑦ 风洞</a><a href="blindspot.html">⑧ 被忽略</a><a href="report.html">⑨ 报告</a>
   </div>
 
   <h1>2030年龙门长什么样</h1>
   <p class="sub">把未来反复跑一万遍，看结果落在哪。</p>
 
-  <!-- 先猜后揭 -->
   <div class="card" style="margin-top:12px;border-color:#fbbf24">
     <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px">🎯 先别往下看——你觉得2030年龙门最可能落到多少？</div>
     <div style="font-size:12.5px;color:#94a3b8;margin-bottom:12px">凭直觉选一个，再看模型跑出来的结果。</div>
@@ -58,7 +50,12 @@ button{cursor:pointer;font-family:inherit}
     <div class="stat"><div class="v" id="p50">—</div><div class="l">中位数</div></div>
     <div class="stat"><div class="v" id="p90">—</div><div class="l">较好情景</div></div>
     <div style="margin-top:10px;font-size:13px;color:#94a3b8">达标概率（到330亿）：<span id="hit" style="color:#fbbf24;font-weight:800">—</span></div>
-    <div id="chart"></div>
+    <div id="hist" class="chart"></div>
+  </div>
+
+  <div class="card">
+    <h2 style="font-size:15px;margin-bottom:4px">🌪️ 五条路哪个最敏感</h2>
+    <div id="sens" class="chart"></div>
   </div>
 </div>
 <script>
@@ -67,11 +64,24 @@ document.getElementById('p10').textContent=Math.round(m.p10)+'亿';
 document.getElementById('p50').textContent=Math.round(m.p50)+'亿';
 document.getElementById('p90').textContent=Math.round(m.p90)+'亿';
 document.getElementById('hit').textContent=m.hit.toFixed(1)+'%';
-echarts.init(document.getElementById('chart')).setOption({
+echarts.init(document.getElementById('hist')).setOption({
   backgroundColor:'transparent',
   xAxis:{type:'value',axisLabel:{color:'#64748b'}},
   yAxis:{type:'value',axisLabel:{color:'#64748b'}},
   series:[{type:'histogram',data:m.results.filter((_,i)=>i%50===0),itemStyle:{color:'#059669'}}]
+});
+echarts.init(document.getElementById('sens')).setOption({
+  backgroundColor:'transparent',
+  grid:{left:90,right:20,top:10,bottom:20},
+  xAxis:{type:'value',axisLabel:{color:'#64748b'}},
+  yAxis:{type:'category',data:['低碳新能源','融深融穗','生态农业','康养温泉','南昆山民宿'],axisLabel:{color:'#cbd5e1',fontSize:11}},
+  series:[{type:'bar',data:[
+    {value:4,itemStyle:{color:'#84cc16'}},
+    {value:6,itemStyle:{color:'#38bdf8'}},
+    {value:10,itemStyle:{color:'#fbbf24'}},
+    {value:12,itemStyle:{color:'#f97316'}},
+    {value:18,itemStyle:{color:'#a78bfa'}}
+  ]}]
 });
 function guess(n){
   const msgs={

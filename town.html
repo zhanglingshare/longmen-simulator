@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>龙门各镇</title>
+<title>龙门各镇吃喝玩乐</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#0a0f1a;color:#e6edf3;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6}
@@ -18,6 +18,12 @@ h1{font-size:22px;margin-bottom:4px}
 .town .n{font-size:15px;font-weight:700;color:#fff}
 .town .tag{display:inline-block;background:#05966922;color:#4ade80;border-radius:20px;padding:2px 8px;font-size:11px;margin-left:6px}
 .town .d{font-size:12.5px;color:#94a3b8;margin-top:4px}
+.veg{display:flex;gap:10px;overflow-x:auto;padding:10px 0}
+.veg-card{flex:none;width:140px;background:#131c2b;border:1px solid #1c2739;border-radius:12px;padding:12px;text-align:center}
+.veg-card .emoji{font-size:30px}
+.veg-card .n{font-size:13px;font-weight:700;color:#fff;margin-top:4px}
+.veg-card .p{font-size:11px;color:#94a3b8;margin-top:2px}
+.veg-card .d{font-size:11px;color:#64748b;margin-top:4px}
 </style>
 </head>
 <body>
@@ -33,12 +39,24 @@ h1{font-size:22px;margin-bottom:4px}
   <p class="sub">10个镇街乡，每个都有自己的活法。</p>
 
   <div class="card" style="margin-top:12px">
+    <div style="font-size:14px;font-weight:800;color:#fff;margin-bottom:8px">🌾 龙门10月当季</div>
+    <div class="veg">
+      <div class="veg-card"><div class="emoji">🍊</div><div class="n">年桔</div><div class="p">麻榨镇</div><div class="d">还在树上，11月才熟</div></div>
+      <div class="veg-card"><div class="emoji">🎋</div><div class="n">西溪笋</div><div class="p">龙华镇</div><div class="d">秋季鲜笋正当时</div></div>
+      <div class="veg-card"><div class="emoji">🍵</div><div class="n">青梅酒</div><div class="p">龙华镇</div><div class="d">夏天泡的酒，正好喝</div></div>
+      <div class="veg-card"><div class="emoji">♨️</div><div class="n">温泉</div><div class="p">地派/南昆山</div><div class="d">天凉了，温泉开始旺季</div></div>
+    </div>
+  </div>
+
+  <div class="card">
     <div class="town"><div class="n">永汉<span class="tag">民宿温泉</span></div><div class="d">南昆山脚下，民宿和温泉最集中。夏天避暑，冬天泡汤。</div></div>
     <div class="town"><div class="n">龙城<span class="tag">县城</span></div><div class="d">县政府所在地，龙门的门面。</div></div>
     <div class="town"><div class="n">麻榨<span class="tag">年桔</span></div><div class="d">年桔主产区，冬天那口甜。</div></div>
     <div class="town"><div class="n">地派<span class="tag">温泉</span></div><div class="d">地派温泉，森林里的冬天。</div></div>
     <div class="town"><div class="n">蓝田瑶族乡<span class="tag">瑶族</span></div><div class="d">龙门唯一少数民族乡，瑶族风情。</div></div>
     <div class="town"><div class="n">龙华<span class="tag">西溪笋</span></div><div class="d">西溪笋、青梅，山里的味道。</div></div>
+    <div class="town"><div class="n">平陵<span class="tag">工业</span></div><div class="d">平陵工业园，龙门的工业家底。</div></div>
+    <div class="town"><div class="n">龙潭<span class="tag">生态</span></div><div class="d">最山里的镇，生态最好。</div></div>
   </div>
 </div>
 </body>
