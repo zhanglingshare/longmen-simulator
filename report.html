@@ -1,41 +1,75 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>龙门一页报告</title>
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>龙门产业风洞 · 一页报告</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0f1a;color:#e6edf3;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6}
-.wrap{max-width:680px;margin:0 auto;padding:16px}
-.nav{display:flex;gap:6px;overflow-x:auto;padding:8px 0;margin-bottom:12px}
+*{box-sizing:border-box}
+body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.7 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;flex:none}
 .nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#059669;color:#fff;border-color:#059669}
-.card{background:#0f172a;border:1px solid #1c2739;border-radius:14px;padding:16px;margin-bottom:12px}
+.nav a.on{background:#059669;border-color:#22c55e;color:#fff;font-weight:600}
+.wrap{max-width:680px;margin:auto;padding:16px}
+.card{background:#0e1523;border:1px solid #1c2739;border-radius:14px;padding:18px;margin-bottom:14px}
 h1{font-size:22px;margin-bottom:4px}
-.sub{font-size:13px;color:#94a3b8;line-height:1.7}
-</style>
-</head>
-<body>
-<div class="wrap">
-  <div class="nav">
-    <span style="font-weight:800;color:#fff;padding:6px 8px;white-space:nowrap">龙门产业风洞</span>
-    <a href="index.html">① 今日话题</a><a href="town.html">② 各镇</a><a href="network.html">③ 关系网</a>
-    <a href="who.html">④ 基本面</a><a href="choices.html">⑤ 五条路</a>
-    <a href="future.html">⑥ 未来</a><a href="windtunnel.html">⑦ 风洞</a><a href="blindspot.html">⑧ 被忽略</a><a href="report.html" class="on">⑨ 报告</a>
-  </div>
+h2{font-size:16px;margin:0 0 10px}
+.sub{color:#8fa3bf;font-size:13px}
+.kpi{display:inline-block;text-align:center;width:31%;padding:10px 0;background:#131c2b;border-radius:10px;margin:1%}
+.kpi .v{font-size:18px;font-weight:800;color:#fbbf24}
+.kpi .l{font-size:11px;color:#94a3b8}
+.row{font-size:13.5px;line-height:2;color:#c8d3e0;margin-top:8px}
+.red{color:#f87171}.green{color:#4ade80}.yellow{color:#fbbf24}.blue{color:#60a5fa}
+</style></head><body>
 
+<div class="nav">
+  <b>龙门产业风洞</b>
+  <a href="index.html">① 今日话题</a><a href="town.html">② 各镇</a><a href="network.html">③ 关系网</a>
+  <a href="who.html">④ 基本面</a><a href="choices.html">⑤ 五条路</a>
+  <a href="future.html">⑥ 未来</a><a href="windtunnel.html">⑦ 风洞</a><a href="blindspot.html">⑧ 被忽略</a><a href="report.html" class="on">⑨ 报告</a>
+</div>
+
+<div class="wrap">
   <h1>龙门一页报告</h1>
-  <p class="sub">用公开数据，把龙门讲清楚。</p>
+  <p class="sub">用公开数据，把龙门讲清楚。不是预测，是风洞。</p>
 
   <div class="card" style="margin-top:12px">
-    <div style="font-size:14px;line-height:2.1;color:#c8d3e0">
-      <b style="color:#fbbf24">龙门是什么：</b>大湾区的生态后花园，217亿GDP，76%森林覆盖率。<br><br>
-      <b style="color:#4ade80">龙门要做什么：</b>不是补齐工业，是把绿水青山变成金山银山。南昆山民宿从夏天卖到四季，年桔从论斤卖变成论品牌卖。<br><br>
-      <b style="color:#60a5fa">龙门最该先做什么：</b>让南昆山淡季不空房，让年桔卖出溢价。这两件事成了，330亿就有了。<br><br>
-      <span style="font-size:11px;color:#475569">数据来源：龙门县政府公开信息、统计公报。模型为作者假设，非官方预测。</span>
+    <h2>📊 现在在哪</h2>
+    <div class="kpi"><div class="v">217.6亿</div><div class="l">GDP 2025</div></div>
+    <div class="kpi"><div class="v">+7.4%</div><div class="l">增速</div></div>
+    <div class="kpi"><div class="v">76%</div><div class="l">森林覆盖率</div></div>
+  </div>
+
+  <div class="card">
+    <h2>🎯 2030往哪去</h2>
+    <div class="kpi"><div class="v">330亿</div><div class="l">参考目标</div></div>
+    <div class="kpi"><div class="v">~330亿</div><div class="l">模型中位数</div></div>
+    <div class="kpi"><div class="v">~49%</div><div class="l">达标概率</div></div>
+    <div class="row">
+      模型跑一万遍，2030年GDP最可能落在<span class="yellow">310-350亿</span>区间。不是到不了，是要靠南昆山民宿、年桔品牌、温泉康养这三件事真做成。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🔑 龙门最该先做什么</h2>
+    <div class="row">
+      <b class="yellow">第一：让南昆山民宿从夏天卖到四季。</b> 旺季满房、淡季空房是通病。淡季填满，不靠涨价也能多赚钱。<br><br>
+      <b class="yellow">第二：让年桔从论斤卖变成论品牌卖。</b> 好东西一直在，问题是怎么从卖橘子变成卖体验、卖品牌。<br><br>
+      <b class="blue">第三：把广深客1.5小时车程变成周末消费力。</b> 路通了，人来了，钱才留下来。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>⚠️ 龙门不是什么</h2>
+    <div class="row">
+      龙门不是要变成第二个博罗，也不是要变成第二个惠城。<br>
+      惠城是城区，博罗是工业县，龙门是<span class="green">生态县</span>。<br>
+      龙门的本钱是76%的森林覆盖率——这是大湾区最后一块生态屏障。它要做的不是补工业短板，是把绿水青山真的变成金山银山。
+    </div>
+  </div>
+
+  <div class="card" style="border-color:#1c2739">
+    <div style="font-size:11px;color:#5b6b82;line-height:1.8">
+      数据来源：龙门县政府工作报告、统计公报公开数据。模型参数为作者假设，非官方预测。阅读/转发/点赞按公开来源热度合理估算，非平台后台真实统计。
     </div>
   </div>
 </div>
-</body>
-</html>
+</body></html>

@@ -1,63 +1,121 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>龙门各镇吃喝玩乐</title>
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>龙门产业风洞 · 各镇吃喝玩乐</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0f1a;color:#e6edf3;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6}
-.wrap{max-width:680px;margin:0 auto;padding:16px}
-.nav{display:flex;gap:6px;overflow-x:auto;padding:8px 0;margin-bottom:12px}
+*{box-sizing:border-box}
+body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.65 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;flex:none}
 .nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#059669;color:#fff;border-color:#059669}
-.card{background:#0f172a;border:1px solid #1c2739;border-radius:14px;padding:16px;margin-bottom:12px}
-h1{font-size:22px;margin-bottom:4px}
-.sub{font-size:13px;color:#94a3b8;line-height:1.7}
-.town{border-left:3px solid #059669;padding:10px 14px;margin-bottom:10px;background:#131c2b;border-radius:0 10px 10px 0}
-.town .n{font-size:15px;font-weight:700;color:#fff}
-.town .tag{display:inline-block;background:#05966922;color:#4ade80;border-radius:20px;padding:2px 8px;font-size:11px;margin-left:6px}
-.town .d{font-size:12.5px;color:#94a3b8;margin-top:4px}
-.veg{display:flex;gap:10px;overflow-x:auto;padding:10px 0}
-.veg-card{flex:none;width:140px;background:#131c2b;border:1px solid #1c2739;border-radius:12px;padding:12px;text-align:center}
-.veg-card .emoji{font-size:30px}
-.veg-card .n{font-size:13px;font-weight:700;color:#fff;margin-top:4px}
-.veg-card .p{font-size:11px;color:#94a3b8;margin-top:2px}
-.veg-card .d{font-size:11px;color:#64748b;margin-top:4px}
-</style>
-</head>
-<body>
+.nav a.on{background:#059669;border-color:#22c55e;color:#fff;font-weight:600}
+.wrap{max-width:960px;margin:auto;padding:16px}
+.scan{background:radial-gradient(ellipse at center,#0b1a12,#080b12);border:1px solid #1c2739;border-radius:14px;padding:18px;display:flex;align-items:center;gap:16px;margin-bottom:14px}
+.radar{width:64px;height:64px;flex:none}
+.refresh{background:#f59e0b;color:#1a1206;border:0;padding:7px 18px;border-radius:18px;font-size:12.5px;font-weight:700;cursor:pointer}
+.scan-info{font-size:11px;color:#5b6b82;margin-top:4px}
+h1{font-size:21px;margin:0}
+.sub{color:#8fa3bf;font-size:13px;margin:4px 0 0}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:680px){.grid{grid-template-columns:1fr}}
+.town{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:15px}
+.town .head{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
+.town .n{font-size:18px;font-weight:800}
+.town .tag{font-size:10.5px;color:#4ade80;background:#0f2a16;border:1px solid #1a3a1a;padding:2px 8px;border-radius:10px}
+.town .row{font-size:12.5px;color:#cbd5e1;margin-top:5px;line-height:1.7}
+.town .row .k{display:inline-block;width:34px;color:#6b7d96}
+.town .why{margin-top:9px;padding-top:8px;border-top:1px dashed #1c2739;font-size:12px;color:#8fa3bf;font-style:italic}
+.veg{margin-bottom:14px}
+.veg-title{font-size:13px;color:#4ade80;margin-bottom:8px;font-weight:700}
+.veg-track{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
+.veg-inner{display:flex;gap:10px;animation:vscroll 26s linear infinite;width:max-content}
+.vegcard{flex:none;background:#0e1523;border:1px solid #1f3a24;border-left:3px solid #22c55e;border-radius:10px;padding:10px 14px;width:190px}
+.vegcard .vn{font-size:14px;font-weight:700;color:#e6edf3}
+.vegcard .vp{font-size:11px;color:#4ade80;margin-top:2px}
+.vegcard .vd{font-size:11.5px;color:#8fa3bf;margin-top:4px;line-height:1.5}
+@keyframes vscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.next{text-align:center;margin-top:18px}
+.next a{background:#059669;color:#fff;padding:11px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+</style></head><body>
+
+<div class="nav">
+  <b>龙门产业风洞</b>
+  <a href="index.html">① 今日话题</a>
+  <a href="town.html" class="on">🏘️ 各镇吃喝玩乐</a>
+  <a href="network.html">③ 关系网</a>
+  <a href="who.html">④ 基本面</a>
+  <a href="choices.html">⑤ 五条路</a>
+  <a href="future.html">⑥ 未来</a>
+  <a href="windtunnel.html">⑦ 风洞</a>
+  <a href="blindspot.html">⑧ 被忽略</a>
+  <a href="report.html">⑨ 报告</a>
+</div>
+
 <div class="wrap">
-  <div class="nav">
-    <span style="font-weight:800;color:#fff;padding:6px 8px;white-space:nowrap">龙门产业风洞</span>
-    <a href="index.html">① 今日话题</a><a href="town.html" class="on">② 各镇</a><a href="network.html">③ 关系网</a>
-    <a href="who.html">④ 基本面</a><a href="choices.html">⑤ 五条路</a>
-    <a href="future.html">⑥ 未来</a><a href="windtunnel.html">⑦ 风洞</a><a href="blindspot.html">⑧ 被忽略</a><a href="report.html">⑨ 报告</a>
-  </div>
-
-  <h1>龙门各镇，一口味道、一座山</h1>
-  <p class="sub">10个镇街乡，每个都有自己的活法。</p>
-
-  <div class="card" style="margin-top:12px">
-    <div style="font-size:14px;font-weight:800;color:#fff;margin-bottom:8px">🌾 龙门10月当季</div>
-    <div class="veg">
-      <div class="veg-card"><div class="emoji">🍊</div><div class="n">年桔</div><div class="p">麻榨镇</div><div class="d">还在树上，11月才熟</div></div>
-      <div class="veg-card"><div class="emoji">🎋</div><div class="n">西溪笋</div><div class="p">龙华镇</div><div class="d">秋季鲜笋正当时</div></div>
-      <div class="veg-card"><div class="emoji">🍵</div><div class="n">青梅酒</div><div class="p">龙华镇</div><div class="d">夏天泡的酒，正好喝</div></div>
-      <div class="veg-card"><div class="emoji">♨️</div><div class="n">温泉</div><div class="p">地派/南昆山</div><div class="d">天凉了，温泉开始旺季</div></div>
+  <div class="scan">
+    <svg class="radar" viewBox="0 0 64 64">
+      <circle cx="32" cy="32" r="28" fill="none" stroke="#1c2739" stroke-width="1"/>
+      <circle cx="32" cy="32" r="18" fill="none" stroke="#1c2739" stroke-width="1"/>
+      <circle cx="32" cy="32" r="8" fill="none" stroke="#1c2739" stroke-width="1"/>
+      <g id="scanline" style="transform-origin:32px 32px;animation:spin 3s linear infinite"><line x1="32" y1="32" x2="32" y2="4" stroke="#22c55e" stroke-width="1.5"/></g>
+      <circle cx="32" cy="32" r="2.5" fill="#22c55e"/>
+    </svg>
+    <div style="flex:1">
+      <h1>龙门各镇，一座山、一口味道</h1>
+      <p class="sub">10个镇街乡，每个都有自己的活法。</p>
+      <div class="scan-info" id="scanInfo">雷达旋转中…</div>
     </div>
   </div>
 
-  <div class="card">
-    <div class="town"><div class="n">永汉<span class="tag">民宿温泉</span></div><div class="d">南昆山脚下，民宿和温泉最集中。夏天避暑，冬天泡汤。</div></div>
-    <div class="town"><div class="n">龙城<span class="tag">县城</span></div><div class="d">县政府所在地，龙门的门面。</div></div>
-    <div class="town"><div class="n">麻榨<span class="tag">年桔</span></div><div class="d">年桔主产区，冬天那口甜。</div></div>
-    <div class="town"><div class="n">地派<span class="tag">温泉</span></div><div class="d">地派温泉，森林里的冬天。</div></div>
-    <div class="town"><div class="n">蓝田瑶族乡<span class="tag">瑶族</span></div><div class="d">龙门唯一少数民族乡，瑶族风情。</div></div>
-    <div class="town"><div class="n">龙华<span class="tag">西溪笋</span></div><div class="d">西溪笋、青梅，山里的味道。</div></div>
-    <div class="town"><div class="n">平陵<span class="tag">工业</span></div><div class="d">平陵工业园，龙门的工业家底。</div></div>
-    <div class="town"><div class="n">龙潭<span class="tag">生态</span></div><div class="d">最山里的镇，生态最好。</div></div>
+  <div class="veg">
+    <div class="veg-title">🌾 龙门10月当季</div>
+    <div class="veg-track"><div class="veg-inner">
+      <div class="vegcard"><div class="vn">龙门年桔</div><div class="vp">麻榨镇</div><div class="vd">冬天那口甜，正在树上慢慢黄。</div></div>
+      <div class="vegcard"><div class="vn">西溪笋</div><div class="vp">龙华镇</div><div class="vd">秋天的山笋，鲜嫩。</div></div>
+      <div class="vegcard"><div class="vn">南昆山蜂蜜</div><div class="vp">南昆山</div><div class="vd">山里的野蜂蜜。</div></div>
+      <div class="vegcard"><div class="vn">龙门米粉</div><div class="vp">龙田镇</div><div class="vd">手工米粉，老味道。</div></div>
+    </div></div>
   </div>
+
+  <div class="grid" id="townGrid">
+    <div class="town">
+      <div class="head"><div class="n">永汉</div><div class="tag">民宿温泉</div></div>
+      <div class="row"><span class="k">吃</span>竹筒饭、走地鸡</div>
+      <div class="row"><span class="k">玩</span>南昆山、温泉</div>
+      <div class="why">→ 夏天避暑，冬天泡汤，龙门的门面</div>
+    </div>
+    <div class="town">
+      <div class="head"><div class="n">龙城</div><div class="tag">县城</div></div>
+      <div class="row"><span class="k">吃</span>龙门粥、客家菜</div>
+      <div class="row"><span class="k">玩</span>县城老街</div>
+      <div class="why">→ 县政府在这，龙门的门面</div>
+    </div>
+    <div class="town">
+      <div class="head"><div class="n">麻榨</div><div class="tag">年桔之乡</div></div>
+      <div class="row"><span class="k">吃</span>年桔、梅菜</div>
+      <div class="row"><span class="k">玩</span>果园采摘</div>
+      <div class="why">→ 年桔主产区，冬天那口甜</div>
+    </div>
+    <div class="town">
+      <div class="head"><div class="n">地派</div><div class="tag">温泉</div></div>
+      <div class="row"><span class="k">吃</span>山坑螺、农家菜</div>
+      <div class="row"><span class="k">玩</span>地派温泉</div>
+      <div class="why">→ 森林里的冬天，温泉最舒服</div>
+    </div>
+    <div class="town">
+      <div class="head"><div class="n">蓝田瑶族乡</div><div class="tag">瑶族</div></div>
+      <div class="row"><span class="k">吃</span>瑶族风味</div>
+      <div class="row"><span class="k">玩</span>瑶族风情、舞火狗</div>
+      <div class="why">→ 龙门唯一少数民族乡</div>
+    </div>
+    <div class="town">
+      <div class="head"><div class="n">龙华</div><div class="tag">西溪笋</div></div>
+      <div class="row"><span class="k">吃</span>西溪笋、青梅酒</div>
+      <div class="row"><span class="k">玩</span>古村、竹海</div>
+      <div class="why">→ 山里的味道，西溪笋最出名</div>
+    </div>
+  </div>
+
+  <div class="next"><a href="network.html">下一步：看龙门在大湾区里的位置 →</a></div>
 </div>
-</body>
-</html>
+<style>@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}</style>
+</body></html>
