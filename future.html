@@ -48,15 +48,18 @@ h1{font-size:22px;margin-bottom:4px}
     <div id="guessOut" style="margin-top:10px;font-size:13px;color:#cbd5e1"></div>
   </div>
 
+  <div class="card" style="padding:13px 15px;background:#0c1422;margin-top:12px">
+    <div style="font-size:12px;line-height:1.9;color:#94a3b8">🧾 <b style="color:#cbd5e1">本页口径</b>：以2025年GDP <b style="color:#fbbf24">217.6亿</b>为起点、2030年参考目标<b style="color:#fbbf24">330亿</b>；同一组假设反复跑<b>10000遍</b>、固定随机起点，结果可复现。这里的概率是"这组假设下"的概率，不是对未来的承诺。</div>
+  </div>
+
   <div class="card" style="margin-top:12px">
     <h2 style="font-size:15px;margin-bottom:4px">📊 跑一万遍，结果怎么分布</h2>
+    <div style="font-size:11px;color:#64748b;margin-bottom:2px">横轴展示中间80%区间（保守10%—乐观90%），更外侧的少数结果并入首尾柱。</div>
     <div id="hist" class="chart"></div>
     <div class="stat"><div class="v" id="p10">—</div><div class="l">保守（10%）</div></div>
     <div class="stat"><div class="v" id="p50">—</div><div class="l">最可能（50%）</div></div>
     <div class="stat"><div class="v" id="p90">—</div><div class="l">乐观（90%）</div></div>
-    <div class="deep">
-      跑一万遍，2030年龙门GDP最可能落在<b style="color:#fbbf24">308-346亿</b>区间，达标概率约42%。<br><b style="color:#fbbf24">注意：中位数接近330亿，是五条路径增量参数（合计约112亿）加基期的设定结果，不能反过来证明路径可行</b>——模型只回答"在这组假设下怎么分布"，参数改了、路径兑现不了，分布就跟着移。
-    </div>
+    <div class="deep" id="histNote"></div>
   </div>
 
   <div class="card">
@@ -86,6 +89,7 @@ function reveal(){
 document.getElementById('p10').textContent=Math.round(r.p10)+'亿';
 document.getElementById('p50').textContent=Math.round(r.p50)+'亿';
 document.getElementById('p90').textContent=Math.round(r.p90)+'亿';
+document.getElementById('histNote').innerHTML=`跑一万遍，2030年龙门GDP的中间80%落在<b style="color:#fbbf24">${Math.round(r.p10)}—${Math.round(r.p90)}亿</b>，达标概率约<b style="color:#fbbf24">${Math.round(r.hit)}%</b>。<br><b style="color:#fbbf24">注意：中位数靠近330亿，是五条路径增量（合计约112亿）加基期的设定结果，不能反过来证明路径可行</b>——它只回答"在这组假设下怎么分布"，参数改了、路径兑现不了，分布就跟着移。`;
 
 const bins=new Array(20).fill(0);
 r.samples.forEach(x=>{

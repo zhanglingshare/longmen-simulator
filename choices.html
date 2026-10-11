@@ -59,7 +59,7 @@ h2{font-size:16px;margin:0 0 6px}
         <div style="font-size:18px;font-weight:800;color:#60a5fa" id="gGap">—</div>
         <div style="font-size:11px;color:#94a3b8">距330缺口</div></div>
     </div>
-    <div class="note">五条路贡献不能简单相加当成必然兑现——它们共享土地、劳力与客流（关联层），且各自兑现程度不同。这里显示的是它们在模型里共同作用的真实结果。</div>
+    <div class="note">单项"中位数差"为相同随机种子下、单独开关该路径的成对结果，反映它在当前基准假设下的边际影响；五条路不能简单相加当成必然兑现——它们共享土地、劳力与客流（关联层），且各自兑现程度不同。下方显示它们在模型里共同作用的真实结果。</div>
   </div>
 
   <div class="bridge b-green">🧭 <b>这五条路，和你有什么关系？</b><br>留宿、温泉连着民宿和饭馆的生意；功能膜连着厂里的岗位；年桔品牌连着果农的腰包；通道连着游客进不进得来。你拨开关，其实是在看：哪条路走成，你的日子会更红火。</div>
@@ -81,7 +81,7 @@ const DEFS=[
 const state={bed:1,film:1,spring:1,agri:1,road:1};
 
 function contrib(p){
-  const a=HT.run(50,3000,p.on).p50, b=HT.run(51,3000,p.off).p50;
+  const a=HT.run(60,4000,p.on).p50, b=HT.run(60,4000,p.off).p50;
   return Math.max(0,a-b);
 }
 function render(){
@@ -91,7 +91,7 @@ function render(){
     return `<div class="path">
       <div class="ic">${p.ic}</div>
       <div class="body"><b>${p.n}</b><div class="d">${p.d}</div>
-      <div class="contrib">约贡献 ${c.toFixed(1)} 亿</div></div>
+      <div class="contrib">基准假设下中位数差 ${c.toFixed(1)} 亿</div></div>
       <div class="sw ${state[p.k]?'on':''}" data-k="${p.k}"><i></i></div>
     </div>`;
   }).join('');

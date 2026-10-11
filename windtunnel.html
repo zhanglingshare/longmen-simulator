@@ -121,7 +121,8 @@ function draw(){
     series:[{type:'line',data,smooth:true,itemStyle:{color:'#38bdf8'},areaStyle:{color:'#38bdf822'},
       markLine:{data:[{yAxis:100,label:{formatter:'正常',color:'#64748b'}}],lineStyle:{color:'#475569',type:'dashed'}}}]
   });
-  recText.innerHTML= D===0?'无中断，客流保持正常。':`中断${D}天，短期客流谷底约<b style="color:#f87171">${Math.round(Math.min(...data))}</b>，抢通后3-5周回正；同时折减旅游路径长期兑现。`;
+  const net=(HT.shockTour(D)*100).toFixed(1);
+  recText.innerHTML= D===0?'无中断，客流保持正常。':`中断${D}天，短期客流谷底约<b style="color:#f87171">${Math.round(Math.min(...data))}</b>，抢通后3-5周回正；折算冲击当年净客流损失约<b style="color:#fbbf24">${net}%</b>（与GDP同一口径），次年起回到增长趋势，模型保守地不假设长期口碑损失。`;
 }
 [daysS,filmS,delayS,stayS].forEach(s=>s.oninput=draw);
 draw();

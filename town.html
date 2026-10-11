@@ -71,7 +71,7 @@ h1{font-size:21px;margin:0}.sub{color:#8fa3bf;font-size:12.5px;margin:4px 0 0}
     <h2>🔎 "一张床"：哪些是硬数，哪些待验证</h2>
     <div class="deep">
       <b style="color:#4ade80">能直接复核的硬数：</b>
-      900万游客÷35.31万常住=25.5倍；客单价477元、同比-1.75%；永汉游客+9.21%、客单价-7.29%。<br><br>
+      905.2万游客÷35.31万常住≈25.6倍；客单价约478元、同比略降；永汉游客+9.21%、客单价-7.29%。<br><br>
       <b style="color:#fbbf24">还不能直接推出的：</b>
       游客人次是到访次数、不等于独立游客；客单价下降不必然等于住宿减少；县级公报通常不公布过夜人次/住宿率/停留天数。<br><br>
       <b style="color:#60a5fa">所以"一张床"目前是待验证核心假设。</b> 永汉-7.29%剪刀差是最接近的旁证，但不等同于过夜率证据；能坐实它的，是过夜占比、民宿入住率与人均停留天数。
@@ -96,17 +96,17 @@ h1{font-size:21px;margin:0}.sub{color:#8fa3bf;font-size:12.5px;margin:4px 0 0}
     <button onclick="sharePage()">🔁 转给朋友</button>
   </div>
   <div style="font-size:11px;color:#5b6b82;line-height:1.8;padding:12px;background:#0a0f1a;border-radius:8px">
-    📌 数据说明：各镇与去处来自政府公开介绍、南方+/惠州日报报道，以及点评/小红书/抖音近期公开打卡热度合理估算，非平台后台真实统计，只排高低；农品按10月真实时令。数据每日更新一次，统计最近24小时公开讨论，点"换一换"为本地随机推荐。
+    📌 数据说明：各镇与去处来自政府公开介绍、南方+/惠州日报报道，以及点评/小红书/抖音近期公开打卡热度，分为高/较高/中三档，非平台后台真实人数；农品按当月真实时令。数据每日更新一次，统计最近24小时公开讨论，点"换一换"为本地随机推荐。
   </div>
 </div>
 
 <script>
 let TOWNS=[],VEG=[],PULSE=[],UPDATED='',SRC='',picks=[];
 function renderVeg(){
-  const cards=(VEG.length?VEG:[{n:"—",p:"",d:"",want:0}]).map(v=>
+  const cards=(VEG.length?VEG:[{n:"—",p:"",d:"",level:"中"}]).map(v=>
     `<div class="vegcard"><div class="vn">${v.n}</div><div class="vp">${v.p}</div><div class="vd">${v.d}</div>
-    <div style="font-size:11px;color:#a3e635;margin-top:6px">👍 ${v.want}人想尝</div>
-    <div style="font-size:9px;color:#5b6b82;margin-top:3px">📎 公开渠道 · 近24小时估算</div></div>`).join("");
+    <div style="font-size:11px;color:#a3e635;margin-top:6px">🔥 尝鲜人气·${v.level||"中"}</div>
+    <div style="font-size:9px;color:#5b6b82;margin-top:3px">📎 公开渠道 · 人气分档</div></div>`).join("");
   document.getElementById("vegInner").innerHTML=cards+cards;
 }
 function pickThree(){
@@ -123,14 +123,14 @@ function render(){
       <div class="row"><span class="k">🍜 吃</span>${(t.foods||[]).join("、")}</div>
       <div class="row"><span class="k">🏔️ 玩</span>${(t.plays||[]).join("、")}</div>
       <div class="why">→ ${t.why}</div>
-      <div style="font-size:12px;color:#a3e635;margin-top:8px">👍 ${t.pop}人想去这个镇</div>
-      <div style="font-size:9.5px;color:#5b6b82;margin-top:4px;line-height:1.4">📎 来源：${SRC}<br>近24小时公开热度 · 合理估算</div>
+      <div style="font-size:12px;color:#a3e635;margin-top:8px">🔥 近期人气·${t.level||"中"}</div>
+      <div style="font-size:9.5px;color:#5b6b82;margin-top:4px;line-height:1.4">📎 来源：${SRC}<br>近期公开打卡热度分档 · 非真实人数</div>
     </div>`;
   }).join("");
 }
 async function loadLife(){
   try{
-    const d=await (await fetch("life.json")).json();
+    const d=await (await fetch("life.json?ts="+Date.now())).json();
     TOWNS=d.towns||[];VEG=d.veg||[];PULSE=d.pulse||[];UPDATED=d.updated||"";SRC=d.sourceLabel||"";
   }catch(e){}
   renderVeg();pickThree();render();

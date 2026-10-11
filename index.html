@@ -50,8 +50,8 @@ button{font-family:inherit}
     </svg>
     <div>
       <h1>今日龙门话题</h1>
-      <p class="sub">扫一遍公开渠道，按热度排，点卡片看详情。<br>
-      <span style="color:#5b6b82">来源：政府工作报告、统计公报与各镇公开信息、南方+/惠州日报等媒体及公开热榜。统计区间：最近24小时（近1天）· 每日自动更新一次。👁️阅读、🔁转发、👍点赞按公开来源热度合理估算，非平台后台真实统计。</span></p>
+      <p class="sub">扫一遍公开渠道，按来源权威、多源与时效编辑排序，点卡片看来源。<br>
+      <span style="color:#5b6b82">来源：政府工作报告、统计公报与各镇公开信息、南方+/惠州日报等媒体及公开热榜。统计区间：最近24小时（近1天）· 每日自动更新一次。话题以「关注档（高/较高/中）」标注来源权威与多源程度；没有平台后台真实阅读、转发、点赞数据，故不展示具体数字。</span></p>
     </div>
   </div>
 
@@ -68,7 +68,7 @@ button{font-family:inherit}
       你可能在<b style="color:#fbbf24">永汉开一家温泉民宿</b>，假期满房、平日却空着一半；<br>
       你可能在<b style="color:#4ade80">南昆山养蜂、种灵芝</b>，东西是真的好，却总卖不上价；<br>
       你可能在<b style="color:#60a5fa">平陵的功能膜厂</b>上班，也可能只是过年才回龙门、走那条雨季总塌方的山路。<br><br>
-      龙门一年涌进来 <b style="color:#f87171">900万人</b>——是全县常住人口的 <b style="color:#f87171">25倍</b>。公开数据还显示：每个人花的钱比去年少了，永汉新增的游客多是低价一日游。至于多少人当天就走、多少人住下，县级公开数据里还没有"过夜率"——这恰恰是龙门最该算清楚的一笔。山是好山，水是好水，温泉是真温泉。要琢磨的，从来不是"有没有人来"，而是——<b style="color:#fcd34d">怎么让人愿意多住一晚、让好东西卖出好价钱、让山里人在家门口就挣到钱。</b><br><br>
+      龙门一年涌进来 <b style="color:#f87171">905万人次</b>——是全县常住人口的 <b style="color:#f87171">25倍</b>。公开数据还显示：每个人花的钱比去年略少，永汉游客在涨、人均花的钱却在往下走。至于多少人当天就走、多少人住下，县级公开数据里还没有"过夜率"——这恰恰是龙门最该算清楚的一笔。山是好山，水是好水，温泉是真温泉。要琢磨的，从来不是"有没有人来"，而是——<b style="color:#fcd34d">怎么让人愿意多住一晚、让好东西卖出好价钱、让山里人在家门口就挣到钱。</b><br><br>
       这不只是哪一个部门的事，也不只是老板的账本：<b style="color:#fff">它是你开的那家民宿、你卖的那罐蜂蜜、你孩子将来回不回得来的龙门。</b>
     </div>
     <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px">
@@ -98,6 +98,7 @@ button{font-family:inherit}
     <div style="font-size:15px;font-weight:800;margin-bottom:4px">🎲 假如你是龙门县长，先做哪件事？</div>
     <div style="font-size:12px;color:#94a3b8;margin-bottom:10px">三选一，没有标准答案，选你心里最该先使劲的。</div>
     <div id="planGrid" style="display:grid;grid-template-columns:1fr;gap:8px"></div>
+    <div id="planFact"></div>
     <button id="genCard" style="margin-top:13px;width:100%;background:#059669;color:#fff;border:0;padding:12px;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer">🎴 生成我的龙门决策卡</button>
     <div id="genHint" style="font-size:11px;color:#6b7d96;margin-top:7px;text-align:center">上面三步都选好，再点生成。</div>
   </div>
@@ -166,17 +167,11 @@ let DATA=[],curCat="all";
 const CATLABEL={industry:"产业",livelihood:"民生",city:"城市",agriculture:"农业",fun:"文旅",tourism:"文旅",gossip:"暖闻"};
 function render(){
  const items=DATA.filter(x=>curCat==="all"||x.cat===curCat||(curCat==="fun"&&x.cat==="tourism"));
- topicList.innerHTML=items.map(x=>{const u=safeUrl(x.url);return `<div class="topic">
-   <div class="meta">${x.emoji} ${esc(CATLABEL[x.cat]||x.cat)} ${x.live?'<span class="live">· 实时</span>':""}</div>
+ topicList.innerHTML=items.map(x=>{const u=safeUrl(x.url);const tc=x.tier==="高"?"#fbbf24":(x.tier==="较高"?"#86efac":"#94a3b8");return `<div class="topic">
+   <div class="meta">${x.emoji} ${esc(CATLABEL[x.cat]||x.cat)}${x.live?'<span class="live"> · 实时</span>':""}<span style="float:right;color:${tc};font-weight:700">关注·${x.tier||"中"}</span></div>
    <div class="t">${esc(x.title)}</div>
    ${x.summary?`<div class="d">${esc(x.summary)}</div>`:""}
-   <div class="stats">
-     <div><b class="v">${x.views_wan}万</b>👁️ 阅读</div>
-     <div><b class="s">${x.shares}</b>🔁 转发</div>
-     <div><b class="l">${x.likes}</b>👍 点赞</div>
-     <div style="margin-left:auto"><b style="color:#f87171">${x.hot}°</b>热度</div>
-   </div>
-   <div class="src">📎 ${esc(x.source)||"公开渠道"} · 近24小时公开热度 · 合理估算${u?` · <a href="${u}" target="_blank" rel="noopener" style="color:#60a5fa;text-decoration:none">查看原文 ↗</a>`:""}</div>
+   <div class="src">📎 ${esc(x.srcLevel)||"公开渠道"} · ${esc(x.source)||"公开渠道"} · 近24小时 · 编辑排序${u?` · <a href="${u}" target="_blank" rel="noopener" style="color:#60a5fa;text-decoration:none">查看来源 ↗</a>`:""}</div>
  </div>`;}).join("")||'<div class="disc">该分类暂无话题。</div>';
 }
 async function loadHot(){
@@ -193,32 +188,33 @@ loadHot();
 
 // 钩子区①：今日大家在看（文旅/暖闻里挑热度最高的，先给糖）
 function renderHotPick(){
- const sweet=DATA.filter(x=>["fun","tourism","gossip"].includes(x.cat)).sort((a,b)=>b.hot-a.hot).slice(0,3);
+ const sweet=DATA.filter(x=>["fun","tourism","gossip"].includes(x.cat)).slice(0,3);
  if(!sweet.length){hotpick.innerHTML="";return;}
  hotpick.innerHTML=`<div class="card" style="border-color:#c084fc;padding:14px">
-   <div style="font-size:14px;font-weight:800;color:#e9d5ff;margin-bottom:6px">🍉 今日大家在看 <span style="float:right;font-size:10.5px;color:#8fa3bf;font-weight:500">近24小时·公开热度</span></div>
+   <div style="font-size:14px;font-weight:800;color:#e9d5ff;margin-bottom:6px">🍉 今日大家在看 <span style="float:right;font-size:10.5px;color:#8fa3bf;font-weight:500">近24小时·编辑排序</span></div>
    ${sweet.map(x=>{const u=safeUrl(x.url);return `<a ${u?`href="${u}" target="_blank" rel="noopener"`:'style="cursor:default"'} style="display:flex;gap:9px;align-items:center;text-decoration:none;padding:8px 2px;border-top:1px solid #1c2739">
      <div style="flex:1"><div style="font-size:13px;font-weight:700;color:#e6edf3;line-height:1.5">${esc(x.title)}</div>
-     <div style="font-size:10.5px;color:#8fa3bf;margin-top:2px">${esc(CATLABEL[x.cat]||"")} · ${x.hot}° · ${x.views_wan}万在看 · 公开来源/估算</div></div><span style="color:#c084fc;font-size:15px">↗</span></a>`;}).join("")}
+     <div style="font-size:10.5px;color:#8fa3bf;margin-top:2px">${esc(CATLABEL[x.cat]||"")} · 关注档${x.tier} · 公开来源</div></div><span style="color:#c084fc;font-size:15px">↗</span></a>`;}).join("")}
  </div>`;
 }
 // 钩子区②：周末去哪 + 当季尝鲜（读 life.json）
 async function loadLifePick(){
  try{
   const d=await (await fetch("life.json?ts="+Date.now())).json();
-  const towns=(d.towns||[]).slice().sort((a,b)=>(b.pop||0)-(a.pop||0)).slice(0,3);
-  const veg=(d.veg||[]).filter(x=>!/挂果|播种|未上市|尚未/.test(x.d||"")).sort((a,b)=>(b.want||0)-(a.want||0)).slice(0,2);
+  const LV={"高":3,"较高":2,"中":1};
+  const towns=(d.towns||[]).slice().sort((a,b)=>(LV[b.level]||0)-(LV[a.level]||0)).slice(0,3);
+  const veg=(d.veg||[]).filter(x=>!/挂果|播种|未上市|尚未/.test(x.d||"")).slice(0,2);
   lifepick.innerHTML=`<div class="card" style="border-color:#22c55e;padding:14px">
     <div style="font-size:14px;font-weight:800;color:#bbf7d0;margin-bottom:9px">🧭 这周末，往龙门哪走？</div>
     <div style="display:flex;gap:7px;flex-wrap:wrap">
-      ${towns.map(t=>`<span style="background:#05966918;border:1px solid #22c55e44;color:#bbf7d0;border-radius:18px;padding:6px 12px;font-size:11.5px;font-weight:700">${esc(t.n)} <span style="color:#86efac;font-weight:600">${t.pop||0}人想去</span></span>`).join("")}
+      ${towns.map(t=>`<span style="background:#05966918;border:1px solid #22c55e44;color:#bbf7d0;border-radius:18px;padding:6px 12px;font-size:11.5px;font-weight:700">${esc(t.n)} <span style="color:#86efac;font-weight:600">人气${t.level}</span></span>`).join("")}
     </div>
     ${veg.length?`<div style="font-size:12.5px;font-weight:700;color:#fde68a;margin:12px 0 7px">🍊 当季尝鲜</div>
     <div style="display:flex;gap:7px;flex-wrap:wrap">
       ${veg.map(v=>`<span style="background:#f59e0b15;border:1px solid #f59e0b44;color:#fde68a;border-radius:18px;padding:6px 12px;font-size:11.5px;font-weight:700">${esc(v.n)} <span style="font-size:10px;color:#fcd34d">${esc(v.p)}</span></span>`).join("")}
     </div>`:""}
     <a href="town.html" style="display:block;text-align:center;margin-top:12px;background:#059669;color:#fff;text-decoration:none;padding:9px;border-radius:9px;font-size:12.5px;font-weight:700">看11镇吃喝玩乐、当季农品 →</a>
-    <div style="font-size:10px;color:#5b6b82;margin-top:8px;text-align:center">人数按点评/小红书/抖音公开打卡热度合理估算，非平台后台真实统计。</div>
+    <div style="font-size:10px;color:#5b6b82;margin-top:8px;text-align:center">人气按点评/小红书/抖音公开打卡热度分档（高/较高/中），非真实人数。</div>
   </div>`;
  }catch(e){lifepick.innerHTML="";}
 }
@@ -238,12 +234,19 @@ function sharePage(){
 // ===== 我的龙门决策卡（生成可保存、带二维码的个人结果图）=====
 var myTown="",myProud="",myPlan="";
 const PLANS=[
- {k:"stay",label:"🛏️ 先把一日游变成过夜游",short:"让游客住下来",persona:"留人型县长",c:"#c084fc"},
- {k:"film",label:"🎞️ 先让功能膜按时达产",short:"让功能膜达产",persona:"强基型县长",c:"#60a5fa"},
- {k:"sell",label:"💎 先给好东西变现通道",short:"让好东西卖出价",persona:"点金型县长",c:"#4ade80"}
+ {k:"stay",label:"🛏️ 先把一日游变成过夜游",short:"让游客住下来",persona:"留人型县长",c:"#c084fc",
+  facts:`永汉镇游客 <b>+9.21%</b>，旅游收入只 <b>+1.25%</b>，人均消费 <b>−7.29%</b>——人来得更多，每人花的钱却更少。县级公开数据里还没有"过夜率"，怎么让人愿意多住一晚，正是最该算清的一笔。`},
+ {k:"film",label:"🎞️ 先让功能膜按时达产",short:"让功能膜达产",persona:"强基型县长",c:"#60a5fa",
+  facts:`功能膜全链已落地 <b>68宗</b>项目、总投资约<b>140亿</b>、<b>620条</b>涂布线；2026年规上工业目标<b>150亿</b>，比现在需增约<b>25.5%</b>，而近年实际增速约5%——这个目标，主要靠这批产线按时达产来撑。`},
+ {k:"sell",label:"💎 先给好东西变现通道",short:"让好东西卖出价",persona:"点金型县长",c:"#4ade80",
+  facts:`龙门农民画拿过<b>41个</b>国家级奖项、走进奥运与世博会，却面临年轻人不愿接班、多靠冰箱贴等小周边走量。好东西不缺名气，缺的是把名气变成好价钱、让手艺人留得下来的通道。`}
 ];
 planGrid.innerHTML=PLANS.map(p=>`<button data-k="${p.k}" onclick="pickPlan('${p.k}')" style="text-align:left;background:#0a0f1a;border:1px solid #22304a;color:#cbd5e1;border-radius:9px;padding:11px 13px;font-size:12.5px;font-weight:600;cursor:pointer">${p.label}</button>`).join("");
-function pickPlan(k){myPlan=k;[...planGrid.children].forEach(b=>{const on=b.dataset.k===k,pc=PLANS.find(p=>p.k===k).c;b.style.borderColor=on?pc:"#22304a";b.style.background=on?"#13233a":"#0a0f1a";});}
+function pickPlan(k){
+ myPlan=k;const p=PLANS.find(x=>x.k===k);
+ [...planGrid.children].forEach(b=>{const on=b.dataset.k===k;b.style.borderColor=on?p.c:"#22304a";b.style.background=on?"#13233a":"#0a0f1a";});
+ planFact.innerHTML=`<div style="margin-top:11px;background:#0a1422;border:1px solid ${p.c}66;border-radius:10px;padding:11px 13px;font-size:12px;line-height:1.85;color:#cbd5e1"><b style="color:${p.c}">📊 你这一票，对应的现实：</b><br>${p.facts}</div>`;
+}
 genCard.onclick=function(){
  if(!myTown||!myProud||!myPlan){genHint.textContent="还差一步："+(!myTown?"选你是哪个镇":!myProud?"选最自豪的家底":"选你当县长先做哪件事");genHint.style.color="#f87171";return;}
  genHint.textContent="正在生成…";genHint.style.color="#6b7d96";

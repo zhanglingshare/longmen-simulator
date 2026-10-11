@@ -35,33 +35,33 @@ h2{font-size:16px;margin:0 0 6px}
   <div class="card" style="margin-top:12px">
     <div class="finding">
       <div class="num">发现 1</div>
-      <div class="t">25倍人流涌进来，却留不住一张床</div>
-      <div class="d">900万人次是常住人口的25.5倍，日均外来2.47万人。但客单价在跌、永汉新增全是一日游。龙门不缺人来，缺的是人住下来。</div>
+      <div class="t">25倍人流涌进来，"一张床"的账还没算清</div>
+      <div class="d">905.2万人次约为常住人口的25.6倍，日均外来约2.5万人次。客单价略降、永汉游客在涨而人均消费在往下走。龙门不缺人来，值得算清的是怎么让人愿意住下来。</div>
       <div style="margin-top:7px;font-size:12px;color:#86efac;line-height:1.75">👉 <b>对你我意味着：</b>与其只盼着更多人来，不如让来的人愿意多住一晚——民宿、餐饮、加油站的生意，才会从“热闹一天”变成“留住一晚”。</div>
     </div>
     <div class="finding">
       <div class="num">发现 2</div>
       <div class="t">人涨8.5%，每个人头上的钱反而少了</div>
-      <div class="d">客单价从486元掉到477元，永汉更是掉7.29%。流量更大不等于更赚钱——低价一日游撑不起"金山银山"。</div>
+      <div class="d">混合客单价约478元、比上年略降，永汉镇人均消费降幅达7.29%。流量更大不等于经营者更赚钱——把温泉、康养、亲子的体验做深，"金山银山"才更扎实。</div>
       <div style="margin-top:7px;font-size:12px;color:#86efac;line-height:1.75">👉 <b>对你我意味着：</b>靠“人多、便宜”走不远；把温泉、康养、亲子做成值得专门来一趟的体验，每个人才愿意多花一点，山里人才挣得多一点。</div></div>
     </div>
     <div class="finding">
       <div class="num">发现 3</div>
       <div class="t">🎨 农民画：41个国家级奖，却靠冰箱贴走量</div>
-      <div class="d">龙门农民画进过奥运、世博，拿过41个国家级奖项，面子极大。但无人接班、变现主要靠几块钱的冰箱贴，里子极弱。好东西不知道怎么真正变现——这和"一张床"是同一个病：留不住价值。
+      <div class="d">龙门农民画进过奥运、世博，拿过41个国家级奖项，名气很大。目前年轻传承人不多、变现较多依赖几块钱的冰箱贴等小周边，价值还没充分释放。怎么把名气变成好价钱——这和"一张床"指向同一件事：让好东西留得住价值。
       <div style="margin-top:7px;font-size:12px;color:#86efac;line-height:1.75">👉 <b>对你我意味着：</b>好手艺不该只值一个冰箱贴。做成研学体验、文创、民宿墙绘，让会画的人能靠它吃饭，年轻人才愿意回来接棒。</div>
       <div id="paintChart" class="chart"></div>
     </div>
     <div class="finding">
       <div class="num">发现 4</div>
       <div class="t">二产猛增14.9%，规上工业只增5.1%</div>
-      <div class="d">不是数据打架，是功能膜新投产未满产、加上建筑业拉动。功能膜620条涂布线一旦真正达产，这道剪刀口才会合上。</div>
+      <div class="d">两个口径并不矛盾：功能膜新项目尚在爬坡、加上建筑业拉动。随着620条涂布线逐步达产，这道剪刀差有望收窄。</div>
       <div style="margin-top:7px;font-size:12px;color:#86efac;line-height:1.75">👉 <b>对你我意味着：</b>功能膜厂一旦开满产，平陵一带的岗位、工资和周边的租房、餐饮、小店，都会跟着上一个台阶。</div>
     </div>
     <div class="finding">
       <div class="num">发现 5</div>
       <div class="t">2026目标增速，是实际增速的5倍</div>
-      <div class="d">规上工业要一年增25.5%，实际只有5.1%。这根轨道全部压在功能膜能不能按时达产上——是龙门最需要压力测试的地方。</div>
+      <div class="d">规上工业一年需增约25.5%，而近年实际增速约5.1%。这根轨道很大程度上系于功能膜能否按时达产——正是最值得提前压一压、算一算的地方。</div>
       <div style="margin-top:7px;font-size:12px;color:#86efac;line-height:1.75">👉 <b>对你我意味着：</b>这根轨道成不成，取决于功能膜项目能否按时达产——这正是开工前最该提前“压一压、算一算”的地方。</div>
     </div>
   </div>
@@ -101,10 +101,12 @@ echarts.init(document.getElementById('paintChart')).setOption({
   document.getElementById('voteGrid').innerHTML=opts.map(o=>
     `<button style="background:${o.c}22;border:1px solid ${o.c};color:${o.c}" onclick="pick('${o.k}')">${o.label}</button>`).join("");
   window.pick=function(k){
-    if(localStorage.getItem(KEY+"_done"))return;
+    const cur=opts.find(o=>o.k===k);
+    if(localStorage.getItem(KEY+"_done")){
+      document.getElementById('voteOut').innerHTML=`你这一票投给了 <b style="color:${cur.c}">${cur.label}</b>。`;return;
+    }
     d[k]++;localStorage.setItem(KEY,JSON.stringify(d));localStorage.setItem(KEY+"_done","1");
-    const top=opts.slice().sort((a,b)=>d[b.k]-d[a.k])[0];
-    document.getElementById('voteOut').innerHTML=`你选了<b style="color:${opts.find(o=>o.k===k).c}">${opts.find(o=>o.k===k).label}</b>。大家最想先补的是 <b style="color:${top.c}">${top.label}</b>。`;
+    document.getElementById('voteOut').innerHTML=`你这一票投给了 <b style="color:${cur.c}">${cur.label}</b>。<span style="color:#64748b">（本机选择，不同人的投票暂不汇总，不代表全体）</span>`;
   };
 })();
 </script>
