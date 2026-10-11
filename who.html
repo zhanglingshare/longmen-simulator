@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>龙门基本面</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#0a0f1a;color:#e6edf3;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6}
@@ -15,24 +16,20 @@ body{background:#0a0f1a;color:#e6edf3;font-family:-apple-system,"PingFang SC","M
 h1{font-size:22px;margin-bottom:4px}
 .sub{font-size:13px;color:#94a3b8;line-height:1.7}
 .stat{display:inline-block;text-align:center;width:32%;padding:10px 0;background:#131c2b;border-radius:10px;margin:1%}
-.stat .v{font-size:20px;font-weight:800;color:#fbbf24}
+.stat .v{font-size:18px;font-weight:800;color:#fbbf24}
 .stat .l{font-size:11px;color:#94a3b8;margin-top:2px}
+.chart{width:100%;height:260px;margin-top:10px}
 .src{font-size:11px;color:#475569;margin-top:8px}
+.deep{font-size:13px;line-height:2;color:#c8d3e0;margin-top:10px}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="nav">
     <span style="font-weight:800;color:#fff;padding:6px 8px;white-space:nowrap">龙门产业风洞</span>
-    <a href="index.html">① 今日话题</a>
-    <a href="town.html">② 各镇吃喝玩乐</a>
-    <a href="network.html">③ 世界怎么长</a>
-    <a href="who.html" class="on">④ 基本面</a>
-    <a href="choices.html">⑤ 五条路</a>
-    <a href="future.html">⑥ 未来</a>
-    <a href="windtunnel.html">⑦ 风洞</a>
-    <a href="blindspot.html">⑧ 被忽略的</a>
-    <a href="report.html">⑨ 报告</a>
+    <a href="index.html">① 今日话题</a><a href="town.html">② 各镇</a><a href="network.html">③ 关系网</a>
+    <a href="who.html" class="on">④ 基本面</a><a href="choices.html">⑤ 五条路</a>
+    <a href="future.html">⑥ 未来</a><a href="windtunnel.html">⑦ 风洞</a><a href="blindspot.html">⑧ 被忽略</a><a href="report.html">⑨ 报告</a>
   </div>
 
   <h1>龙门现在在哪</h1>
@@ -46,12 +43,27 @@ h1{font-size:22px;margin-bottom:4px}
     <div class="stat"><div class="v">76%</div><div class="l">森林覆盖率</div></div>
     <div class="stat"><div class="v">330亿</div><div class="l">2030参考目标</div></div>
     <div class="stat"><div class="v">~7万</div><div class="l">人均GDP</div></div>
-    <div class="src">来源：龙门县政府工作报告、统计公报公开数据</div>
   </div>
 
   <div class="card">
-    <h2 style="font-size:15px;margin-bottom:10px">🌲 龙门和别的县不一样</h2>
-    <div style="font-size:13.5px;line-height:2;color:#c8d3e0">
+    <h2 style="font-size:15px;margin-bottom:4px">📈 GDP这些年怎么爬上来的</h2>
+    <div id="gdpChart" class="chart"></div>
+    <div class="deep">
+      龙门GDP从2020年的约160亿爬到2025年的217亿，五年涨了约57亿。增速7.4%在惠州各县里不算慢——但基数小，每涨一个点都是真金白银。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="font-size:15px;margin-bottom:4px">🥧 三块家底各占多少</h2>
+    <div id="indChart" class="chart"></div>
+    <div class="deep">
+      龙门不是工业县。一产占比高是特色不是短板——农业是国家战略，连着31万人的生计和大湾区的菜篮子。二产靠平陵工业园，三产靠南昆山民宿和温泉。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="font-size:15px;margin-bottom:4px">🌲 龙门和别的县不一样</h2>
+    <div class="deep">
       惠城在算"怎么到1500亿"，博罗在算"怎么到1600亿"。龙门不这么算。<br><br>
       龙门的家底是<b style="color:#4ade80">76%的森林覆盖率</b>——这是大湾区最后一块生态屏障。南昆山在这，温泉在这，年桔在这，瑶族乡在这。<br><br>
       它要做的不是"补齐工业"，是<b style="color:#fbbf24">把绿水青山真的变成金山银山</b>——让南昆山的民宿不只夏天满房，让年桔从论斤卖变成论品牌卖，让温泉从冬天火变成四季都有人来。
@@ -59,8 +71,27 @@ h1{font-size:22px;margin-bottom:4px}
   </div>
 
   <div style="text-align:center;font-size:11px;color:#475569;margin-top:20px;line-height:1.8">
-    龙门产业决策风洞 · Demo &nbsp;|&nbsp; 张凌 博士
+    龙门产业决策风洞 · Demo &nbsp;|&nbsp; 张凌 博士<br>
+    数据来源：龙门县政府工作报告、统计公报公开数据
   </div>
 </div>
+<script>
+echarts.init(document.getElementById('gdpChart')).setOption({
+  backgroundColor:'transparent',
+  grid:{left:40,right:20,top:20,bottom:30},
+  xAxis:{type:'category',data:['2020','2021','2022','2023','2024','2025'],axisLabel:{color:'#64748b'}},
+  yAxis:{type:'value',axisLabel:{color:'#64748b'}},
+  series:[{type:'line',data:[160,172,185,196,205,217.6],smooth:true,itemStyle:{color:'#059669'},areaStyle:{color:'#05966922'}}]
+});
+echarts.init(document.getElementById('indChart')).setOption({
+  backgroundColor:'transparent',
+  series:[{type:'pie',radius:['40%','70%'],label:{color:'#cbd5e1',fontSize:12},
+    data:[
+      {value:22,name:'一产·农业',itemStyle:{color:'#84cc16'}},
+      {value:32,name:'二产·工业',itemStyle:{color:'#f97316'}},
+      {value:46,name:'三产·文旅服务',itemStyle:{color:'#38bdf8'}}
+    ]}]
+});
+</script>
 </body>
 </html>

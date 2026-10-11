@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>龙门五条路</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <script src="model.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -23,6 +24,7 @@ h1{font-size:22px;margin-bottom:4px}
 .path .num{font-size:13px;color:#fbbf24;font-weight:800;margin-top:6px}
 .gap{background:#131c2b;border-radius:10px;padding:12px;margin-top:10px;text-align:center}
 .gap .v{font-size:22px;font-weight:800;color:#fbbf24}
+.chart{width:100%;height:220px;margin-top:10px}
 </style>
 </head>
 <body>
@@ -39,6 +41,11 @@ h1{font-size:22px;margin-bottom:4px}
 
   <div id="paths"></div>
 
+  <div class="card">
+    <h2 style="font-size:15px;margin-bottom:4px">📊 五条路各贡献多少</h2>
+    <div id="barChart" class="chart"></div>
+  </div>
+
   <div class="gap">
     <div style="font-size:12px;color:#94a3b8">离330亿目标还差</div>
     <div class="v" id="gap">—</div>
@@ -47,11 +54,11 @@ h1{font-size:22px;margin-bottom:4px}
 </div>
 <script>
 const DATA=[
-  {icon:"⛰️",t:"南昆山民宿升级",d:"永汉、南昆山脚下，民宿从夏天旺季卖到四季。从路过住一晚到住两三天。",feel:"走通了你会感到：周末民宿更满、淡季不空房",mu:38},
-  {icon:"🍊",t:"生态农业品牌",d:"龙门年桔、西溪笋、青梅。从论斤卖原料到论品牌卖生活方式。",feel:"走通了你会感到：你家的年桔能卖出溢价",mu:22},
-  {icon:"♨️",t:"康养温泉旅游",d:"地派温泉、南昆山温泉。从冬天火到四季都有康养客。",feel:"走通了你会感到：冬天温泉不再一房难求",mu:25},
-  {icon:"🚗",t:"融深融穗通道",d:"武深高速、广河高速。广州深圳客1.5小时到，周末消费带上来。",feel:"走通了你会感到：广州深圳客来得更勤",mu:15},
-  {icon:"🌱",t:"低碳新能源",d:"生态县不搞大工业，但光伏、竹林碳汇是新故事。",feel:"走通了你会感到：山里的竹林也能变收入",mu:12}
+  {icon:"⛰️",t:"南昆山民宿升级",d:"永汉、南昆山脚下，民宿从夏天旺季卖到四季。",feel:"走通了你会感到：周末民宿更满、淡季不空房",mu:38,c:'#a78bfa'},
+  {icon:"🍊",t:"生态农业品牌",d:"龙门年桔、西溪笋、青梅。从论斤卖原料到论品牌卖。",feel:"走通了你会感到：你家的年桔能卖出溢价",mu:22,c:'#fbbf24'},
+  {icon:"♨️",t:"康养温泉旅游",d:"地派温泉、南昆山温泉。从冬天火到四季康养。",feel:"走通了你会感到：冬天温泉不再一房难求",mu:25,c:'#f97316'},
+  {icon:"🚗",t:"融深融穗通道",d:"武深高速、广河高速。广深客1.5小时到。",feel:"走通了你会感到：广深客来得更勤",mu:15,c:'#38bdf8'},
+  {icon:"🌱",t:"低碳新能源",d:"光伏、竹林碳汇是新故事。",feel:"走通了你会感到：山里竹林也能变收入",mu:12,c:'#84cc16'}
 ];
 const GAP=113;
 function render(){
@@ -64,12 +71,21 @@ function render(){
     </div>`
   ).join("");
 }
+let barChart;
 function calc(){
-  let sum=0;
+  let sum=0;const active=[];
   DATA.forEach((p,i)=>{
-    if(document.getElementById("p"+i).classList.contains("on")) sum+=p.mu;
+    if(document.getElementById("p"+i).classList.contains("on")){sum+=p.mu;active.push(p);}
   });
   document.getElementById("gap").textContent=(GAP-sum)+"亿";
+  if(!barChart)barChart=echarts.init(document.getElementById('barChart'));
+  barChart.setOption({
+    backgroundColor:'transparent',
+    grid:{left:80,right:20,top:10,bottom:20},
+    xAxis:{type:'value',axisLabel:{color:'#64748b'}},
+    yAxis:{type:'category',data:active.map(p=>p.t),axisLabel:{color:'#cbd5e1',fontSize:11}},
+    series:[{type:'bar',data:active.map(p=>({value:p.mu,itemStyle:{color:p.c}}))}]
+  });
 }
 render();calc();
 </script>

@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>龙门风洞</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <script src="model.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -21,6 +22,7 @@ h1{font-size:22px;margin-bottom:4px}
 .slider-row span{color:#fbbf24;font-weight:700}
 .result{background:#131c2b;border-radius:10px;padding:14px;text-align:center}
 .result .v{font-size:24px;font-weight:800;color:#fbbf24}
+.chart{width:100%;height:240px;margin-top:10px}
 </style>
 </head>
 <body>
@@ -58,7 +60,12 @@ h1{font-size:22px;margin-bottom:4px}
     <div class="v" id="out">—</div>
   </div>
 
-  <div class="card" style="margin-top:12px;border-color:#059669">
+  <div class="card">
+    <h2 style="font-size:15px;margin-bottom:4px">🌪️ 哪个变量最敏感</h2>
+    <div id="tornado" class="chart"></div>
+  </div>
+
+  <div class="card" style="border-color:#059669">
     <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:6px">🎲 如果你是龙门县长，最该先保的是___</div>
     <div style="font-size:13px;line-height:2;color:#cbd5e1">
       跑完上面滑块，答案已经出来了：<b style="color:#fbbf24">南昆山民宿能不能从夏天卖到四季</b>。<br>
@@ -76,6 +83,17 @@ function calc(){
 }
 sliders.forEach(s=>s.oninput=calc);
 calc();
+echarts.init(document.getElementById('tornado')).setOption({
+  backgroundColor:'transparent',
+  grid:{left:80,right:30,top:10,bottom:20},
+  xAxis:{type:'value',axisLabel:{color:'#64748b'}},
+  yAxis:{type:'category',data:['客流量','年桔溢价','民宿旺季'],axisLabel:{color:'#cbd5e1',fontSize:11}},
+  series:[{type:'bar',data:[
+    {value:8,itemStyle:{color:'#3b82f6'}},
+    {value:12,itemStyle:{color:'#fbbf24'}},
+    {value:18,itemStyle:{color:'#f97316'}}
+  ]}]
+});
 </script>
 </body>
 </html>
