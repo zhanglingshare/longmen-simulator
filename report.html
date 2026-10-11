@@ -28,6 +28,17 @@ h2{font-size:16px;margin:0 0 10px}
   <h1>龙门一页报告</h1>
   <p class="sub">用公开数据，把龙门讲清楚。不是预测，是风洞。</p>
 
+  <div class="card" style="border:1px solid #fbbf24;background:linear-gradient(135deg,#1a1408,#0e1523)">
+    <h2 style="font-size:15px;color:#fcd34d;margin-bottom:9px">📖 别急着看数字——这份报告，和你有什么关系？</h2>
+    <div class="row" style="margin-top:0">
+      · 看到"GDP"别犯怵，它就是<b class="yellow">"龙门一年挣多少"</b>——217亿，不算多，但每一块都连着山、连着水。<br>
+      · <b class="purple">"一张床"</b>，说的是怎么让来玩的人愿意多住一晚——你开的民宿、餐馆，跑的出租，生意才会从一天变成一晚。<br>
+      · <b class="blue">"功能膜"</b>，就是平陵那些新厂——等它们开满产，家门口的岗位和工资会更多，不用都往外地跑。<br>
+      · <b class="green">"三件事"</b>，是龙门想更好、最该先使劲的三个地方。<br><br>
+      <b style="color:#fff">这份报告里没有一件和你无关。你大可以把自己当成龙门县长，边看边想：换作是我，会先做哪一件？</b>
+    </div>
+  </div>
+
   <div class="card" style="margin-top:12px">
     <h2>📊 现在在哪</h2>
     <div class="kpi"><div class="v">217.62亿</div><div class="l">GDP 2025</div></div>
@@ -76,6 +87,21 @@ h2{font-size:16px;margin:0 0 10px}
     <div class="row">不是第二个惠城，也不是第二个博罗。惠城是城区、博罗是工业县、龙门是生态县。它要做的不是补工业，是<b class="green">把绿水青山真的变成金山银山</b>。</div>
   </div>
 
+  <div class="card" style="border-color:#22c55e">
+    <h2 style="font-size:15px;color:#86efac;margin-bottom:9px">🤝 看到这儿，轮到你了</h2>
+    <div class="row" style="margin-top:0">
+      <b class="purple">🪞 代入：</b>你在龙门上班、做买卖、带孩子，这些数字就是你每天过的日子。<br>
+      <b class="yellow">🧭 决策：</b>过夜、功能膜、好东西变现——如果你来拍板，先使劲哪一件？<br>
+      <b class="blue">🔁 参与：</b>转给同样关心龙门的家人朋友，看看大家选的一不一样。<br>
+      <b class="green">🎁 收获：</b>看懂一个县怎么"算账"，再看自己的工作和生意，也会清楚不少。<br><br>
+      <b style="color:#fff">龙门的事，说到底，是每一个龙门人的事。</b>
+    </div>
+    <div style="margin-top:12px;display:flex;gap:12px;justify-content:center">
+      <button onclick="rlike()" style="background:#059669;color:#fff;border:0;padding:9px 20px;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer">👍 <span id="rcount">0</span></button>
+      <button onclick="rshare()" style="background:#f59e0b;color:#1a1206;border:0;padding:9px 20px;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer">🔁 转给朋友</button>
+    </div>
+  </div>
+
   <div class="card" style="border-color:#1c2739">
     <div style="font-size:11px;color:#5b6b82;line-height:1.8">
       数据来源：龙门县政府工作报告、统计公报、文旅与工信公开数据。客单价=旅游收入÷游客人次（混合口径）；县级公报通常不公布过夜人次，故以永汉剪刀差为"留不住"主证据。模型参数为作者假设，非官方预测；阅读/转发/点赞按公开来源热度合理估算，非平台后台真实统计。
@@ -86,5 +112,14 @@ h2{font-size:16px;margin:0 0 10px}
 const r=HT.run(42,10000);
 document.getElementById('m50').textContent=Math.round(r.p50)+'亿';
 document.getElementById('mhit').textContent=Math.round(r.hit)+'%';
+var rk="like_report",rn=parseInt(localStorage.getItem(rk)||"0");rcount.textContent=rn;
+function rlike(){rn++;localStorage.setItem(rk,rn);rcount.textContent=rn;}
+function rshare(){
+ var m=document.createElement("div");
+ m.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";
+ m.onclick=()=>m.remove();
+ m.innerHTML='<div style="background:#0f172a;padding:20px;border-radius:14px;text-align:center"><div style="color:#fff;font-size:14px;margin-bottom:12px">截图二维码，发给朋友/群</div><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(location.href)+'" style="width:200px;height:200;background:#fff;padding:8px;border-radius:8px"><div style="color:#94a3b8;font-size:12px;margin-top:12px">扫码打开</div></div>';
+ document.body.appendChild(m);navigator.clipboard&&navigator.clipboard.writeText(location.href);
+}
 </script>
 </body></html>
