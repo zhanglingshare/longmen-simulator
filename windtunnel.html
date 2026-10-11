@@ -17,8 +17,12 @@ h2{font-size:16px;margin:0 0 8px}
 .slider-row{margin-bottom:14px}
 .slider-row label{font-size:13px;color:#cbd5e1;display:block;margin-bottom:4px}
 .slider-row input{width:100%}.slider-row span{color:#fbbf24;font-weight:700}
-.chart{width:100%;height:280px;margin-top:8px}
+.chart{width:100%;height:260px;margin-top:8px}
 .deep{font-size:13px;line-height:2;color:#c8d3e0;margin-top:10px}
+.real{background:#0a141f;border:1px solid #155e75;border-radius:10px;padding:14px;margin-top:10px}
+.real .tag{font-size:11px;color:#67e8f9;font-weight:700;margin-bottom:8px}
+.kpi{display:inline-block;text-align:center;width:31%;padding:8px 0;background:#0a0f1a;border-radius:10px;margin:1%}
+.kpi .v{font-size:18px;font-weight:800;color:#fbbf24}.kpi .l{font-size:10.5px;color:#94a3b8}
 .note{border-left:3px solid #38bdf8;background:#0a141f;border-radius:0 8px 8px 0;padding:9px 12px;margin-top:10px;font-size:12.5px;color:#bae6fd;line-height:1.85}
 </style></head><body>
 
@@ -30,72 +34,83 @@ h2{font-size:16px;margin:0 0 8px}
 </div>
 
 <div class="wrap">
-  <h1>风洞：断了多久，多久能恢复</h1>
-  <p class="sub">龙门盘山通道和惠城过江桥不一样——桥是天天堵、慢慢失血；盘山道是雨季突然塌方，脉冲式冲击，再慢慢恢复。</p>
+  <h1>风洞：拨一下，模型真的重算</h1>
+  <p class="sub">三个滑块都接进统一模型——下面的GDP数字随参数真实变化，不是只改曲线和文字。</p>
 
   <div class="card" style="margin-top:12px">
-    <h2>⛰️ 雨季盘山通道塌方</h2>
+    <h2>🎛️ 压力参数</h2>
     <div class="slider-row">
-      <label>塌方中断天数</label>
-      <input type="range" id="days" min="0" max="30" value="10"><span id="daysV">10天</span>
+      <label>每年雨季盘山通道中断天数</label>
+      <input type="range" id="days" min="0" max="30" value="0"><span id="daysV">0天</span>
     </div>
     <div class="slider-row">
       <label>功能膜达产进度</label>
-      <input type="range" id="film" min="0" max="100" value="60"><span id="filmV">60%</span>
+      <input type="range" id="film" min="0" max="100" value="100"><span id="filmV">100%</span>
+    </div>
+    <div class="slider-row">
+      <label>功能膜投产延迟</label>
+      <input type="range" id="delay" min="0" max="2" value="0"><span id="delayV">0年</span>
     </div>
   </div>
 
-  <div class="card">
-    <h2>📉 冲击与恢复曲线</h2>
-    <div id="recChart" class="chart"></div>
-    <div class="deep" id="recText"></div>
+  <div class="real">
+    <div class="tag">📐 统一模型真实输出（跑一万遍）</div>
+    <div class="kpi"><div class="v" id="oP50">—</div><div class="l">2030 GDP中位数</div></div>
+    <div class="kpi"><div class="v" id="oHit">—</div><div class="l">达标330概率</div></div>
+    <div class="kpi"><div class="v" id="oRange">—</div><div class="l">80%区间</div></div>
   </div>
 
-  <div class="note">
-    <b>为什么龙门压"恢复"而不是"堵车"：</b>盘山通道中断是事件性的——断的那几天，游客进不来、民宿退订，是一次急跌；抢通之后，客流几周内慢慢爬回来。压测要看的是<b>谷底多深、多久回到正常</b>，而不是像惠城那样每步慢性失血。
+  <div class="card">
+    <h2>📉 雨季客流：冲击与恢复</h2>
+    <div id="recChart" class="chart"></div>
+    <div class="deep" id="recText"></div>
+    <div class="note">恢复曲线是旅游客流的短期形态；上方GDP数字才是模型对2030全年的真实计算。中断天数同时进入两处——既压短期客流，也折减"一张床"路径的5年兑现。</div>
   </div>
 
   <div class="card" style="border-color:#059669">
     <h2>🎲 如果你是龙门县长</h2>
     <div class="deep">
-      雨季塌方压的是<b style="color:#f87171">旅游和民宿的短期现金流</b>——备足应急抢通力量、给民宿一点缓冲，比什么都实在。<br>
-      功能膜达产压的是<b style="color:#fbbf24">全年工业的基本盘</b>——620条涂布线能不能按时转起来，决定25.5%的目标增速。<br>
-      一个管"短期不慌"，一个管"全年达标"，这是县长手里的两本账。
+      雨季塌方压<b style="color:#f87171">旅游民宿短期现金流</b>——备足抢通力量、给民宿缓冲。<br>
+      功能膜达产与延迟压<b style="color:#fbbf24">全年工业基本盘</b>——620条涂布线按时转起来，25.5%目标增速才有着落。<br>
+      拨一下滑块就看到：这两件事任何一件掉链子，达标率会明显往下走。
     </div>
   </div>
 </div>
 <script>
-const daysS=document.getElementById('days'),filmS=document.getElementById('film');
-let chart=echarts.init(document.getElementById('recChart'));
+const daysS=document.getElementById('days'),filmS=document.getElementById('film'),delayS=document.getElementById('delay');
+let recChart=echarts.init(document.getElementById('recChart'));
 function draw(){
-  const D=parseInt(daysS.value),FP=parseInt(filmS.value);
-  document.getElementById('daysV').textContent=D+'天';
-  document.getElementById('filmV').textContent=FP+'%';
-  // 12周客流指数：正常=100，塌方期急跌，之后恢复
-  const weeks=12,data=[];
-  const startW=2, durW=Math.max(1,D/7);
+  const D=+daysS.value,FP=+filmS.value,DL=+delayS.value;
+  daysV.textContent=D+'天';filmV.textContent=FP+'%';delayV.textContent=DL+'年';
+
+  // 真实模型输出
+  const r=HT.run(42,10000,{filmProgress:FP,disruptDays:D,delayYears:DL});
+  oP50.textContent=Math.round(r.p50)+'亿';
+  oHit.textContent=Math.round(r.hit)+'%';
+  oRange.textContent=Math.round(r.p10)+'-'+Math.round(r.p90);
+
+  // 12周恢复曲线
+  const weeks=12,data=[];const startW=2,durW=Math.max(0.5,D/7);
   for(let w=0;w<weeks;w++){
     let v=100;
-    if(w>=startW){
+    if(D>0&&w>=startW){
       const t=w-startW;
-      if(t<durW) v=100-55*(1-t/durW*0.3);
-      else v=100-55*Math.exp(-(t-durW)/2.2); // 恢复曲线
+      if(t<durW)v=100-55*(1-t/durW*0.3);
+      else v=100-55*Math.exp(-(t-durW)/2.2);
     }
     data.push(+v.toFixed(1));
   }
-  chart.setOption({
+  recChart.setOption({
     backgroundColor:'transparent',
     grid:{left:45,right:20,top:20,bottom:30},
     xAxis:{type:'category',data:data.map((_,i)=>'第'+(i+1)+'周'),axisLabel:{color:'#64748b',fontSize:10}},
-    yAxis:{type:'value',min:30,max:110,axisLabel:{color:'#64748b',formatter:'{value}'}},
+    yAxis:{type:'value',min:30,max:110,axisLabel:{color:'#64748b'}},
     series:[{type:'line',data,smooth:true,itemStyle:{color:'#38bdf8'},areaStyle:{color:'#38bdf822'},
       markLine:{data:[{yAxis:100,label:{formatter:'正常',color:'#64748b'}}],lineStyle:{color:'#475569',type:'dashed'}}}]
   });
-  const trough=Math.min(...data);
-  const loss=(100-trough).toFixed(0);
-  document.getElementById('recText').innerHTML=
-    `中断${D}天，客流指数谷底跌到约<b style="color:#f87171">${Math.round(trough)}</b>（比正常低${loss}个点），抢通后约3-5周爬回正常。功能膜达产${FP}%，达产每慢10个百分点，全年规上工业增速约少1.5个点。`;
+  recText.innerHTML= D===0?'无中断，客流保持正常。':`中断${D}天，短期客流谷底约<b style="color:#f87171">${Math.round(Math.min(...data))}</b>，抢通后3-5周回正；同时折减旅游路径长期兑现。`;
 }
-daysS.oninput=draw;filmS.oninput=draw;draw();
+[daysS,filmS,delayS].forEach(s=>s.oninput=draw);
+draw();
 </script>
 </body></html>
