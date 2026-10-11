@@ -61,7 +61,7 @@ button{font-family:inherit}
       你可能在<b style="color:#fbbf24">永汉开一家温泉民宿</b>，假期满房、平日却空着一半；<br>
       你可能在<b style="color:#4ade80">南昆山养蜂、种灵芝</b>，东西是真的好，却总卖不上价；<br>
       你可能在<b style="color:#60a5fa">平陵的功能膜厂</b>上班，也可能只是过年才回龙门、走那条雨季总塌方的山路。<br><br>
-      龙门一年涌进来 <b style="color:#f87171">900万人</b>——是全县常住人口的 <b style="color:#f87171">25倍</b>。可多数人玩一天就走，每个人花的钱还比去年少了。山是好山，水是好水，温泉是真温泉。要琢磨的，从来不是"有没有人来"，而是——<b style="color:#fcd34d">怎么让人愿意多住一晚、让好东西卖出好价钱、让山里人在家门口就挣到钱。</b><br><br>
+      龙门一年涌进来 <b style="color:#f87171">900万人</b>——是全县常住人口的 <b style="color:#f87171">25倍</b>。公开数据还显示：每个人花的钱比去年少了，永汉新增的游客多是低价一日游。至于多少人当天就走、多少人住下，县级公开数据里还没有"过夜率"——这恰恰是龙门最该算清楚的一笔。山是好山，水是好水，温泉是真温泉。要琢磨的，从来不是"有没有人来"，而是——<b style="color:#fcd34d">怎么让人愿意多住一晚、让好东西卖出好价钱、让山里人在家门口就挣到钱。</b><br><br>
       这不只是哪一个部门的事，也不只是老板的账本：<b style="color:#fff">它是你开的那家民宿、你卖的那罐蜂蜜、你孩子将来回不回得来的龙门。</b>
     </div>
     <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px">
@@ -92,7 +92,7 @@ button{font-family:inherit}
     <button class="cat" data-c="agriculture">🌾 农业</button>
     <button class="cat" data-c="fun">🏞️ 文旅</button>
     <button class="cat" data-c="gossip">✨ 暖闻</button>
-    <button class="refresh" id="btnScan">🔄 重新扫描</button>
+    <button class="refresh" id="btnScan">🔄 刷新话题</button>
   </div>
   <div class="scan-info" id="scanInfo">读取中…</div>
   <div id="topicList"></div>
@@ -107,6 +107,10 @@ button{font-family:inherit}
 </div>
 
 <script>
+// 安全：外部文本一律转义后再插入；链接只允许 http/https
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function safeUrl(u){return typeof u==="string"&&/^https?:\/\//i.test(u)?u:"";}
+
 // 你是龙门哪里人
 const TOWNS=[
  {n:"龙城",say:"县城所在地，龙门的门面。"},{n:"平陵",say:"功能膜产业园，龙门工业家底。"},
@@ -134,8 +138,8 @@ proudGrid.innerHTML=PROUD.map(o=>`<button onclick="pickProud('${o.k}')" style="f
 function pickProud(k){
  if(localStorage.getItem(PKEY+"_done"))return;
  pd[k]++;localStorage.setItem(PKEY,JSON.stringify(pd));localStorage.setItem(PKEY+"_done","1");
- const top=PROUD.slice().sort((a,b)=>pd[b.k]-pd[a.k])[0];
- proudOut.innerHTML=`你选了<b style="color:#fbbf24">${PROUD.find(o=>o.k===k).label}</b>。大家最常提起的是 <b style="color:${top.c}">${top.label}</b>——${top.say}`;
+ const cur=PROUD.find(o=>o.k===k);
+ proudOut.innerHTML=`你把票投给了<b style="color:#fbbf24">${cur.label}</b>——${cur.say}<br><span style="color:#6b7d96;font-size:11px">（这是你本机的选择，不同人的投票暂不汇总，不代表全体）</span>`;
 }
 
 // 话题（读hot.json）
@@ -143,18 +147,18 @@ let DATA=[],curCat="all";
 const CATLABEL={industry:"产业",livelihood:"民生",city:"城市",agriculture:"农业",fun:"文旅",tourism:"文旅",gossip:"暖闻"};
 function render(){
  const items=DATA.filter(x=>curCat==="all"||x.cat===curCat||(curCat==="fun"&&x.cat==="tourism"));
- topicList.innerHTML=items.map(x=>`<div class="topic">
-   <div class="meta">${x.emoji} ${CATLABEL[x.cat]||x.cat} ${x.live?'<span class="live">· 实时</span>':""}</div>
-   <div class="t">${x.title}</div>
-   ${x.summary?`<div class="d">${x.summary}</div>`:""}
+ topicList.innerHTML=items.map(x=>{const u=safeUrl(x.url);return `<div class="topic">
+   <div class="meta">${x.emoji} ${esc(CATLABEL[x.cat]||x.cat)} ${x.live?'<span class="live">· 实时</span>':""}</div>
+   <div class="t">${esc(x.title)}</div>
+   ${x.summary?`<div class="d">${esc(x.summary)}</div>`:""}
    <div class="stats">
      <div><b class="v">${x.views_wan}万</b>👁️ 阅读</div>
      <div><b class="s">${x.shares}</b>🔁 转发</div>
      <div><b class="l">${x.likes}</b>👍 点赞</div>
      <div style="margin-left:auto"><b style="color:#f87171">${x.hot}°</b>热度</div>
    </div>
-   <div class="src">📎 ${x.source||"公开渠道"} · 近24小时公开热度 · 合理估算</div>
- </div>`).join("")||'<div class="disc">该分类暂无话题。</div>';
+   <div class="src">📎 ${esc(x.source)||"公开渠道"} · 近24小时公开热度 · 合理估算${u?` · <a href="${u}" target="_blank" rel="noopener" style="color:#60a5fa;text-decoration:none">查看原文 ↗</a>`:""}</div>
+ </div>`;}).join("")||'<div class="disc">该分类暂无话题。</div>';
 }
 async function loadHot(){
  try{
