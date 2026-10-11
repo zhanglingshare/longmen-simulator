@@ -1,118 +1,175 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>龙门产业风洞</title>
-<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
-<script src="model.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0f1a;color:#e6edf3;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#080b12;color:#e6edf3;font:14px/1.65 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
 .wrap{max-width:680px;margin:0 auto;padding:16px}
 .nav{display:flex;gap:6px;overflow-x:auto;padding:8px 0;margin-bottom:12px}
+.nav span{font-weight:800;color:#fff;padding:6px 8px;white-space:nowrap}
 .nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
 .nav a.on{background:#059669;color:#fff;border-color:#059669}
-.card{background:#0f172a;border:1px solid #1c2739;border-radius:14px;padding:16px;margin-bottom:12px}
-h1{font-size:22px;margin-bottom:4px}
-.sub{font-size:13px;color:#94a3b8;line-height:1.7}
-h2{font-size:16px;margin-bottom:10px}
-.chip{display:inline-block;background:#1c2739;color:#93a4bd;border-radius:20px;padding:4px 10px;font-size:11px;margin:2px}
-button{cursor:pointer;font-family:inherit}
-</style>
-</head>
-<body>
+.head{display:flex;gap:14px;align-items:flex-start;margin-bottom:6px}
+.radar{width:80px;height:80px;flex:none}
+h1{font-size:22px}.sub{font-size:12px;color:#8fa3bf;margin-top:4px;line-height:1.7}
+.card{background:#0e1523;border:1px solid #1c2739;border-radius:14px;padding:16px;margin:12px 0}
+.toolbar{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin:14px 0 8px}
+.cat{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 13px;border-radius:18px;font-size:12px;cursor:pointer}
+.cat.on{background:#059669;border-color:#22c55e;color:#fff;font-weight:600}
+.refresh{margin-left:auto;background:#f59e0b;color:#1a1206;border:0;padding:8px 16px;border-radius:18px;font-size:12.5px;font-weight:700;cursor:pointer}
+.scan-info{font-size:11.5px;color:#5b6b82;margin-bottom:10px}
+.topic{background:#0e1523;border:1px solid #1c2739;border-radius:13px;padding:15px;margin-bottom:11px}
+.topic .meta{font-size:11px;color:#6b7d96;margin-bottom:6px}
+.topic .meta .live{color:#f87171;font-weight:700}
+.topic .t{font-size:16px;font-weight:800;line-height:1.5}
+.topic .d{font-size:12.5px;color:#94a3b8;margin-top:6px;line-height:1.7}
+.stats{display:flex;gap:18px;margin-top:11px;font-size:12px;color:#cbd5e1}
+.stats b{display:block;font-size:16px}
+.stats .v{color:#fbbf24}.stats .s{color:#60a5fa}.stats .l{color:#4ade80}
+.topic .src{font-size:10.5px;color:#5b6b82;margin-top:9px}
+.next{text-align:center;margin:18px 0}.next a{background:#059669;color:#fff;padding:11px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
+.disc{font-size:11px;color:#5b6b82;line-height:1.8;margin-top:8px}
+.likebar{display:flex;justify-content:center;margin:18px 0;background:rgba(15,23,42,.96);border:1px solid #059669;border-radius:24px;padding:9px 20px;gap:22px}
+.likebar button{background:none;border:none;color:#e2e8f0;font-size:14px;cursor:pointer}
+button{font-family:inherit}
+</style></head><body>
 <div class="wrap">
   <div class="nav">
-    <span style="font-weight:800;color:#fff;padding:6px 8px;white-space:nowrap">龙门产业风洞</span>
+    <span>龙门产业风洞</span>
     <a href="index.html" class="on">① 今日话题</a>
-    <a href="town.html">② 各镇吃喝玩乐</a>
-    <a href="network.html">③ 世界怎么长</a>
+    <a href="town.html">🏘️ 各镇吃喝玩乐</a>
+    <a href="network.html">③ 关系网</a>
     <a href="who.html">④ 基本面</a>
     <a href="choices.html">⑤ 五条路</a>
     <a href="future.html">⑥ 未来</a>
     <a href="windtunnel.html">⑦ 风洞</a>
-    <a href="blindspot.html">⑧ 被忽略的</a>
+    <a href="blindspot.html">⑧ 被忽略</a>
     <a href="report.html">⑨ 报告</a>
   </div>
 
-  <h1>今日龙门话题</h1>
-  <p class="sub">扫一遍公开渠道，按热度排。龙门是大湾区的生态后花园。</p>
-
-  <!-- 你是龙门哪里人 -->
-  <div class="card" style="margin-top:12px;border-color:#059669">
-    <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px">🏘️ 你是龙门哪里人？</div>
-    <div style="font-size:12.5px;color:#94a3b8;margin-bottom:10px">10个镇街乡，每个都有自己的活法。</div>
-    <div id="townGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"></div>
-    <div id="townOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1;line-height:1.6"></div>
+  <div class="head">
+    <svg class="radar" viewBox="0 0 80 80">
+      <circle cx="40" cy="40" r="36" fill="none" stroke="#1c2739"/>
+      <circle cx="40" cy="40" r="24" fill="none" stroke="#1c2739"/>
+      <circle cx="40" cy="40" r="12" fill="none" stroke="#1c2739"/>
+      <line x1="40" y1="4" x2="40" y2="76" stroke="#1c2739"/>
+      <line x1="4" y1="40" x2="76" y2="40" stroke="#1c2739"/>
+      <g id="scanline" style="transform-origin:40px 40px"><line x1="40" y1="40" x2="40" y2="6" stroke="#22c55e" stroke-width="1.5"/><circle cx="40" cy="6" r="2" fill="#22c55e"/></g>
+    </svg>
+    <div>
+      <h1>今日龙门话题</h1>
+      <p class="sub">扫一遍公开渠道，按热度排，点卡片看详情。<br>
+      <span style="color:#5b6b82">来源：政府工作报告、统计公报与各镇公开信息、南方+/惠州日报等媒体及公开热榜。统计区间：最近24小时（近1天）· 每日自动更新一次。👁️阅读、🔁转发、👍点赞按公开来源热度合理估算，非平台后台真实统计。</span></p>
+    </div>
   </div>
 
-  <!-- 龙门骄傲 -->
+  <div class="card" style="border-color:#059669">
+    <div style="font-size:15px;font-weight:800;margin-bottom:4px">🏘️ 你是龙门哪里人？</div>
+    <div style="font-size:12px;color:#94a3b8;margin-bottom:10px">11个镇街乡，每个都有自己的活法。</div>
+    <div id="townGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px"></div>
+    <div id="townOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1"></div>
+  </div>
+
   <div class="card" style="border-color:#fbbf24">
-    <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px">🏆 向外人介绍龙门，你最先说哪样？</div>
-    <div style="font-size:12.5px;color:#94a3b8;margin-bottom:10px">龙门是龙门。南昆山、温泉、年桔——这是我们的家底。</div>
+    <div style="font-size:15px;font-weight:800;margin-bottom:4px">🏆 向外人介绍龙门，你最先说哪样？</div>
+    <div style="font-size:12px;color:#94a3b8;margin-bottom:10px">南昆山、温泉、年桔——这是我们的家底。</div>
     <div id="proudGrid" style="display:flex;gap:8px;flex-wrap:wrap"></div>
-    <div id="proudOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1;line-height:1.6"></div>
+    <div id="proudOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1"></div>
   </div>
 
-  <div class="card" style="text-align:center;padding:30px 16px">
-    <div style="font-size:14px;color:#64748b">今日话题数据即将上线</div>
-    <div style="font-size:12px;color:#475569;margin-top:6px">每日自动更新一次，覆盖政府公开信息、南方+/惠州日报、点评/小红书/抖音公开打卡</div>
+  <div class="toolbar">
+    <button class="cat on" data-c="all">全部</button>
+    <button class="cat" data-c="industry">🏭 产业</button>
+    <button class="cat" data-c="livelihood">🟠 民生</button>
+    <button class="cat" data-c="city">⚪ 城市</button>
+    <button class="cat" data-c="agriculture">🌾 农业</button>
+    <button class="cat" data-c="fun">🏞️ 文旅</button>
+    <button class="cat" data-c="gossip">✨ 暖闻</button>
+    <button class="refresh" id="btnScan">🔄 重新扫描</button>
   </div>
+  <div class="scan-info" id="scanInfo">读取中…</div>
+  <div id="topicList"></div>
 
-  <div style="text-align:center;font-size:11px;color:#475569;margin-top:20px;line-height:1.8">
-    龙门产业决策风洞 · Demo &nbsp;|&nbsp; 张凌 博士<br>
-    数据来源：龙门县政府公开信息、统计公报、南方+/惠州日报等公开渠道
+  <div class="next"><a href="town.html">下一步：看龙门各镇吃喝玩乐 →</a></div>
+  <div class="disc">数据来源：龙门县政府工作报告、统计公报、各镇公开信息、本地媒体及公开热榜。</div>
+
+  <div class="likebar">
+    <button onclick="likePage()">👍 <span id="pcount">0</span></button>
+    <button onclick="sharePage()">🔁 转给朋友</button>
   </div>
 </div>
 
 <script>
 // 你是龙门哪里人
-(function(){
-  const TOWNS=[
-    {n:"龙城",say:"县城所在地，龙门的门面。"},
-    {n:"平陵",say:"工业园在这，龙门的工业家底。"},
-    {n:"永汉",say:"南昆山脚下，民宿和温泉最集中。"},
-    {n:"麻榨",say:"山里的镇子，年桔主产区。"},
-    {n:"龙华",say:"西溪笋、青梅，山里的味道。"},
-    {n:"龙江",say:"路溪石硖龙眼，古村老味道。"},
-    {n:"龙田",say:"挨着县城，城郊农业。"},
-    {n:"地派",say:"温泉在这，森林覆盖率最高。"},
-    {n:"龙潭",say:"最山里的镇，生态最好。"},
-    {n:"蓝田瑶族乡",say:"瑶族乡，龙门唯一的少数民族乡。"}
-  ];
-  document.getElementById("townGrid").innerHTML=TOWNS.map(t=>
-    `<button onclick="pickTown('${t.n}')" style="background:#05966922;border:1px solid #05966944;color:#bbf7d0;border-radius:8px;padding:8px 4px;cursor:pointer;font-size:12px;font-weight:700">${t.n}</button>`
-  ).join("");
-  window.pickTown=function(n){
-    const t=TOWNS.find(x=>x.n===n);if(!t)return;
-    document.getElementById("townOut").innerHTML=`你是<b style="color:#4ade80">${n}人</b>——${t.say}`;
-  };
-})();
-</script>
-<script>
+const TOWNS=[
+ {n:"龙城",say:"县城所在地，龙门的门面。"},{n:"平陵",say:"功能膜产业园，龙门工业家底。"},
+ {n:"永汉",say:"南昆山脚下，温泉民宿最集中。"},{n:"南昆山",say:"避暑后花园，夏天一房难求。"},
+ {n:"麻榨",say:"山里的镇子，年桔主产区。"},{n:"龙华",say:"西溪笋、青梅，山里味道。"},
+ {n:"龙江",say:"年桔核心产区，生态种植。"},{n:"龙田",say:"挨着县城，城郊农业。"},
+ {n:"地派",say:"温泉与高山茶，森林覆盖率高。"},{n:"龙潭",say:"最山里的镇，生态最好。"},
+ {n:"蓝田瑶族乡",say:"瑶族乡，舞火狗非遗。"}
+];
+townGrid.innerHTML=TOWNS.map(t=>`<button onclick="pickTown('${t.n}')" style="background:#05966922;border:1px solid #05966944;color:#bbf7d0;border-radius:8px;padding:8px 2px;font-size:11.5px;font-weight:700;cursor:pointer">${t.n}</button>`).join("");
+function pickTown(n){const t=TOWNS.find(x=>x.n===n);townOut.innerHTML=`你是<b style="color:#4ade80">${n}人</b>——${t.say}`;}
+
 // 龙门骄傲
-(function(){
-  const KEY="longmen_proud_v1";
-  const opts=[
-    {k:"nks",label:"⛰️ 南昆山",c:"#a78bfa",say:"北回归线上的绿洲，大湾区避暑后花园。"},
-    {k:"spring",label:"♨️ 温泉",c:"#f97316",say:"龙门温泉水质好，冬天最舒服。"},
-    {k:"orange",label:"🍊 年桔",c:"#fbbf24",say:"龙门年桔，过年的那口甜。"},
-    {k:"eco",label:"🌲 生态",c:"#22c55e",say:"森林覆盖率76%，大湾区生态屏障。"},
-    {k:"yao",label:"瑶族",c:"#ec4899",say:"蓝田瑶族乡，龙门唯一少数民族乡。"}
-  ];
-  let d=JSON.parse(localStorage.getItem(KEY)||'{}');
-  opts.forEach(o=>{if(typeof d[o.k]!=="number")d[o.k]=0;});
-  document.getElementById("proudGrid").innerHTML=opts.map(o=>
-    `<button onclick="pickProud('${o.k}')" style="flex:1;min-width:70px;background:${o.c}22;border:1px solid ${o.c};color:${o.c};border-radius:10px;padding:10px 6px;cursor:pointer;font-size:11.5px;font-weight:700">${o.label}</button>`
-  ).join("");
-  window.pickProud=function(k){
-    if(localStorage.getItem(KEY+"_done"))return;
-    d[k]++;localStorage.setItem(KEY,JSON.stringify(d));localStorage.setItem(KEY+"_done","1");
-    const top=opts.slice().sort((a,b)=>d[b.k]-d[a.k])[0];
-    document.getElementById("proudOut").innerHTML=`你选了<b style="color:#fbbf24">${opts.find(o=>o.k===k).label}</b>。<br>大家最常向外人提起的是 <b style="color:${top.c}">${top.label}</b>——${top.say}<br>龙门是龙门，这就是我们的家底。`;
-  };
-})();
+const PKEY="longmen_proud";
+const PROUD=[
+ {k:"nks",label:"⛰️ 南昆山",c:"#a78bfa",say:"北回归线上的绿洲，大湾区避暑后花园。"},
+ {k:"spring",label:"♨️ 温泉",c:"#f97316",say:"温泉水质好，秋冬最舒服。"},
+ {k:"orange",label:"🍊 年桔",c:"#fbbf24",say:"国家地理标志，过年的那口甜。"},
+ {k:"eco",label:"🌲 生态",c:"#22c55e",say:"森林覆盖率76%，大湾区生态屏障。"},
+ {k:"yao",label:"🔥 瑶族",c:"#ec4899",say:"蓝田舞火狗，山里的非遗。"}
+];
+let pd=JSON.parse(localStorage.getItem(PKEY)||"{}");
+PROUD.forEach(o=>{if(typeof pd[o.k]!=="number")pd[o.k]=0;});
+proudGrid.innerHTML=PROUD.map(o=>`<button onclick="pickProud('${o.k}')" style="flex:1;min-width:64px;background:${o.c}22;border:1px solid ${o.c};color:${o.c};border-radius:10px;padding:10px 4px;font-size:11.5px;font-weight:700;cursor:pointer">${o.label}</button>`).join("");
+function pickProud(k){
+ if(localStorage.getItem(PKEY+"_done"))return;
+ pd[k]++;localStorage.setItem(PKEY,JSON.stringify(pd));localStorage.setItem(PKEY+"_done","1");
+ const top=PROUD.slice().sort((a,b)=>pd[b.k]-pd[a.k])[0];
+ proudOut.innerHTML=`你选了<b style="color:#fbbf24">${PROUD.find(o=>o.k===k).label}</b>。大家最常提起的是 <b style="color:${top.c}">${top.label}</b>——${top.say}`;
+}
+
+// 话题（读hot.json）
+let DATA=[],curCat="all";
+const CATLABEL={industry:"产业",livelihood:"民生",city:"城市",agriculture:"农业",fun:"文旅",tourism:"文旅",gossip:"暖闻"};
+function render(){
+ const items=DATA.filter(x=>curCat==="all"||x.cat===curCat||(curCat==="fun"&&x.cat==="tourism"));
+ topicList.innerHTML=items.map(x=>`<div class="topic">
+   <div class="meta">${x.emoji} ${CATLABEL[x.cat]||x.cat} ${x.live?'<span class="live">· 实时</span>':""}</div>
+   <div class="t">${x.title}</div>
+   ${x.summary?`<div class="d">${x.summary}</div>`:""}
+   <div class="stats">
+     <div><b class="v">${x.views_wan}万</b>👁️ 阅读</div>
+     <div><b class="s">${x.shares}</b>🔁 转发</div>
+     <div><b class="l">${x.likes}</b>👍 点赞</div>
+     <div style="margin-left:auto"><b style="color:#f87171">${x.hot}°</b>热度</div>
+   </div>
+   <div class="src">📎 ${x.source||"公开渠道"} · 近24小时公开热度 · 合理估算</div>
+ </div>`).join("")||'<div class="disc">该分类暂无话题。</div>';
+}
+async function loadHot(){
+ try{
+  const d=await (await fetch("hot.json?ts="+Date.now())).json();
+  DATA=d.items||[];
+  scanInfo.textContent=`数据每日更新一次 · 上次更新 ${d.updated} · 近1天 · 共${d.count}个话题 · 公开来源`;
+ }catch(e){scanInfo.textContent="话题读取失败，请稍后重试。";}
+ render();
+}
+document.querySelectorAll(".cat").forEach(b=>b.onclick=()=>{document.querySelectorAll(".cat").forEach(x=>x.classList.remove("on"));b.classList.add("on");curCat=b.dataset.c;render();});
+btnScan.onclick=loadHot;
+loadHot();
+
+// 点赞/转发
+var lk="like_"+location.pathname,ln=parseInt(localStorage.getItem(lk)||"0");pcount.textContent=ln;
+function likePage(){ln++;localStorage.setItem(lk,ln);pcount.textContent=ln;}
+function sharePage(){
+ const m=document.createElement("div");
+ m.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";
+ m.onclick=()=>m.remove();
+ m.innerHTML='<div style="background:#0f172a;padding:20px;border-radius:14px;text-align:center"><div style="color:#fff;font-size:14px;margin-bottom:12px">截图二维码，发给朋友/群</div><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(location.href)+'" style="width:200px;height:200;background:#fff;padding:8px;border-radius:8px"><div style="color:#94a3b8;font-size:12px;margin-top:12px">扫码打开</div></div>';
+ document.body.appendChild(m);navigator.clipboard&&navigator.clipboard.writeText(location.href);
+}
 </script>
-</body>
-</html>
+</body></html>
