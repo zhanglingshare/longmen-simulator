@@ -1,66 +1,91 @@
-/* 龙门产业决策风洞 · 统一模型内核
-   口径：2025年GDP 217.62亿；2030参考目标330亿。
-   公开数据锚点 + 作者假设参数，非官方预测。
-   注意：五路径μ合计≈112，故基线p50≈330是参数设定的结果，
-   不构成对路径可行性的证明——仅回答"在这组假设下结果如何分布"。 */
+/* 龙门产业决策风洞 · 统一模型内核 v2
+   路径层(驱动因子) + 时间层(逐年爬坡/过夜率渐进) + 关联层(互补/竞争/共同风险)
+   基期2025：一产44.4 / 二产63.2 / 三产110.0，GDP 217.62；2030参考目标330。
+   驱动因子经标定：2025年可还原旅游43亿/客单价477元。
+   公开数据锚点 + 作者假设参数，非官方预测。 */
 (function(global){
-  const BASE=217.62, TARGET=330, NOISE_SD=18;
-
-  // 五条路：mu=满实现状态下5年累计增量期望(亿)，sigma=波动
-  const PATHS=[
-    {k:"bed",   n:"一张床·南昆山留宿", mu:32, sigma:11},
-    {k:"film",  n:"功能膜新材料",   mu:30, sigma:12},
-    {k:"spring",n:"温泉康养",      mu:22, sigma:9},
-    {k:"agri",  n:"生态农业品牌",   mu:16, sigma:7},
-    {k:"road",  n:"融深融穗通道",   mu:12, sigma:6}
-  ];
+  const BASE=217.62, TARGET=330;
+  const BP={p1:44.4,p2:63.2,p3:110.0};
 
   function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
   function gauss(rng){let u=0,v=0;while(u===0)u=rng();while(v===0)v=rng();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
 
-  /* 情景参数（滑块真实驱动）：
-     filmProgress  功能膜达产进度 0-100（影响film路径实现比例）
-     disruptDays   每年雨季盘山通道中断天数（影响bed/spring旅游路径实现）
-     delayYears    功能膜投产延迟年数 0-2（影响film路径5年内能兑现多少） */
-  function applyScenario(p,sc){
-    let mu=p.mu;
-    if(p.k==="film"){
-      const prog=0.35+0.65*(sc.filmProgress/100);     // 达产进度
-      const timing=Math.max(0,1-sc.delayYears*0.28);  // 延迟折减
-      mu=p.mu*prog*timing;
-    }
-    if(p.k==="bed")   mu=p.mu*(1-Math.min(0.6,sc.disruptDays*0.02));
-    if(p.k==="spring")mu=p.mu*(1-Math.min(0.5,sc.disruptDays*0.012));
-    return mu;
-  }
+  // 2030情景参数（滑块/假设驱动）
+  const DEFAULT_SC={filmProgress:100,delayYears:0,disruptDays:0,stayRate:30,tourFocus:0.5,springOn:1,agriBrandOn:1,roadOn:1};
+  const STAY2025=12;                 // 2025基期过夜率（假设，待验证）
+  const FILM={invest:140,vaRate:0.28,ramp:[0.05,0.25,0.5,0.75,1.0]};
+  const TOUR={visits2025:900,trend:0.06,daySpend:380,nightSpend:1000};
+  const NONTOUR2025=67;              // 三产里旅游之外（110-43）
 
-  function run(seed=42,N=10000,sc){
-    sc=sc||{filmProgress:100,disruptDays:0,delayYears:0};
-    const rng=mulberry32(seed), samples=[];
-    const mus=PATHS.map(p=>applyScenario(p,sc));
-    for(let i=0;i<N;i++){
-      let y=BASE;
-      PATHS.forEach((p,j)=>{y+=mus[j]+p.sigma*gauss(rng);});
-      y+=NOISE_SD*gauss(rng);
-      samples.push(y);
+  function run(seed,N,sc){
+    sc=Object.assign({},DEFAULT_SC,sc||{});
+    const samples=[];
+    for(let n=0;n<N;n++){
+      const rng=mulberry32((seed+n*2654435761)>>>0);
+      const filmRes=1-0.35*sc.tourFocus;   // 资源竞争
+      const tourRes=0.65+0.35*sc.tourFocus;
+      const disT=Math.min(0.5,sc.disruptDays*0.016); // 共同风险：旅游
+      const disA=Math.min(0.3,sc.disruptDays*0.008); // 共同风险：农业外运
+
+      let visits=TOUR.visits2025,p1=BP.p1;
+      const vTrend=sc.roadOn?TOUR.trend:TOUR.trend*0.3;       // 通道：客流趋势
+      const effNight=TOUR.nightSpend*(sc.springOn?1:0.72);    // 温泉：过夜消费溢价
+      for(let y=1;y<=5;y++){
+        // —— 时间层：过夜率从12%渐进到目标 ——
+        const stayR=(STAY2025+(sc.stayRate-STAY2025)*y/5)/100*(0.7+0.6*sc.tourFocus);
+        // —— 三产 ——
+        visits*=(1+vTrend+0.03*tourRes-disT)*(1+0.035*gauss(rng));
+        const nightV=visits*stayR,dayV=visits-nightV;
+        const tourRev=(nightV*effNight+dayV*TOUR.daySpend)/10000;
+        const nonTour=NONTOUR2025*Math.pow(1.06,y);
+        const p3=tourRev+nonTour;
+        // —— 二产：功能膜爬坡 + 存量 ——
+        const ri=y-1-sc.delayYears;
+        const ramp=ri>=0?FILM.ramp[Math.min(4,ri)]:0;
+        const filmVA=FILM.invest*0.9*FILM.vaRate*ramp*(sc.filmProgress/100)*filmRes;
+        const p2=BP.p2*Math.pow(1.05,y)+filmVA;
+        p2;
+        // —— 一产：品牌溢价（互补于通道/旅游），量稳质升 ——
+        const agriG=(sc.agriBrandOn?0.035*tourRes:0.008)*(sc.roadOn?1:0.5);
+        p1=BP.p1*Math.pow(1+agriG,y)*(1-disA)*(1+0.012*gauss(rng));
+        if(y===5){samples.push(p1+p2*(1+0.035*gauss(rng))+p3*(1+0.035*gauss(rng))+12*gauss(rng));}
+      }
     }
     samples.sort((a,b)=>a-b);
     const q=p=>samples[Math.min(N-1,Math.floor(p*N))];
-    const p10=q(0.10),p50=q(0.50),p90=q(0.90);
+    const p10=q(.1),p50=q(.5),p90=q(.9);
     let hit=0;samples.forEach(x=>{if(x>=TARGET)hit++;});
-    return {samples,p10,p50,p90,hit:hit/N*100,target:TARGET,base:BASE,paths:PATHS,mus,sc};
+    return {samples,p10,p50,p90,hit:hit/N*100,target:TARGET,base:BASE,sc,decomp:decomp(sc)};
   }
 
-  const FACTS={
-    gdp:217.62, growth:7.4, pop:35.31, forest:76,
+  function decomp(sc){
+    sc=Object.assign({},DEFAULT_SC,sc||{});
+    const filmRes=1-0.35*sc.tourFocus,tourRes=0.65+0.35*sc.tourFocus;
+    const disT=Math.min(.5,sc.disruptDays*.016);
+    const stayR=sc.stayRate/100*(0.7+0.6*sc.tourFocus);
+    const vTrend=sc.roadOn?TOUR.trend:TOUR.trend*0.3;
+    const effNight=TOUR.nightSpend*(sc.springOn?1:0.72);
+    let visits=TOUR.visits2025;
+    for(let y=1;y<=5;y++)visits*=(1+vTrend+0.03*tourRes-disT);
+    const nightV=visits*stayR,dayV=visits-nightV;
+    const tourRev2030=(nightV*effNight+dayV*TOUR.daySpend)/10000;
+    const ri=5-1-sc.delayYears,ramp=ri>=0?FILM.ramp[Math.min(4,ri)]:0;
+    const filmVA=FILM.invest*.9*FILM.vaRate*ramp*(sc.filmProgress/100)*filmRes;
+    const agriG=(sc.agriBrandOn?0.035*tourRes:0.008)*(sc.roadOn?1:0.5);
+    return {p1:BP.p1*Math.pow(1+agriG,5),
+            p2base:BP.p2*Math.pow(1.05,5),filmVA,
+            nonTour:NONTOUR2025*Math.pow(1.06,5),tourRev2030,
+            visits2030:visits,nightV,stayR:stayR*100};
+  }
+
+  const FACTS={gdp:217.62,growth:7.4,pop:35.31,forest:76,
     ind:{p1:44.4,p1pct:20.4,p2:63.2,p2pct:29.0,p3:110,p3pct:50.5},
     indGrowth:{p1:4.6,p2:14.9,p3:6.8},
     tourism:{rev:43,visits:900,price:477,priceChg:-1.75,visitsChg:8.54},
     yonghan:{visitsChg:9.21,revChg:1.25,priceChg:-7.29},
-    nksGrowth:3.17, indAbove:5.1,
+    nksGrowth:3.17,indAbove:5.1,
     target2026:{regInd:150,regIndNow:119.5,need:25.5},
-    film:{projects:68,invest:140,lines:620}
-  };
+    film:{projects:68,invest:140,lines:620}};
 
-  global.HT={run,FACTS,BASE,TARGET,PATHS};
+  global.HT={run,FACTS,BASE,TARGET,DEFAULT_SC};
 })(window);

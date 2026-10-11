@@ -51,6 +51,10 @@ h2{font-size:16px;margin:0 0 8px}
       <label>功能膜投产延迟</label>
       <input type="range" id="delay" min="0" max="2" value="0"><span id="delayV">0年</span>
     </div>
+    <div class="slider-row">
+      <label>2030过夜转化率（"一张床"做成程度，待验证假设）</label>
+      <input type="range" id="stay" min="12" max="40" value="30"><span id="stayV">30%</span>
+    </div>
   </div>
 
   <div class="real">
@@ -77,14 +81,14 @@ h2{font-size:16px;margin:0 0 8px}
   </div>
 </div>
 <script>
-const daysS=document.getElementById('days'),filmS=document.getElementById('film'),delayS=document.getElementById('delay');
+const daysS=document.getElementById('days'),filmS=document.getElementById('film'),delayS=document.getElementById('delay'),stayS=document.getElementById('stay');
 let recChart=echarts.init(document.getElementById('recChart'));
 function draw(){
-  const D=+daysS.value,FP=+filmS.value,DL=+delayS.value;
-  daysV.textContent=D+'天';filmV.textContent=FP+'%';delayV.textContent=DL+'年';
+  const D=+daysS.value,FP=+filmS.value,DL=+delayS.value,SR=+stayS.value;
+  daysV.textContent=D+'天';filmV.textContent=FP+'%';delayV.textContent=DL+'年';stayV.textContent=SR+'%';
 
-  // 真实模型输出
-  const r=HT.run(42,10000,{filmProgress:FP,disruptDays:D,delayYears:DL});
+  // 真实模型输出（五参数全部进入）
+  const r=HT.run(42,10000,{filmProgress:FP,disruptDays:D,delayYears:DL,stayRate:SR});
   oP50.textContent=Math.round(r.p50)+'亿';
   oHit.textContent=Math.round(r.hit)+'%';
   oRange.textContent=Math.round(r.p10)+'-'+Math.round(r.p90);
@@ -110,7 +114,7 @@ function draw(){
   });
   recText.innerHTML= D===0?'无中断，客流保持正常。':`中断${D}天，短期客流谷底约<b style="color:#f87171">${Math.round(Math.min(...data))}</b>，抢通后3-5周回正；同时折减旅游路径长期兑现。`;
 }
-[daysS,filmS,delayS].forEach(s=>s.oninput=draw);
+[daysS,filmS,delayS,stayS].forEach(s=>s.oninput=draw);
 draw();
 </script>
 </body></html>

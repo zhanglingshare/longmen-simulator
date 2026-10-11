@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>龙门五条路</title>
-<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <script src="model.js"></script>
 <style>
 *{box-sizing:border-box}
@@ -12,17 +11,22 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.65 -apple-system,"Pin
 .nav a.on{background:#059669;border-color:#22c55e;color:#fff;font-weight:600}
 .wrap{max-width:680px;margin:auto;padding:16px}
 .card{background:#0e1523;border:1px solid #1c2739;border-radius:14px;padding:18px;margin-bottom:14px}
-h1{font-size:22px;margin:0 0 4px}.sub{color:#8fa3bf;font-size:13px}
-h2{font-size:16px;margin:0 0 8px}
-.path{border:1px solid #1c2739;border-radius:12px;padding:14px;margin-bottom:10px;background:#0e1523;cursor:pointer}
-.path.on{border-color:#22c55e}
-.path .t{font-size:15px;font-weight:700;color:#fff}
-.path .d{font-size:12.5px;color:#a9b6c9;margin-top:6px;line-height:1.8}
-.path .feel{font-size:12.5px;color:#7dd3fc;margin-top:6px}
-.path .num{font-size:13px;color:#fbbf24;font-weight:800;margin-top:6px}
-.gap{background:#131c2b;border-radius:10px;padding:12px;margin-top:10px;text-align:center}
-.gap .v{font-size:22px;font-weight:800;color:#fbbf24}
-.chart{width:100%;height:220px;margin-top:8px}
+h1{font-size:22px;margin:0 0 4px}.sub{color:#8fa3bf;font-size:13px;line-height:1.8}
+h2{font-size:16px;margin:0 0 6px}
+.path{display:flex;align-items:flex-start;gap:12px;background:#0a0f1a;border:1px solid #1c2739;border-radius:11px;padding:14px;margin-bottom:11px}
+.path .ic{font-size:22px;flex:none;width:34px;text-align:center}
+.path .body{flex:1}
+.path .body b{font-size:14.5px}
+.path .body .d{font-size:12px;color:#94a3b8;margin-top:3px;line-height:1.7}
+.path .contrib{font-size:12px;color:#fbbf24;margin-top:5px;font-weight:600}
+.sw{position:relative;width:46px;height:26px;flex:none;cursor:pointer;margin-top:3px}
+.sw i{position:absolute;inset:0;background:#334155;border-radius:13px;transition:.2s}
+.sw i:after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:.2s}
+.sw.on i{background:#059669}.sw.on i:after{left:23px}
+.gauge{text-align:center;padding:14px;background:#0a0f1a;border-radius:11px;margin-top:6px}
+.gauge .big{font-size:26px;font-weight:800;color:#fbbf24}
+.gauge .l{font-size:12px;color:#94a3b8}
+.note{font-size:11.5px;color:#7c8aa0;line-height:1.8;margin-top:10px}
 </style></head><body>
 
 <div class="nav">
@@ -33,51 +37,66 @@ h2{font-size:16px;margin:0 0 8px}
 </div>
 
 <div class="wrap">
-  <h1>龙门到330亿，靠哪五条路</h1>
-  <p class="sub">不是补齐工业，是把绿水青山变成金山银山。点每条路开关，看缺口怎么变。</p>
+  <h1>五条路，一条条看</h1>
+  <p class="sub">开关每一条，模型真实重算2030。贡献=这条路开与关的GDP差，不是预设数字。</p>
 
-  <div id="paths"></div>
+  <div class="card" style="margin-top:12px" id="paths"></div>
 
   <div class="card">
-    <h2>📊 五条路各贡献多少</h2>
-    <div id="barChart" class="chart"></div>
-  </div>
-
-  <div class="gap">
-    <div style="font-size:12px;color:#94a3b8">离330亿目标还差</div>
-    <div class="v" id="gap">—</div>
-    <div style="font-size:11px;color:#64748b;margin-top:4px">从217.62亿到330亿，差约112亿</div>
+    <h2>🎯 组合结果</h2>
+    <div class="gauge">
+      <div class="big" id="gP50">—</div>
+      <div class="l">2030 GDP中位数（跑4000遍）</div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <div style="flex:1;text-align:center;background:#0a0f1a;border-radius:10px;padding:10px">
+        <div style="font-size:18px;font-weight:800;color:#4ade80" id="gHit">—</div>
+        <div style="font-size:11px;color:#94a3b8">达标330概率</div></div>
+      <div style="flex:1;text-align:center;background:#0a0f1a;border-radius:10px;padding:10px">
+        <div style="font-size:18px;font-weight:800;color:#60a5fa" id="gGap">—</div>
+        <div style="font-size:11px;color:#94a3b8">距330缺口</div></div>
+    </div>
+    <div class="note">五条路贡献不能简单相加当成必然兑现——它们共享土地、劳力与客流（关联层），且各自兑现程度不同。这里显示的是它们在模型里共同作用的真实结果。</div>
   </div>
 </div>
 <script>
-const DATA=[
-  {icon:"🛏️",t:"一张床·南昆山留宿",d:"民宿从夏天旺季卖到四季，把一日游变成过夜游，把客单价拉回来。",feel:"走通了你会感到：周末民宿更满、淡季不空房",mu:32,c:'#a78bfa'},
-  {icon:"🎞️",t:"功能膜新材料",d:"68宗项目、140亿投资、620条涂布线。达产了，二产和规上工业的剪刀差才合上。",feel:"走通了你会感到：工业园真正转起来",mu:30,c:'#f97316'},
-  {icon:"♨️",t:"温泉康养",d:"地派、南昆山温泉，从冬天火到四季康养客。",feel:"走通了你会感到：温泉不再只靠冬天",mu:22,c:'#fbbf24'},
-  {icon:"🍊",t:"生态农业品牌",d:"年桔、西溪笋，从论斤卖原料到论品牌卖生活方式。",feel:"走通了你会感到：你家年桔卖出溢价",mu:16,c:'#84cc16'},
-  {icon:"🚗",t:"融深融穗通道",d:"武深、广河高速，广深客1.5小时到，周末消费带上来。",feel:"走通了你会感到：广深客来得更勤",mu:12,c:'#38bdf8'}
+const DEFS=[
+  {k:"bed",ic:"🛏️",n:"一张床·南昆山留宿",d:"过夜转化率从12%提到30%，把一日游变过夜，客单价拉回来。",on:{stayRate:30},off:{stayRate:12}},
+  {k:"film",ic:"🎞️",n:"功能膜新材料",d:"620条涂布线按时达产，稳住规上工业基本盘。",on:{filmProgress:100},off:{filmProgress:0}},
+  {k:"spring",ic:"♨️",n:"温泉康养",d:"温泉是过夜理由，带住宿与餐饮溢价。",on:{springOn:1},off:{springOn:0}},
+  {k:"agri",ic:"🍊",n:"生态农业品牌",d:"年桔等做品牌、提溢价，量稳质升。",on:{agriBrandOn:1},off:{agriBrandOn:0}},
+  {k:"road",ic:"🛣️",n:"融深融穗通道",d:"通道改善带客流、带农产品外运，和旅游农业互补。",on:{roadOn:1},off:{roadOn:0}}
 ];
-const GAP=112;
+const state={bed:1,film:1,spring:1,agri:1,road:1};
+
+function contrib(p){
+  const a=HT.run(50,3000,p.on).p50, b=HT.run(51,3000,p.off).p50;
+  return Math.max(0,a-b);
+}
 function render(){
-  document.getElementById("paths").innerHTML=DATA.map((p,i)=>
-    `<div class="path on" id="p${i}" onclick="this.classList.toggle('on');calc()">
-      <div class="t">${p.icon} ${p.t}</div><div class="d">${p.d}</div>
-      <div class="feel">→ ${p.feel}</div><div class="num">5年累计 ~${p.mu}亿</div>
-    </div>`).join("");
+  const box=document.getElementById('paths');
+  box.innerHTML=DEFS.map(p=>{
+    const c=contrib(p);
+    return `<div class="path">
+      <div class="ic">${p.ic}</div>
+      <div class="body"><b>${p.n}</b><div class="d">${p.d}</div>
+      <div class="contrib">约贡献 ${c.toFixed(1)} 亿</div></div>
+      <div class="sw ${state[p.k]?'on':''}" data-k="${p.k}"><i></i></div>
+    </div>`;
+  }).join('');
+  box.querySelectorAll('.sw').forEach(el=>el.onclick=()=>{state[el.dataset.k]^=1;update();});
 }
-let barChart;
-function calc(){
-  let sum=0;const active=[];
-  DATA.forEach((p,i)=>{if(document.getElementById("p"+i).classList.contains("on")){sum+=p.mu;active.push(p);}});
-  document.getElementById("gap").textContent=(GAP-sum)+"亿";
-  if(!barChart)barChart=echarts.init(document.getElementById('barChart'));
-  barChart.setOption({
-    backgroundColor:'transparent',grid:{left:90,right:30,top:10,bottom:20},
-    xAxis:{type:'value',axisLabel:{color:'#64748b'}},
-    yAxis:{type:'category',data:active.map(p=>p.t),axisLabel:{color:'#cbd5e1',fontSize:11}},
-    series:[{type:'bar',data:active.map(p=>({value:p.mu,itemStyle:{color:p.c}}))}]
-  });
+function update(){
+  let sc={};
+  DEFS.forEach(p=>Object.assign(sc,state[p.k]?p.on:p.off));
+  const r=HT.run(42,4000,sc);
+  gP50.textContent=Math.round(r.p50)+'亿';
+  gHit.textContent=Math.round(r.hit)+'%';
+  gGap.textContent=(TARGET_DIFF(r.p50))+'亿';
+  // 同步开关样式
+  document.querySelectorAll('.sw').forEach(el=>el.classList.toggle('on',state[el.dataset.k]));
 }
-render();calc();
+function TARGET_DIFF(v){return Math.max(0,Math.round(330-v));}
+render();update();
 </script>
 </body></html>
