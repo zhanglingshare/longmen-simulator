@@ -1,8 +1,77 @@
 <!DOCTYPE html>
-<html lang="zh"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>龙门风洞</title>
-<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0f1a;color:#e6edf3;font-family:-apple-system,"PingFang SC",sans-serif;line-height:1.6}.wrap{max-width:680px;margin:0 auto;padding:16px}.nav{display:flex;gap:6px;overflow-x:auto;padding:8px 0;margin-bottom:12px}.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}.card{background:#0f172a;border:1px solid #1c2739;border-radius:14px;padding:16px;margin-bottom:12px}h1{font-size:20px;margin-bottom:8px}.sub{font-size:13px;color:#94a3b8}</style></head>
-<body><div class="wrap">
-<div class="nav"><span style="font-weight:800;color:#fff;padding:6px 8px;white-space:nowrap">龙门产业风洞</span>
-<a href="index.html">① 今日话题</a><a href="town.html">② 各镇</a><a href="network.html">③ 关系网</a><a href="who.html">④ 基本面</a><a href="choices.html">⑤ 五条路</a><a href="future.html">⑥ 未来</a><a href="windtunnel.html">⑦ 风洞</a><a href="blindspot.html">⑧ 被忽略</a><a href="report.html">⑨ 报告</a></div>
-<div class="card"><h1>建设中</h1><p class="sub">这一页正在打磨。先看别的页面。</p></div>
-</div></body></html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>龙门五条路</title>
+<script src="model.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0f1a;color:#e6edf3;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6}
+.wrap{max-width:680px;margin:0 auto;padding:16px}
+.nav{display:flex;gap:6px;overflow-x:auto;padding:8px 0;margin-bottom:12px}
+.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#059669;color:#fff;border-color:#059669}
+.card{background:#0f172a;border:1px solid #1c2739;border-radius:14px;padding:16px;margin-bottom:12px}
+h1{font-size:22px;margin-bottom:4px}
+.sub{font-size:13px;color:#94a3b8;line-height:1.7}
+.path{border:1px solid #1c2739;border-radius:12px;padding:14px;margin-bottom:10px;background:#0f172a;cursor:pointer}
+.path.on{border-color:#059669}
+.path .t{font-size:15px;font-weight:700;color:#fff}
+.path .d{font-size:12.5px;color:#94a3b8;margin-top:6px;line-height:1.8}
+.path .feel{font-size:12.5px;color:#7dd3fc;margin-top:6px}
+.path .num{font-size:13px;color:#fbbf24;font-weight:800;margin-top:6px}
+.gap{background:#131c2b;border-radius:10px;padding:12px;margin-top:10px;text-align:center}
+.gap .v{font-size:22px;font-weight:800;color:#fbbf24}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="nav">
+    <span style="font-weight:800;color:#fff;padding:6px 8px;white-space:nowrap">龙门产业风洞</span>
+    <a href="index.html">① 今日话题</a><a href="town.html">② 各镇</a><a href="network.html">③ 关系网</a>
+    <a href="who.html">④ 基本面</a><a href="choices.html" class="on">⑤ 五条路</a>
+    <a href="future.html">⑥ 未来</a><a href="windtunnel.html">⑦ 风洞</a><a href="blindspot.html">⑧ 被忽略</a><a href="report.html">⑨ 报告</a>
+  </div>
+
+  <h1>龙门到330亿，靠哪五条路</h1>
+  <p class="sub">不是补齐工业短板，是把绿水青山变成金山银山。点每条路开关，看缺口怎么变。</p>
+
+  <div id="paths"></div>
+
+  <div class="gap">
+    <div style="font-size:12px;color:#94a3b8">离330亿目标还差</div>
+    <div class="v" id="gap">—</div>
+    <div style="font-size:11px;color:#64748b;margin-top:4px">从217亿到330亿，差约113亿</div>
+  </div>
+</div>
+<script>
+const DATA=[
+  {icon:"⛰️",t:"南昆山民宿升级",d:"永汉、南昆山脚下，民宿从夏天旺季卖到四季。从路过住一晚到住两三天。",feel:"走通了你会感到：周末民宿更满、淡季不空房",mu:38},
+  {icon:"🍊",t:"生态农业品牌",d:"龙门年桔、西溪笋、青梅。从论斤卖原料到论品牌卖生活方式。",feel:"走通了你会感到：你家的年桔能卖出溢价",mu:22},
+  {icon:"♨️",t:"康养温泉旅游",d:"地派温泉、南昆山温泉。从冬天火到四季都有康养客。",feel:"走通了你会感到：冬天温泉不再一房难求",mu:25},
+  {icon:"🚗",t:"融深融穗通道",d:"武深高速、广河高速。广州深圳客1.5小时到，周末消费带上来。",feel:"走通了你会感到：广州深圳客来得更勤",mu:15},
+  {icon:"🌱",t:"低碳新能源",d:"生态县不搞大工业，但光伏、竹林碳汇是新故事。",feel:"走通了你会感到：山里的竹林也能变收入",mu:12}
+];
+const GAP=113;
+function render(){
+  document.getElementById("paths").innerHTML=DATA.map((p,i)=>
+    `<div class="path on" id="p${i}" onclick="this.classList.toggle('on');calc()">
+      <div class="t">${p.icon} ${p.t}</div>
+      <div class="d">${p.d}</div>
+      <div class="feel">→ ${p.feel}</div>
+      <div class="num">5年累计 ~${p.mu}亿</div>
+    </div>`
+  ).join("");
+}
+function calc(){
+  let sum=0;
+  DATA.forEach((p,i)=>{
+    if(document.getElementById("p"+i).classList.contains("on")) sum+=p.mu;
+  });
+  document.getElementById("gap").textContent=(GAP-sum)+"亿";
+}
+render();calc();
+</script>
+</body>
+</html>

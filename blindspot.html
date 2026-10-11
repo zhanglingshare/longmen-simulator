@@ -1,8 +1,85 @@
 <!DOCTYPE html>
-<html lang="zh"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>龙门风洞</title>
-<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0f1a;color:#e6edf3;font-family:-apple-system,"PingFang SC",sans-serif;line-height:1.6}.wrap{max-width:680px;margin:0 auto;padding:16px}.nav{display:flex;gap:6px;overflow-x:auto;padding:8px 0;margin-bottom:12px}.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}.card{background:#0f172a;border:1px solid #1c2739;border-radius:14px;padding:16px;margin-bottom:12px}h1{font-size:20px;margin-bottom:8px}.sub{font-size:13px;color:#94a3b8}</style></head>
-<body><div class="wrap">
-<div class="nav"><span style="font-weight:800;color:#fff;padding:6px 8px;white-space:nowrap">龙门产业风洞</span>
-<a href="index.html">① 今日话题</a><a href="town.html">② 各镇</a><a href="network.html">③ 关系网</a><a href="who.html">④ 基本面</a><a href="choices.html">⑤ 五条路</a><a href="future.html">⑥ 未来</a><a href="windtunnel.html">⑦ 风洞</a><a href="blindspot.html">⑧ 被忽略</a><a href="report.html">⑨ 报告</a></div>
-<div class="card"><h1>建设中</h1><p class="sub">这一页正在打磨。先看别的页面。</p></div>
-</div></body></html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>龙门被忽略的</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0f1a;color:#e6edf3;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6}
+.wrap{max-width:680px;margin:0 auto;padding:16px}
+.nav{display:flex;gap:6px;overflow-x:auto;padding:8px 0;margin-bottom:12px}
+.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#059669;color:#fff;border-color:#059669}
+.card{background:#0f172a;border:1px solid #1c2739;border-radius:14px;padding:16px;margin-bottom:12px}
+h1{font-size:22px;margin-bottom:4px}
+.sub{font-size:13px;color:#94a3b8;line-height:1.7}
+.finding{margin-bottom:14px}
+.finding .num{display:inline-block;background:#059669;color:#fff;border-radius:8px;padding:2px 10px;font-size:12px;font-weight:700;margin-bottom:6px}
+.finding .t{font-size:15px;font-weight:700;color:#fff;margin-bottom:4px}
+.finding .d{font-size:13px;color:#94a3b8;line-height:1.9}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="nav">
+    <span style="font-weight:800;color:#fff;padding:6px 8px;white-space:nowrap">龙门产业风洞</span>
+    <a href="index.html">① 今日话题</a><a href="town.html">② 各镇</a><a href="network.html">③ 关系网</a>
+    <a href="who.html">④ 基本面</a><a href="choices.html">⑤ 五条路</a>
+    <a href="future.html">⑥ 未来</a><a href="windtunnel.html">⑦ 风洞</a><a href="blindspot.html" class="on">⑧ 被忽略</a><a href="report.html">⑨ 报告</a>
+  </div>
+
+  <h1>龙门可能被忽略的几件事</h1>
+  <p class="sub">不是短板，是没被算进来的牌。</p>
+
+  <div class="card" style="margin-top:12px">
+    <div class="finding">
+      <div class="num">发现 1</div>
+      <div class="t">南昆山夏天一房难求，但全年平均入住率其实不高</div>
+      <div class="d">旺季满房、淡季空房，是民宿县的通病。如果能把淡季填满，不靠涨价也能多赚钱。</div>
+    </div>
+    <div class="finding">
+      <div class="num">发现 2</div>
+      <div class="t">年桔是国家地理标志，但大部分还是论斤卖原料</div>
+      <div class="d">好东西一直在。问题不是种不出来，是怎么从卖橘子变成卖品牌、卖体验。</div>
+    </div>
+    <div class="finding">
+      <div class="num">发现 3</div>
+      <div class="t">龙门不缺生态，缺的是把生态变成可消费的产品</div>
+      <div class="d">76%森林覆盖率是家底，但家底要变成民宿、康养、研学、露营，才是GDP。</div>
+    </div>
+  </div>
+
+  <!-- 龙门品牌投票 -->
+  <div class="card" style="border-color:#fbbf24">
+    <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px">🍊 你最希望把龙门哪样做成真正的大品牌？</div>
+    <div style="font-size:12.5px;color:#94a3b8;margin-bottom:10px">好东西一直在，就看怎么卖出溢价。</div>
+    <div id="brandGrid" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+    <div id="brandOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1;line-height:1.6"></div>
+  </div>
+</div>
+<script>
+(function(){
+  const KEY="longmen_brand_v1";
+  const opts=[
+    {k:"orange",label:"🍊 年桔",c:"#fbbf24"},
+    {k:"bamboo",label:"🎋 西溪笋",c:"#84cc16"},
+    {k:"spring",label:"♨️ 温泉",c:"#f97316"},
+    {k:"nks",label:"⛰️ 南昆山",c:"#a78bfa"},
+    {k:"yao",label:"瑶族文化",c:"#ec4899"}
+  ];
+  let d=JSON.parse(localStorage.getItem(KEY)||'{}');
+  opts.forEach(o=>{if(typeof d[o.k]!=="number")d[o.k]=0;});
+  document.getElementById("brandGrid").innerHTML=opts.map(o=>
+    `<button onclick="pickBrand('${o.k}')" style="flex:1;min-width:70px;background:${o.c}22;border:1px solid ${o.c};color:${o.c};border-radius:10px;padding:10px 6px;cursor:pointer;font-size:11.5px;font-weight:700">${o.label}</button>`
+  ).join("");
+  window.pickBrand=function(k){
+    if(localStorage.getItem(KEY+"_done"))return;
+    d[k]++;localStorage.setItem(KEY,JSON.stringify(d));localStorage.setItem(KEY+"_done","1");
+    const top=opts.slice().sort((a,b)=>d[b.k]-d[a.k])[0];
+    document.getElementById("brandOut").innerHTML=`你选了<b style="color:${opts.find(o=>o.k===k).c}">${opts.find(o=>o.k===k).label}</b>。<br>大家最想做成大品牌的是 <b style="color:${top.c}">${top.label}</b>。`;
+  };
+})();
+</script>
+</body>
+</html>

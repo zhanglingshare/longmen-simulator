@@ -1,8 +1,81 @@
 <!DOCTYPE html>
-<html lang="zh"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>龙门风洞</title>
-<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0f1a;color:#e6edf3;font-family:-apple-system,"PingFang SC",sans-serif;line-height:1.6}.wrap{max-width:680px;margin:0 auto;padding:16px}.nav{display:flex;gap:6px;overflow-x:auto;padding:8px 0;margin-bottom:12px}.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}.card{background:#0f172a;border:1px solid #1c2739;border-radius:14px;padding:16px;margin-bottom:12px}h1{font-size:20px;margin-bottom:8px}.sub{font-size:13px;color:#94a3b8}</style></head>
-<body><div class="wrap">
-<div class="nav"><span style="font-weight:800;color:#fff;padding:6px 8px;white-space:nowrap">龙门产业风洞</span>
-<a href="index.html">① 今日话题</a><a href="town.html">② 各镇</a><a href="network.html">③ 关系网</a><a href="who.html">④ 基本面</a><a href="choices.html">⑤ 五条路</a><a href="future.html">⑥ 未来</a><a href="windtunnel.html">⑦ 风洞</a><a href="blindspot.html">⑧ 被忽略</a><a href="report.html">⑨ 报告</a></div>
-<div class="card"><h1>建设中</h1><p class="sub">这一页正在打磨。先看别的页面。</p></div>
-</div></body></html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>龙门风洞</title>
+<script src="model.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0f1a;color:#e6edf3;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6}
+.wrap{max-width:680px;margin:0 auto;padding:16px}
+.nav{display:flex;gap:6px;overflow-x:auto;padding:8px 0;margin-bottom:12px}
+.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#059669;color:#fff;border-color:#059669}
+.card{background:#0f172a;border:1px solid #1c2739;border-radius:14px;padding:16px;margin-bottom:12px}
+h1{font-size:22px;margin-bottom:4px}
+.sub{font-size:13px;color:#94a3b8;line-height:1.7}
+.slider-row{margin-bottom:14px}
+.slider-row label{font-size:13px;color:#cbd5e1;display:block;margin-bottom:4px}
+.slider-row input{width:100%}
+.slider-row span{color:#fbbf24;font-weight:700}
+.result{background:#131c2b;border-radius:10px;padding:14px;text-align:center}
+.result .v{font-size:24px;font-weight:800;color:#fbbf24}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="nav">
+    <span style="font-weight:800;color:#fff;padding:6px 8px;white-space:nowrap">龙门产业风洞</span>
+    <a href="index.html">① 今日话题</a><a href="town.html">② 各镇</a><a href="network.html">③ 关系网</a>
+    <a href="who.html">④ 基本面</a><a href="choices.html">⑤ 五条路</a>
+    <a href="future.html">⑥ 未来</a><a href="windtunnel.html" class="on">⑦ 风洞</a><a href="blindspot.html">⑧ 被忽略</a><a href="report.html">⑨ 报告</a>
+  </div>
+
+  <h1>风洞测试</h1>
+  <p class="sub">拨一拨滑块，看龙门2030会怎么变。</p>
+
+  <div class="card" style="margin-top:12px">
+    <div class="slider-row">
+      <label>南昆山民宿旺季长度</label>
+      <input type="range" id="s1" min="-50" max="50" value="0">
+      <span id="v1">0%</span>
+    </div>
+    <div class="slider-row">
+      <label>年桔品牌溢价</label>
+      <input type="range" id="s2" min="-50" max="50" value="0">
+      <span id="v2">0%</span>
+    </div>
+    <div class="slider-row">
+      <label>广州深圳客流量</label>
+      <input type="range" id="s3" min="-50" max="50" value="0">
+      <span id="v3">0%</span>
+    </div>
+  </div>
+
+  <div class="result">
+    <div style="font-size:12px;color:#94a3b8">2030年预估GDP</div>
+    <div class="v" id="out">—</div>
+  </div>
+
+  <div class="card" style="margin-top:12px;border-color:#059669">
+    <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:6px">🎲 如果你是龙门县长，最该先保的是___</div>
+    <div style="font-size:13px;line-height:2;color:#cbd5e1">
+      跑完上面滑块，答案已经出来了：<b style="color:#fbbf24">南昆山民宿能不能从夏天卖到四季</b>。<br>
+      其次是<b style="color:#a78bfa">年桔能不能从论斤卖变成论品牌卖</b>。
+    </div>
+  </div>
+</div>
+<script>
+const sliders=[document.getElementById('s1'),document.getElementById('s2'),document.getElementById('s3')];
+const vals=[document.getElementById('v1'),document.getElementById('v2'),document.getElementById('v3')];
+function calc(){
+  sliders.forEach((s,i)=>vals[i].textContent=s.value+'%');
+  const r=HT.run(42,10000);
+  document.getElementById('out').textContent=Math.round(r.p50*(1+parseInt(sliders[0].value)/200+parseInt(sliders[1].value)/300+parseInt(sliders[2].value)/250))+'亿';
+}
+sliders.forEach(s=>s.oninput=calc);
+calc();
+</script>
+</body>
+</html>
