@@ -84,6 +84,14 @@ button{font-family:inherit}
     <div id="proudOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1"></div>
   </div>
 
+  <div class="card" style="border-color:#60a5fa">
+    <div style="font-size:15px;font-weight:800;margin-bottom:4px">🎲 假如你是龙门县长，先做哪件事？</div>
+    <div style="font-size:12px;color:#94a3b8;margin-bottom:10px">三选一，没有标准答案，选你心里最该先使劲的。</div>
+    <div id="planGrid" style="display:grid;grid-template-columns:1fr;gap:8px"></div>
+    <button id="genCard" style="margin-top:13px;width:100%;background:#059669;color:#fff;border:0;padding:12px;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer">🎴 生成我的龙门决策卡</button>
+    <div id="genHint" style="font-size:11px;color:#6b7d96;margin-top:7px;text-align:center">上面三步都选好，再点生成。</div>
+  </div>
+
   <div class="toolbar">
     <button class="cat on" data-c="all">全部</button>
     <button class="cat" data-c="industry">🏭 产业</button>
@@ -121,7 +129,7 @@ const TOWNS=[
  {n:"蓝田瑶族乡",say:"瑶族乡，舞火狗非遗。"}
 ];
 townGrid.innerHTML=TOWNS.map(t=>`<button onclick="pickTown('${t.n}')" style="background:#05966922;border:1px solid #05966944;color:#bbf7d0;border-radius:8px;padding:8px 2px;font-size:11.5px;font-weight:700;cursor:pointer">${t.n}</button>`).join("");
-function pickTown(n){const t=TOWNS.find(x=>x.n===n);townOut.innerHTML=`你是<b style="color:#4ade80">${n}人</b>——${t.say}`;}
+function pickTown(n){const t=TOWNS.find(x=>x.n===n);myTown=n;townOut.innerHTML=`你是<b style="color:#4ade80">${n}人</b>——${t.say}`;}
 
 // 龙门骄傲
 const PKEY="longmen_proud";
@@ -136,9 +144,10 @@ let pd=JSON.parse(localStorage.getItem(PKEY)||"{}");
 PROUD.forEach(o=>{if(typeof pd[o.k]!=="number")pd[o.k]=0;});
 proudGrid.innerHTML=PROUD.map(o=>`<button onclick="pickProud('${o.k}')" style="flex:1;min-width:64px;background:${o.c}22;border:1px solid ${o.c};color:${o.c};border-radius:10px;padding:10px 4px;font-size:11.5px;font-weight:700;cursor:pointer">${o.label}</button>`).join("");
 function pickProud(k){
- if(localStorage.getItem(PKEY+"_done"))return;
- pd[k]++;localStorage.setItem(PKEY,JSON.stringify(pd));localStorage.setItem(PKEY+"_done","1");
  const cur=PROUD.find(o=>o.k===k);
+ myProud=cur.label;
+ if(localStorage.getItem(PKEY+"_done")){proudOut.innerHTML=`你选了<b style="color:#fbbf24">${cur.label}</b>——${cur.say}<br><span style="color:#6b7d96;font-size:11px">（本机选择，暂不汇总）</span>`;return;}
+ pd[k]++;localStorage.setItem(PKEY,JSON.stringify(pd));localStorage.setItem(PKEY+"_done","1");
  proudOut.innerHTML=`你把票投给了<b style="color:#fbbf24">${cur.label}</b>——${cur.say}<br><span style="color:#6b7d96;font-size:11px">（这是你本机的选择，不同人的投票暂不汇总，不代表全体）</span>`;
 }
 
@@ -181,6 +190,69 @@ function sharePage(){
  m.onclick=()=>m.remove();
  m.innerHTML='<div style="background:#0f172a;padding:20px;border-radius:14px;text-align:center"><div style="color:#fff;font-size:14px;margin-bottom:12px">截图二维码，发给朋友/群</div><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(location.href)+'" style="width:200px;height:200;background:#fff;padding:8px;border-radius:8px"><div style="color:#94a3b8;font-size:12px;margin-top:12px">扫码打开</div></div>';
  document.body.appendChild(m);navigator.clipboard&&navigator.clipboard.writeText(location.href);
+}
+
+// ===== 我的龙门决策卡（生成可保存、带二维码的个人结果图）=====
+var myTown="",myProud="",myPlan="";
+const PLANS=[
+ {k:"stay",label:"🛏️ 先把一日游变成过夜游",short:"让游客住下来",persona:"留人型县长",c:"#c084fc"},
+ {k:"film",label:"🎞️ 先让功能膜按时达产",short:"让功能膜达产",persona:"强基型县长",c:"#60a5fa"},
+ {k:"sell",label:"💎 先给好东西变现通道",short:"让好东西卖出价",persona:"点金型县长",c:"#4ade80"}
+];
+planGrid.innerHTML=PLANS.map(p=>`<button data-k="${p.k}" onclick="pickPlan('${p.k}')" style="text-align:left;background:#0a0f1a;border:1px solid #22304a;color:#cbd5e1;border-radius:9px;padding:11px 13px;font-size:12.5px;font-weight:600;cursor:pointer">${p.label}</button>`).join("");
+function pickPlan(k){myPlan=k;[...planGrid.children].forEach(b=>{const on=b.dataset.k===k,pc=PLANS.find(p=>p.k===k).c;b.style.borderColor=on?pc:"#22304a";b.style.background=on?"#13233a":"#0a0f1a";});}
+genCard.onclick=function(){
+ if(!myTown||!myProud||!myPlan){genHint.textContent="还差一步："+(!myTown?"选你是哪个镇":!myProud?"选最自豪的家底":"选你当县长先做哪件事");genHint.style.color="#f87171";return;}
+ genHint.textContent="正在生成…";genHint.style.color="#6b7d96";
+ const p=PLANS.find(x=>x.k===myPlan);
+ drawCard(p,url=>{genHint.textContent="生成好了，保存图片就能转给朋友。";showCard(url,p);});
+};
+function drawCard(p,cb){
+ const W=640,H=880,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');
+ const g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0c2a1a');g.addColorStop(.55,'#0a1220');g.addColorStop(1,'#0a0f1a');
+ x.fillStyle=g;x.fillRect(0,0,W,H);
+ x.strokeStyle='#22c55e55';x.lineWidth=3;x.strokeRect(16,16,W-32,H-32);
+ x.textAlign='center';
+ x.fillStyle='#4ade80';x.font='bold 20px sans-serif';x.fillText('REGIONAL DECISION WIND TUNNEL',W/2,66);
+ x.fillStyle='#fff';x.font='bold 40px sans-serif';x.fillText('我的龙门决策卡',W/2,124);
+ x.fillStyle='#94a3b8';x.font='17px sans-serif';x.fillText('龙门产业风洞 · 我当县长这一票',W/2,158);
+ x.textAlign='left';
+ const line=(y,emo,label,val,color)=>{x.fillStyle='#94a3b8';x.font='18px sans-serif';x.fillText(emo+' '+label,70,y);x.fillStyle=color;x.font='bold 27px sans-serif';x.fillText(val,70,y+40);};
+ line(210,'📍','我是','龙门 · '+myTown+'人','#4ade80');
+ line(320,'🏆','最自豪','我家的'+myProud,'#fbbf24');
+ line(430,'🎯','我当县长先做',p.short,p.c);
+ x.textAlign='center';
+ x.fillStyle=p.c;x.font='bold 42px sans-serif';x.fillText('「'+p.persona+'」',W/2,590);
+ x.fillStyle='#cbd5e1';x.font='17px sans-serif';x.fillText('换作是你，会先做哪一件？',W/2,628);
+ const qr=new Image();qr.crossOrigin='anonymous';
+ qr.onload=function(){
+  x.fillStyle='#fff';x.fillRect(W/2-86,660,172,172);
+  x.drawImage(qr,W/2-78,668,156,156);
+  x.fillStyle='#94a3b8';x.font='15px sans-serif';x.fillText('扫码，你也来当一次龙门县长',W/2,858);
+  cb(cv.toDataURL('image/png'));
+ };
+ qr.onerror=function(){
+  x.fillStyle='#60a5fa';x.font='18px sans-serif';
+  x.fillText('zhanglingshare.github.io/longmen-simulator',W/2,760);
+  cb(cv.toDataURL('image/png'));
+ };
+ qr.src='https://api.qrserver.com/v1/create-qr-code/?size=160x160&data='+encodeURIComponent(location.origin+location.pathname);
+}
+function showCard(url,p){
+ const m=document.createElement('div');
+ m.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px";
+ const img=new Image();img.src=url;img.style.cssText="max-width:92%;max-height:68vh;border-radius:12px";
+ const shareTxt=`我在「龙门产业风洞」当了回县长——我是${myTown}人，最自豪${myProud}，我选先"${p.short}"（${p.persona}）。你会怎么选？ ${location.origin}${location.pathname}`;
+ const btns=document.createElement('div');btns.style.cssText="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;justify-content:center";
+ btns.innerHTML='<a href="'+url+'" download="龙门决策卡.png" style="background:#059669;color:#fff;padding:10px 18px;border-radius:20px;font-size:13px;font-weight:700;text-decoration:none">⬇️ 保存图片</a><button id="copyShare" style="background:#f59e0b;color:#1a1206;border:0;padding:10px 18px;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer">📋 复制分享语</button><button id="closeCard" style="background:#1e293b;color:#cbd5e1;border:0;padding:10px 18px;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer">关闭</button>';
+ m.appendChild(img);m.appendChild(btns);document.body.appendChild(m);
+ document.getElementById('closeCard').onclick=()=>m.remove();
+ m.onclick=e=>{if(e.target===m)m.remove();};
+ document.getElementById('copyShare').onclick=function(){
+  const ta=document.createElement('textarea');ta.value=shareTxt;document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');this.textContent='✅ 已复制，去粘贴';}catch(e){this.textContent='请手动复制';}
+  document.body.removeChild(ta);
+ };
 }
 </script>
 </body></html>
