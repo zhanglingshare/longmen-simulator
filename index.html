@@ -55,6 +55,13 @@ button{font-family:inherit}
     </div>
   </div>
 
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:14px 0 4px">
+    <a href="#hotpick" style="background:#1a1024;border:1px solid #c084fc55;color:#e9d5ff;border-radius:12px;padding:11px 2px;text-align:center;font-size:12.5px;font-weight:800;text-decoration:none;line-height:1.7">🍉<br>吃瓜</a>
+    <a href="town.html" style="background:#0c2418;border:1px solid #22c55e55;color:#bbf7d0;border-radius:12px;padding:11px 2px;text-align:center;font-size:12.5px;font-weight:800;text-decoration:none;line-height:1.7">🏞️<br>去哪玩</a>
+    <a href="town.html#vegzone" style="background:#2a1a0c;border:1px solid #f59e0b55;color:#fde68a;border-radius:12px;padding:11px 2px;text-align:center;font-size:12.5px;font-weight:800;text-decoration:none;line-height:1.7">🍜<br>吃什么</a>
+    <a href="#cardzone" style="background:#0c1c2e;border:1px solid #60a5fa55;color:#bfdbfe;border-radius:12px;padding:11px 2px;text-align:center;font-size:12.5px;font-weight:800;text-decoration:none;line-height:1.7">🎴<br>测县长</a>
+  </div>
+
   <div class="card" style="border:1px solid #fbbf24;background:linear-gradient(135deg,#1a1408,#0e1523)">
     <div style="font-size:16px;font-weight:800;color:#fcd34d;margin-bottom:10px;line-height:1.5">⏳ 先别急着划走——这说的，就是你我的龙门</div>
     <div style="font-size:13.5px;line-height:2;color:#e2e8f0">
@@ -70,7 +77,10 @@ button{font-family:inherit}
     </div>
   </div>
 
-  <div class="card" style="border-color:#059669">
+  <div id="hotpick"></div>
+  <div id="lifepick"></div>
+
+  <div class="card" id="cardzone" style="border-color:#059669">
     <div style="font-size:15px;font-weight:800;margin-bottom:4px">🏘️ 你是龙门哪里人？</div>
     <div style="font-size:12px;color:#94a3b8;margin-bottom:10px">11个镇街乡，每个都有自己的活法。</div>
     <div id="townGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px"></div>
@@ -94,12 +104,12 @@ button{font-family:inherit}
 
   <div class="toolbar">
     <button class="cat on" data-c="all">全部</button>
+    <button class="cat" data-c="fun">🏞️ 文旅</button>
+    <button class="cat" data-c="gossip">✨ 暖闻</button>
+    <button class="cat" data-c="agriculture">🌾 农业</button>
     <button class="cat" data-c="industry">🏭 产业</button>
     <button class="cat" data-c="livelihood">🟠 民生</button>
     <button class="cat" data-c="city">⚪ 城市</button>
-    <button class="cat" data-c="agriculture">🌾 农业</button>
-    <button class="cat" data-c="fun">🏞️ 文旅</button>
-    <button class="cat" data-c="gossip">✨ 暖闻</button>
     <button class="refresh" id="btnScan">🔄 刷新话题</button>
   </div>
   <div class="scan-info" id="scanInfo">读取中…</div>
@@ -175,11 +185,44 @@ async function loadHot(){
   DATA=d.items||[];
   scanInfo.textContent=`数据每日更新一次 · 上次更新 ${d.updated} · 近1天 · 共${d.count}个话题 · 公开来源`;
  }catch(e){scanInfo.textContent="话题读取失败，请稍后重试。";}
- render();
+ render();renderHotPick();
 }
 document.querySelectorAll(".cat").forEach(b=>b.onclick=()=>{document.querySelectorAll(".cat").forEach(x=>x.classList.remove("on"));b.classList.add("on");curCat=b.dataset.c;render();});
 btnScan.onclick=loadHot;
 loadHot();
+
+// 钩子区①：今日大家在看（文旅/暖闻里挑热度最高的，先给糖）
+function renderHotPick(){
+ const sweet=DATA.filter(x=>["fun","tourism","gossip"].includes(x.cat)).sort((a,b)=>b.hot-a.hot).slice(0,3);
+ if(!sweet.length){hotpick.innerHTML="";return;}
+ hotpick.innerHTML=`<div class="card" style="border-color:#c084fc;padding:14px">
+   <div style="font-size:14px;font-weight:800;color:#e9d5ff;margin-bottom:6px">🍉 今日大家在看 <span style="float:right;font-size:10.5px;color:#8fa3bf;font-weight:500">近24小时·公开热度</span></div>
+   ${sweet.map(x=>{const u=safeUrl(x.url);return `<a ${u?`href="${u}" target="_blank" rel="noopener"`:'style="cursor:default"'} style="display:flex;gap:9px;align-items:center;text-decoration:none;padding:8px 2px;border-top:1px solid #1c2739">
+     <div style="flex:1"><div style="font-size:13px;font-weight:700;color:#e6edf3;line-height:1.5">${esc(x.title)}</div>
+     <div style="font-size:10.5px;color:#8fa3bf;margin-top:2px">${esc(CATLABEL[x.cat]||"")} · ${x.hot}° · ${x.views_wan}万在看 · 公开来源/估算</div></div><span style="color:#c084fc;font-size:15px">↗</span></a>`;}).join("")}
+ </div>`;
+}
+// 钩子区②：周末去哪 + 当季尝鲜（读 life.json）
+async function loadLifePick(){
+ try{
+  const d=await (await fetch("life.json?ts="+Date.now())).json();
+  const towns=(d.towns||[]).slice().sort((a,b)=>(b.pop||0)-(a.pop||0)).slice(0,3);
+  const veg=(d.veg||[]).filter(x=>!/挂果|播种|未上市|尚未/.test(x.d||"")).sort((a,b)=>(b.want||0)-(a.want||0)).slice(0,2);
+  lifepick.innerHTML=`<div class="card" style="border-color:#22c55e;padding:14px">
+    <div style="font-size:14px;font-weight:800;color:#bbf7d0;margin-bottom:9px">🧭 这周末，往龙门哪走？</div>
+    <div style="display:flex;gap:7px;flex-wrap:wrap">
+      ${towns.map(t=>`<span style="background:#05966918;border:1px solid #22c55e44;color:#bbf7d0;border-radius:18px;padding:6px 12px;font-size:11.5px;font-weight:700">${esc(t.n)} <span style="color:#86efac;font-weight:600">${t.pop||0}人想去</span></span>`).join("")}
+    </div>
+    ${veg.length?`<div style="font-size:12.5px;font-weight:700;color:#fde68a;margin:12px 0 7px">🍊 当季尝鲜</div>
+    <div style="display:flex;gap:7px;flex-wrap:wrap">
+      ${veg.map(v=>`<span style="background:#f59e0b15;border:1px solid #f59e0b44;color:#fde68a;border-radius:18px;padding:6px 12px;font-size:11.5px;font-weight:700">${esc(v.n)} <span style="font-size:10px;color:#fcd34d">${esc(v.p)}</span></span>`).join("")}
+    </div>`:""}
+    <a href="town.html" style="display:block;text-align:center;margin-top:12px;background:#059669;color:#fff;text-decoration:none;padding:9px;border-radius:9px;font-size:12.5px;font-weight:700">看11镇吃喝玩乐、当季农品 →</a>
+    <div style="font-size:10px;color:#5b6b82;margin-top:8px;text-align:center">人数按点评/小红书/抖音公开打卡热度合理估算，非平台后台真实统计。</div>
+  </div>`;
+ }catch(e){lifepick.innerHTML="";}
+}
+loadLifePick();
 
 // 点赞/转发
 var lk="like_"+location.pathname,ln=parseInt(localStorage.getItem(lk)||"0");pcount.textContent=ln;
