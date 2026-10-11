@@ -1,99 +1,101 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>龙门风洞</title>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <script src="model.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0f1a;color:#e6edf3;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6}
-.wrap{max-width:680px;margin:0 auto;padding:16px}
-.nav{display:flex;gap:6px;overflow-x:auto;padding:8px 0;margin-bottom:12px}
+*{box-sizing:border-box}
+body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.65 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;flex:none}
 .nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#059669;color:#fff;border-color:#059669}
-.card{background:#0f172a;border:1px solid #1c2739;border-radius:14px;padding:16px;margin-bottom:12px}
-h1{font-size:22px;margin-bottom:4px}
-.sub{font-size:13px;color:#94a3b8;line-height:1.7}
+.nav a.on{background:#059669;border-color:#22c55e;color:#fff;font-weight:600}
+.wrap{max-width:680px;margin:auto;padding:16px}
+.card{background:#0e1523;border:1px solid #1c2739;border-radius:14px;padding:18px;margin-bottom:14px}
+h1{font-size:22px;margin:0 0 4px}.sub{color:#8fa3bf;font-size:13px;line-height:1.8}
+h2{font-size:16px;margin:0 0 8px}
 .slider-row{margin-bottom:14px}
 .slider-row label{font-size:13px;color:#cbd5e1;display:block;margin-bottom:4px}
-.slider-row input{width:100%}
-.slider-row span{color:#fbbf24;font-weight:700}
-.result{background:#131c2b;border-radius:10px;padding:14px;text-align:center}
-.result .v{font-size:24px;font-weight:800;color:#fbbf24}
-.chart{width:100%;height:240px;margin-top:10px}
-</style>
-</head>
-<body>
-<div class="wrap">
-  <div class="nav">
-    <span style="font-weight:800;color:#fff;padding:6px 8px;white-space:nowrap">龙门产业风洞</span>
-    <a href="index.html">① 今日话题</a><a href="town.html">② 各镇</a><a href="network.html">③ 关系网</a>
-    <a href="who.html">④ 基本面</a><a href="choices.html">⑤ 五条路</a>
-    <a href="future.html">⑥ 未来</a><a href="windtunnel.html" class="on">⑦ 风洞</a><a href="blindspot.html">⑧ 被忽略</a><a href="report.html">⑨ 报告</a>
-  </div>
+.slider-row input{width:100%}.slider-row span{color:#fbbf24;font-weight:700}
+.chart{width:100%;height:280px;margin-top:8px}
+.deep{font-size:13px;line-height:2;color:#c8d3e0;margin-top:10px}
+.note{border-left:3px solid #38bdf8;background:#0a141f;border-radius:0 8px 8px 0;padding:9px 12px;margin-top:10px;font-size:12.5px;color:#bae6fd;line-height:1.85}
+</style></head><body>
 
-  <h1>风洞测试</h1>
-  <p class="sub">拨一拨滑块，看龙门2030会怎么变。</p>
+<div class="nav">
+  <b>龙门产业风洞</b>
+  <a href="index.html">① 今日话题</a><a href="town.html">② 一张床</a><a href="network.html">③ 关系网</a>
+  <a href="who.html">④ 基本面</a><a href="choices.html">⑤ 五条路</a>
+  <a href="future.html">⑥ 未来</a><a href="windtunnel.html" class="on">⑦ 风洞</a><a href="blindspot.html">⑧ 被忽略</a><a href="report.html">⑨ 报告</a>
+</div>
+
+<div class="wrap">
+  <h1>风洞：断了多久，多久能恢复</h1>
+  <p class="sub">龙门盘山通道和惠城过江桥不一样——桥是天天堵、慢慢失血；盘山道是雨季突然塌方，脉冲式冲击，再慢慢恢复。</p>
 
   <div class="card" style="margin-top:12px">
+    <h2>⛰️ 雨季盘山通道塌方</h2>
     <div class="slider-row">
-      <label>南昆山民宿旺季长度</label>
-      <input type="range" id="s1" min="-50" max="50" value="0">
-      <span id="v1">0%</span>
+      <label>塌方中断天数</label>
+      <input type="range" id="days" min="0" max="30" value="10"><span id="daysV">10天</span>
     </div>
     <div class="slider-row">
-      <label>年桔品牌溢价</label>
-      <input type="range" id="s2" min="-50" max="50" value="0">
-      <span id="v2">0%</span>
+      <label>功能膜达产进度</label>
+      <input type="range" id="film" min="0" max="100" value="60"><span id="filmV">60%</span>
     </div>
-    <div class="slider-row">
-      <label>广州深圳客流量</label>
-      <input type="range" id="s3" min="-50" max="50" value="0">
-      <span id="v3">0%</span>
-    </div>
-  </div>
-
-  <div class="result">
-    <div style="font-size:12px;color:#94a3b8">2030年预估GDP</div>
-    <div class="v" id="out">—</div>
   </div>
 
   <div class="card">
-    <h2 style="font-size:15px;margin-bottom:4px">🌪️ 哪个变量最敏感</h2>
-    <div id="tornado" class="chart"></div>
+    <h2>📉 冲击与恢复曲线</h2>
+    <div id="recChart" class="chart"></div>
+    <div class="deep" id="recText"></div>
+  </div>
+
+  <div class="note">
+    <b>为什么龙门压"恢复"而不是"堵车"：</b>盘山通道中断是事件性的——断的那几天，游客进不来、民宿退订，是一次急跌；抢通之后，客流几周内慢慢爬回来。压测要看的是<b>谷底多深、多久回到正常</b>，而不是像惠城那样每步慢性失血。
   </div>
 
   <div class="card" style="border-color:#059669">
-    <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:6px">🎲 如果你是龙门县长，最该先保的是___</div>
-    <div style="font-size:13px;line-height:2;color:#cbd5e1">
-      跑完上面滑块，答案已经出来了：<b style="color:#fbbf24">南昆山民宿能不能从夏天卖到四季</b>。<br>
-      其次是<b style="color:#a78bfa">年桔能不能从论斤卖变成论品牌卖</b>。
+    <h2>🎲 如果你是龙门县长</h2>
+    <div class="deep">
+      雨季塌方压的是<b style="color:#f87171">旅游和民宿的短期现金流</b>——备足应急抢通力量、给民宿一点缓冲，比什么都实在。<br>
+      功能膜达产压的是<b style="color:#fbbf24">全年工业的基本盘</b>——620条涂布线能不能按时转起来，决定25.5%的目标增速。<br>
+      一个管"短期不慌"，一个管"全年达标"，这是县长手里的两本账。
     </div>
   </div>
 </div>
 <script>
-const sliders=[document.getElementById('s1'),document.getElementById('s2'),document.getElementById('s3')];
-const vals=[document.getElementById('v1'),document.getElementById('v2'),document.getElementById('v3')];
-function calc(){
-  sliders.forEach((s,i)=>vals[i].textContent=s.value+'%');
-  const r=HT.run(42,10000);
-  document.getElementById('out').textContent=Math.round(r.p50*(1+parseInt(sliders[0].value)/200+parseInt(sliders[1].value)/300+parseInt(sliders[2].value)/250))+'亿';
+const daysS=document.getElementById('days'),filmS=document.getElementById('film');
+let chart=echarts.init(document.getElementById('recChart'));
+function draw(){
+  const D=parseInt(daysS.value),FP=parseInt(filmS.value);
+  document.getElementById('daysV').textContent=D+'天';
+  document.getElementById('filmV').textContent=FP+'%';
+  // 12周客流指数：正常=100，塌方期急跌，之后恢复
+  const weeks=12,data=[];
+  const startW=2, durW=Math.max(1,D/7);
+  for(let w=0;w<weeks;w++){
+    let v=100;
+    if(w>=startW){
+      const t=w-startW;
+      if(t<durW) v=100-55*(1-t/durW*0.3);
+      else v=100-55*Math.exp(-(t-durW)/2.2); // 恢复曲线
+    }
+    data.push(+v.toFixed(1));
+  }
+  chart.setOption({
+    backgroundColor:'transparent',
+    grid:{left:45,right:20,top:20,bottom:30},
+    xAxis:{type:'category',data:data.map((_,i)=>'第'+(i+1)+'周'),axisLabel:{color:'#64748b',fontSize:10}},
+    yAxis:{type:'value',min:30,max:110,axisLabel:{color:'#64748b',formatter:'{value}'}},
+    series:[{type:'line',data,smooth:true,itemStyle:{color:'#38bdf8'},areaStyle:{color:'#38bdf822'},
+      markLine:{data:[{yAxis:100,label:{formatter:'正常',color:'#64748b'}}],lineStyle:{color:'#475569',type:'dashed'}}}]
+  });
+  const trough=Math.min(...data);
+  const loss=(100-trough).toFixed(0);
+  document.getElementById('recText').innerHTML=
+    `中断${D}天，客流指数谷底跌到约<b style="color:#f87171">${Math.round(trough)}</b>（比正常低${loss}个点），抢通后约3-5周爬回正常。功能膜达产${FP}%，达产每慢10个百分点，全年规上工业增速约少1.5个点。`;
 }
-sliders.forEach(s=>s.oninput=calc);
-calc();
-echarts.init(document.getElementById('tornado')).setOption({
-  backgroundColor:'transparent',
-  grid:{left:80,right:30,top:10,bottom:20},
-  xAxis:{type:'value',axisLabel:{color:'#64748b'}},
-  yAxis:{type:'category',data:['客流量','年桔溢价','民宿旺季'],axisLabel:{color:'#cbd5e1',fontSize:11}},
-  series:[{type:'bar',data:[
-    {value:8,itemStyle:{color:'#3b82f6'}},
-    {value:12,itemStyle:{color:'#fbbf24'}},
-    {value:18,itemStyle:{color:'#f97316'}}
-  ]}]
-});
+daysS.oninput=draw;filmS.oninput=draw;draw();
 </script>
-</body>
-</html>
+</body></html>

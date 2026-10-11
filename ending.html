@@ -1,35 +1,96 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>龙门结语</title>
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport"="width=device-width,initial-scale=1">
+<title>让每一个重大决策，先跑一遍 · 龙门产业风洞</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0f1a;color:#e6edf3;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6}
-.wrap{max-width:680px;margin:0 auto;padding:16px;text-align:center}
-.nav{display:flex;gap:6px;overflow-x:auto;padding:8px 0;margin-bottom:12px;text-align:left}
+*{box-sizing:border-box}
+body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.7 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;flex:none}
 .nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-h1{font-size:24px;margin:30px 0 10px}
-.sub{font-size:14px;color:#94a3b8;line-height:2.2;max-width:500px;margin:0 auto}
-.btn{display:inline-block;background:#059669;color:#fff;border-radius:10px;padding:12px 24px;text-decoration:none;font-size:14px;font-weight:700;margin:6px}
-.ghost{background:transparent;border:1px solid #22c55e;color:#22c55e}
-</style>
-</head>
-<body>
-<div class="wrap">
-  <div class="nav"><span style="font-weight:800;color:#fff;padding:6px 8px">龙门产业风洞</span></div>
-  <h1>为什么一个人也该懂龙门怎么算</h1>
-  <p class="sub">
-    你住永汉、你家种年桔、你周末上南昆山——这些都在这张网里。<br>
-    龙门怎么变，和你有关。
-  </p>
-  <div style="margin-top:20px">
-    <a class="btn" href="index.html">重新看一遍</a>
-    <a class="btn ghost" href="report.html">一页报告</a>
-    <a class="btn" href="windtunnel.html">🎲 你来当一次县长</a>
-  </div>
-  <div style="font-size:11px;color:#475569;margin-top:30px">龙门产业决策风洞 · Demo | 张凌 博士</div>
+.nav a.on{background:#059669;border-color:#22c55e;color:#fff;font-weight:600}
+.wrap{max-width:880px;margin:auto;padding:18px}
+.hero{text-align:center;padding:44px 22px;background:radial-gradient(ellipse at top,#0c2a1a 0%,#0a0f1a 70%);border:1px solid #1c2739;border-radius:16px;margin-bottom:14px}
+.hero .kick{font-size:12px;letter-spacing:3px;color:#4ade80;margin-bottom:14px}
+.hero h1{font-size:25px;line-height:1.5;margin:0}
+.hero p{font-size:13px;color:#9aa9bd;margin:14px 0 0}
+.card{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:18px;margin-bottom:14px}
+.card h2{font-size:16px;margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid #1c2739}
+.quote{border-left:3px solid #4ade80;background:#0a0f1a;border-radius:0 8px 8px 0;padding:9px 12px;margin:9px 0;font-size:12.5px;color:#d7f0dd;line-height:1.85}
+.quote b{color:#86efac}
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:700px){.why{grid-template-columns:1fr}}
+.why .step{background:#0a0f1a;border:1px solid #1c2739;border-radius:10px;padding:14px}
+.why .step .n{font-size:11px;font-weight:800;color:#4ade80;letter-spacing:1px}
+.why .step h3{font-size:13.5px;margin:6px 0;color:#fbbf24}
+.why .step p{font-size:12px;color:#a9b6c9;margin:0;line-height:1.85}
+.grid6{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+@media(max-width:700px){.grid6{grid-template-columns:1fr 1fr}}
+.feat{background:#0a0f1a;border:1px solid #1c2739;border-radius:10px;padding:13px}
+.feat b{font-size:12.8px;color:#e6edf3;display:block;margin-bottom:4px}
+.feat span{font-size:11px;color:#8fa3bf;line-height:1.7}
+.closing{text-align:center;padding:34px 24px;background:linear-gradient(160deg,#0a1a0e,#0a0f1a);border:1px solid #14532d;border-radius:14px;margin-bottom:14px}
+.closing .big{font-size:15px;line-height:2.1;color:#e6edf3}.closing .big b{color:#4ade80}
+.sign{font-size:12px;color:#8fa3bf;margin-top:18px}.sign b{color:#fbbf24}
+.btn{background:#059669;color:#fff;border:0;padding:11px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;margin:4px}
+.btn.ghost{background:transparent;border:1px solid #2b3c5a;color:#cbd5e1}
+</style></head><body>
+
+<div class="nav">
+  <b>龙门产业风洞</b>
+  <a href="index.html">① 今日话题</a><a href="town.html">② 一张床</a><a href="network.html">③ 关系网</a>
+  <a href="who.html">④ 基本面</a><a href="choices.html">⑤ 五条路</a>
+  <a href="future.html">⑥ 未来</a><a href="windtunnel.html">⑦ 风洞</a><a href="blindspot.html">⑧ 被忽略</a><a href="ending.html" class="on">⑨ 结语</a>
 </div>
-</body>
-</html>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">REGIONAL DECISION WIND TUNNEL</div>
+    <h1>让龙门的每一个重大决策<br>先在风洞里跑一遍</h1>
+    <p>不是预测未来，是把假设摆到台面上，看系统怎么响应。</p>
+  </div>
+
+  <div class="card">
+    <h2>🌲 桥、道、床——三个县三种命门</h2>
+    <div class="quote">惠城的命门是<b>桥</b>——江北和江南，通勤天天过江。</div>
+    <div class="quote">博罗的命门是<b>道</b>——连着东莞，产业沿通道流进来。</div>
+    <div class="quote">龙门的命门是<b>床</b>——25倍人流涌进来，却留不住人过夜。</div>
+  </div>
+
+  <div class="card">
+    <h2>🎯 龙门两本账，三步棋</h2>
+    <div class="why">
+      <div class="step"><div class="n">STEP 1</div><h3>把一日游变成过夜游</h3><p>民宿从夏天卖到四季，客单价拉回来。</p></div>
+      <div class="step"><div class="n">STEP 2</div><h3>让功能膜按时达产</h3><p>620条涂布线转起来，25.5%增速有着落。</p></div>
+      <div class="step"><div class="n">STEP 3</div><h3>给好东西变现通道</h3><p>年桔做品牌、农民画不再只靠冰箱贴。</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🧭 这台风洞能帮你看什么</h2>
+    <div class="grid6">
+      <div class="feat"><b>① 今日话题</b><span>最近24小时在聊什么</span></div>
+      <div class="feat"><b>② 一张床</b><span>25倍人流、客单价、永汉剪刀差</span></div>
+      <div class="feat"><b>③ 关系网</b><span>南昆山、广深客、年桔</span></div>
+      <div class="feat"><b>④ 基本面</b><span>217亿、两个背离、目标激进性</span></div>
+      <div class="feat"><b>⑤ 五条路</b><span>一张床、功能膜、温泉、农业、通道</span></div>
+      <div class="feat"><b>⑥ 未来</b><span>跑一万遍，看落在哪</span></div>
+      <div class="feat"><b>⑦ 风洞</b><span>塌方脉冲+恢复，不是慢性失血</span></div>
+      <div class="feat"><b>⑧ 被忽略</b><span>农民画、客单价、五倍目标</span></div>
+      <div class="feat"><b>⑨ 一页报告</b><span>把龙门讲清楚</span></div>
+    </div>
+  </div>
+
+  <div class="closing">
+    <div class="big">
+      你住永汉、你家种年桔、你周末上南昆山——<br>
+      这些都在这张网里。<br>
+      <b>龙门怎么变，和你有关。</b>
+    </div>
+    <div style="margin-top:20px">
+      <a class="btn" href="index.html">重新看一遍</a>
+      <a class="btn ghost" href="windtunnel.html">🎲 你来当一次县长</a>
+    </div>
+    <div class="sign">龙门产业决策风洞 · Demo &nbsp;|&nbsp; <b>张凌 博士</b></div>
+  </div>
+</div>
+</body></html>

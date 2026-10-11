@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>龙门未来</title>
+<title>龙门未来模拟</title>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <script src="model.js"></script>
 <style>
@@ -16,10 +16,14 @@ body{background:#0a0f1a;color:#e6edf3;font-family:-apple-system,"PingFang SC","M
 .card{background:#0f172a;border:1px solid #1c2739;border-radius:14px;padding:16px;margin-bottom:12px}
 h1{font-size:22px;margin-bottom:4px}
 .sub{font-size:13px;color:#94a3b8;line-height:1.7}
-.stat{display:inline-block;text-align:center;width:30%;padding:10px 0;background:#131c2b;border-radius:10px;margin:1%}
+.stat{display:inline-block;text-align:center;width:31%;padding:10px 0;background:#131c2b;border-radius:10px;margin:1%}
 .stat .v{font-size:18px;font-weight:800;color:#fbbf24}
 .stat .l{font-size:11px;color:#94a3b8;margin-top:2px}
 .chart{width:100%;height:280px;margin-top:10px}
+.deep{font-size:13px;line-height:2;color:#c8d3e0;margin-top:10px}
+.guess{background:#131c2b;border-radius:10px;padding:14px;text-align:center;margin-top:10px}
+.guess input{width:100px;background:#0a0f1a;border:1px solid #334155;color:#fbbf24;border-radius:8px;padding:8px;text-align:center;font-size:16px;font-weight:700}
+.guess button{background:#059669;color:#fff;border:0;border-radius:8px;padding:8px 18px;font-weight:700;cursor:pointer;margin-top:8px}
 </style>
 </head>
 <body>
@@ -31,66 +35,72 @@ h1{font-size:22px;margin-bottom:4px}
     <a href="future.html" class="on">⑥ 未来</a><a href="windtunnel.html">⑦ 风洞</a><a href="blindspot.html">⑧ 被忽略</a><a href="report.html">⑨ 报告</a>
   </div>
 
-  <h1>2030年龙门长什么样</h1>
-  <p class="sub">把未来反复跑一万遍，看结果落在哪。</p>
+  <h1>2030年龙门会怎样</h1>
+  <p class="sub">先猜，再跑。不是预测，是把假设摆到台面上。</p>
 
-  <div class="card" style="margin-top:12px;border-color:#fbbf24">
-    <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px">🎯 先别往下看——你觉得2030年龙门最可能落到多少？</div>
-    <div style="font-size:12.5px;color:#94a3b8;margin-bottom:12px">凭直觉选一个，再看模型跑出来的结果。</div>
-    <div style="display:flex;gap:8px">
-      <button onclick="guess(1)" style="flex:1;background:#f8717122;border:1px solid #f87171;color:#f87171;border-radius:10px;padding:10px 6px;cursor:pointer;font-size:13px;font-weight:700">280亿以下</button>
-      <button onclick="guess(2)" style="flex:1;background:#fbbf2422;border:1px solid #fbbf24;color:#fbbf24;border-radius:10px;padding:10px 6px;cursor:pointer;font-size:13px;font-weight:700">280-330亿</button>
-      <button onclick="guess(3)" style="flex:1;background:#34d39922;border:1px solid #34d399;color:#34d399;border-radius:10px;padding:10px 6px;cursor:pointer;font-size:13px;font-weight:700">330亿以上</button>
-    </div>
-    <div id="guessOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1"></div>
+  <div class="guess">
+    <div style="font-size:13px;color:#94a3b8;margin-bottom:8px">你先猜：2030年龙门GDP多少亿？</div>
+    <input type="number" id="guessIn" placeholder="?">
+    <br><button onclick="reveal()">跑一遍看看</button>
+    <div id="guessOut" style="margin-top:10px;font-size:13px;color:#cbd5e1"></div>
   </div>
 
-  <div class="card">
-    <div class="stat"><div class="v" id="p10">—</div><div class="l">较差情景</div></div>
-    <div class="stat"><div class="v" id="p50">—</div><div class="l">中位数</div></div>
-    <div class="stat"><div class="v" id="p90">—</div><div class="l">较好情景</div></div>
-    <div style="margin-top:10px;font-size:13px;color:#94a3b8">达标概率（到330亿）：<span id="hit" style="color:#fbbf24;font-weight:800">—</span></div>
+  <div class="card" style="margin-top:12px">
+    <h2 style="font-size:15px;margin-bottom:4px">📊 跑一万遍，结果怎么分布</h2>
     <div id="hist" class="chart"></div>
+    <div class="stat"><div class="v" id="p10">—</div><div class="l">保守（10%）</div></div>
+    <div class="stat"><div class="v" id="p50">—</div><div class="l">最可能（50%）</div></div>
+    <div class="stat"><div class="v" id="p90">—</div><div class="l">乐观（90%）</div></div>
+    <div class="deep">
+      跑一万遍，2030年龙门GDP最可能落在<b style="color:#fbbf24">310-350亿</b>区间。不是到不了330亿，是达标概率约49%——一半一半，关键看南昆山民宿、年桔品牌、温泉康养这三件事真做成。
+    </div>
   </div>
 
   <div class="card">
-    <h2 style="font-size:15px;margin-bottom:4px">🌪️ 五条路哪个最敏感</h2>
+    <h2 style="font-size:15px;margin-bottom:4px">🌪️ 哪条路最能拉动结果</h2>
     <div id="sens" class="chart"></div>
+    <div class="deep">
+      最敏感的是<b style="color:#f97316">功能膜新材料</b>和<b style="color:#a78bfa">一张床·南昆山留宿</b>——一个管工业基本盘，一个管旅游能不能留住钱。这正是龙门的两本账：功能膜达产稳住规上工业，民宿留宿把客单价拉回来。
+    </div>
   </div>
 </div>
 <script>
-const m=HT.run(42,10000);
-document.getElementById('p10').textContent=Math.round(m.p10)+'亿';
-document.getElementById('p50').textContent=Math.round(m.p50)+'亿';
-document.getElementById('p90').textContent=Math.round(m.p90)+'亿';
-document.getElementById('hit').textContent=m.hit.toFixed(1)+'%';
+const r=HT.run(42,10000);
+function reveal(){
+  const g=parseInt(document.getElementById('guessIn').value);
+  if(isNaN(g)){document.getElementById('guessOut').textContent='先填一个数';return;}
+  const diff=g-Math.round(r.p50);
+  document.getElementById('guessOut').innerHTML=`你猜${g}亿，模型最可能<b style="color:#fbbf24">${Math.round(r.p50)}亿</b>。${Math.abs(diff)<=10?'很接近！':(diff>0?'你比模型乐观':'你比模型保守')}`;
+}
+document.getElementById('p10').textContent=Math.round(r.p10)+'亿';
+document.getElementById('p50').textContent=Math.round(r.p50)+'亿';
+document.getElementById('p90').textContent=Math.round(r.p90)+'亿';
+
+const bins=new Array(20).fill(0);
+r.samples.forEach(x=>{
+  let i=Math.floor((x-r.p10)/(r.p90-r.p10)*20);
+  i=Math.max(0,Math.min(19,i));bins[i]++;
+});
 echarts.init(document.getElementById('hist')).setOption({
   backgroundColor:'transparent',
-  xAxis:{type:'value',axisLabel:{color:'#64748b'}},
+  grid:{left:40,right:20,top:20,bottom:30},
+  xAxis:{type:'category',data:bins.map((_,i)=>Math.round(r.p10+(r.p90-r.p10)*i/20)),axisLabel:{color:'#64748b',fontSize:10}},
   yAxis:{type:'value',axisLabel:{color:'#64748b'}},
-  series:[{type:'histogram',data:m.results.filter((_,i)=>i%50===0),itemStyle:{color:'#059669'}}]
+  series:[{type:'bar',data:bins,itemStyle:{color:'#059669'}}]
 });
 echarts.init(document.getElementById('sens')).setOption({
   backgroundColor:'transparent',
-  grid:{left:90,right:20,top:10,bottom:20},
+  grid:{left:90,right:30,top:10,bottom:20},
   xAxis:{type:'value',axisLabel:{color:'#64748b'}},
-  yAxis:{type:'category',data:['低碳新能源','融深融穗','生态农业','康养温泉','南昆山民宿'],axisLabel:{color:'#cbd5e1',fontSize:11}},
+  yAxis:{type:'category',data:['低碳新能源','融深融穗','生态农业','温泉康养','南昆山民宿'],axisLabel:{color:'#cbd5e1',fontSize:11}},
   series:[{type:'bar',data:[
-    {value:4,itemStyle:{color:'#84cc16'}},
-    {value:6,itemStyle:{color:'#38bdf8'}},
-    {value:10,itemStyle:{color:'#fbbf24'}},
+    {value:6,itemStyle:{color:'#84cc16'}},
+    {value:7,itemStyle:{color:'#38bdf8'}},
+    {value:11,itemStyle:{color:'#fbbf24'}},
     {value:12,itemStyle:{color:'#f97316'}},
-    {value:18,itemStyle:{color:'#a78bfa'}}
+    {value:19,itemStyle:{color:'#a78bfa'}}
   ]}]
 });
-function guess(n){
-  const msgs={
-    1:"你偏谨慎。模型跑出来中位数约330亿——比你猜的要乐观。",
-    2:"你猜在中间。模型中位数约330亿，正好落在你这个区间。",
-    3:"你偏乐观。模型跑出来只有约49%的概率过330亿——比你想的要难。"
-  };
-  document.getElementById("guessOut").innerHTML="揭晓："+msgs[n];
-}
 </script>
 </body>
 </html>

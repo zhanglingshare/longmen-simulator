@@ -1,101 +1,108 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>龙门被忽略的</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<script src="model.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0f1a;color:#e6edf3;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6}
-.wrap{max-width:680px;margin:0 auto;padding:16px}
-.nav{display:flex;gap:6px;overflow-x:auto;padding:8px 0;margin-bottom:12px}
+*{box-sizing:border-box}
+body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.65 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;flex:none}
 .nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#059669;color:#fff;border-color:#059669}
-.card{background:#0f172a;border:1px solid #1c2739;border-radius:14px;padding:16px;margin-bottom:12px}
-h1{font-size:22px;margin-bottom:4px}
-.sub{font-size:13px;color:#94a3b8;line-height:1.7}
-.finding{margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #1c2739}
-.finding:last-child{border:none}
+.nav a.on{background:#059669;border-color:#22c55e;color:#fff;font-weight:600}
+.wrap{max-width:680px;margin:auto;padding:16px}
+.card{background:#0e1523;border:1px solid #1c2739;border-radius:14px;padding:18px;margin-bottom:14px}
+h1{font-size:22px;margin:0 0 4px}.sub{color:#8fa3bf;font-size:13px}
+h2{font-size:16px;margin:0 0 6px}
+.finding{margin-bottom:18px}
 .finding .num{display:inline-block;background:#059669;color:#fff;border-radius:8px;padding:2px 10px;font-size:12px;font-weight:700;margin-bottom:6px}
 .finding .t{font-size:15px;font-weight:700;color:#fff;margin-bottom:4px}
-.finding .d{font-size:13px;color:#94a3b8;line-height:1.9}
-.finding .deep{font-size:12.5px;color:#cbd5e1;margin-top:6px;line-height:1.9}
-</style>
-</head>
-<body>
-<div class="wrap">
-  <div class="nav">
-    <span style="font-weight:800;color:#fff;padding:6px 8px;white-space:nowrap">龙门产业风洞</span>
-    <a href="index.html">① 今日话题</a><a href="town.html">② 各镇</a><a href="network.html">③ 关系网</a>
-    <a href="who.html">④ 基本面</a><a href="choices.html">⑤ 五条路</a>
-    <a href="future.html">⑥ 未来</a><a href="windtunnel.html">⑦ 风洞</a><a href="blindspot.html" class="on">⑧ 被忽略</a><a href="report.html">⑨ 报告</a>
-  </div>
+.finding .d{font-size:13px;color:#a9b6c9;line-height:1.95}
+.chart{width:100%;height:220px;margin-top:8px}
+.vote{background:#131c2b;border-radius:10px;padding:14px;margin-top:8px}
+.vote button{flex:1;min-width:70px;border-radius:10px;padding:10px 6px;cursor:pointer;font-size:11.5px;font-weight:700;margin:3px}
+</style></head><body>
 
-  <h1>龙门可能被忽略的几件事</h1>
+<div class="nav">
+  <b>龙门产业风洞</b>
+  <a href="index.html">① 今日话题</a><a href="town.html">② 一张床</a><a href="network.html">③ 关系网</a>
+  <a href="who.html">④ 基本面</a><a href="choices.html">⑤ 五条路</a>
+  <a href="future.html">⑥ 未来</a><a href="windtunnel.html">⑦ 风洞</a><a href="blindspot.html" class="on">⑧ 被忽略</a><a href="report.html">⑨ 报告</a>
+</div>
+
+<div class="wrap">
+  <h1>龙门可能被忽略的五件事</h1>
   <p class="sub">不是短板，是没被算进来的牌。</p>
 
   <div class="card" style="margin-top:12px">
     <div class="finding">
       <div class="num">发现 1</div>
-      <div class="t">南昆山夏天一房难求，但全年平均入住率其实不高</div>
-      <div class="d">旺季满房、淡季空房，是民宿县的通病。</div>
-      <div class="deep">如果能把淡季填满，不靠涨价也能多赚钱。</div>
+      <div class="t">25倍人流涌进来，却留不住一张床</div>
+      <div class="d">900万人次是常住人口的25.5倍，日均外来2.47万人。但客单价在跌、永汉新增全是一日游。龙门不缺人来，缺的是人住下来。</div>
     </div>
     <div class="finding">
       <div class="num">发现 2</div>
-      <div class="t">年桔是国家地理标志，但大部分还是论斤卖原料</div>
-      <div class="d">好东西一直在。问题不是种不出来。</div>
-      <div class="deep">是怎么从卖橘子变成卖品牌、卖体验。</div>
+      <div class="t">人涨8.5%，每个人头上的钱反而少了</div>
+      <div class="d">客单价从486元掉到477元，永汉更是掉7.29%。流量更大不等于更赚钱——低价一日游撑不起"金山银山"。</div>
     </div>
     <div class="finding">
       <div class="num">发现 3</div>
-      <div class="t">龙门不缺生态，缺的是把生态变成可消费的产品</div>
-      <div class="d">76%森林覆盖率是家底。</div>
-      <div class="deep">但家底要变成民宿、康养、研学、露营，才是GDP。</div>
+      <div class="t">🎨 农民画：41个国家级奖，却靠冰箱贴走量</div>
+      <div class="d">龙门农民画进过奥运、世博，拿过41个国家级奖项，面子极大。但无人接班、变现主要靠几块钱的冰箱贴，里子极弱。好东西不知道怎么真正变现——这和"一张床"是同一个病：留不住价值。</div>
+      <div id="paintChart" class="chart"></div>
     </div>
     <div class="finding">
       <div class="num">发现 4</div>
-      <div class="t">温泉只在冬天火，康养可以四季做</div>
-      <div class="d">地派温泉、南昆山温泉，冬天一房难求。</div>
-      <div class="deep">但春秋天的森林徒步、夏天的避暑、秋天的丰收节，都可以变成康养产品。</div>
+      <div class="t">二产猛增14.9%，规上工业只增5.1%</div>
+      <div class="d">不是数据打架，是功能膜新投产未满产、加上建筑业拉动。功能膜620条涂布线一旦真正达产，这道剪刀口才会合上。</div>
     </div>
     <div class="finding">
       <div class="num">发现 5</div>
-      <div class="t">蓝田瑶族文化是被忽略的一张牌</div>
-      <div class="d">龙门唯一少数民族乡。</div>
-      <div class="deep">瑶族风情、民俗、美食，可以和南昆山民宿串成一条线。</div>
+      <div class="t">2026目标增速，是实际增速的5倍</div>
+      <div class="d">规上工业要一年增25.5%，实际只有5.1%。这根轨道全部压在功能膜能不能按时达产上——是龙门最需要压力测试的地方。</div>
     </div>
   </div>
 
   <div class="card" style="border-color:#fbbf24">
-    <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px">🍊 你最希望把龙门哪样做成真正的大品牌？</div>
-    <div style="font-size:12.5px;color:#94a3b8;margin-bottom:10px">好东西一直在，就看怎么卖出溢价。</div>
-    <div id="brandGrid" style="display:flex;gap:8px;flex-wrap:wrap"></div>
-    <div id="brandOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1;line-height:1.6"></div>
+    <h2>🗳️ 你觉得龙门最该先补哪一课？</h2>
+    <div class="vote" id="voteGrid" style="display:flex;flex-wrap:wrap"></div>
+    <div id="voteOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1"></div>
   </div>
+
+  <div style="font-size:11px;color:#5b6b82;line-height:1.8">数据来源：龙门县统计公报、文旅与工信公开数据。模型为作者假设，非官方预测。</div>
 </div>
 <script>
+echarts.init(document.getElementById('paintChart')).setOption({
+  backgroundColor:'transparent',
+  grid:{left:60,right:30,top:20,bottom:30},
+  xAxis:{type:'category',data:['国家级奖项','主要变现单品'],axisLabel:{color:'#cbd5e1',fontSize:11}},
+  yAxis:[
+    {type:'value',name:'奖项(个)',nameTextStyle:{color:'#64748b'},axisLabel:{color:'#64748b'}},
+    {type:'value',name:'单价(元)',nameTextStyle:{color:'#64748b'},axisLabel:{color:'#64748b'}}
+  ],
+  series:[
+    {type:'bar',data:[41,null],itemStyle:{color:'#a78bfa'},label:{show:true,position:'top',color:'#cbd5e1'}},
+    {type:'bar',data:[null,5],yAxisIndex:1,itemStyle:{color:'#f59e0b'},label:{show:true,position:'top',color:'#cbd5e1',formatter:'~{c}元'}}
+  ]
+});
 (function(){
-  const KEY="longmen_brand_v1";
+  const KEY="longmen_vote_v1";
   const opts=[
-    {k:"orange",label:"🍊 年桔",c:"#fbbf24"},
-    {k:"bamboo",label:"🎋 西溪笋",c:"#84cc16"},
-    {k:"spring",label:"♨️ 温泉",c:"#f97316"},
-    {k:"nks",label:"⛰️ 南昆山",c:"#a78bfa"},
-    {k:"yao",label:"瑶族文化",c:"#ec4899"}
+    {k:"bed",label:"留住人过夜",c:"#a78bfa"},
+    {k:"paint",label:"农民画变现",c:"#ec4899"},
+    {k:"film",label:"功能膜达产",c:"#f97316"},
+    {k:"agri",label:"年桔品牌",c:"#22c55e"}
   ];
   let d=JSON.parse(localStorage.getItem(KEY)||'{}');
   opts.forEach(o=>{if(typeof d[o.k]!=="number")d[o.k]=0;});
-  document.getElementById("brandGrid").innerHTML=opts.map(o=>
-    `<button onclick="pickBrand('${o.k}')" style="flex:1;min-width:70px;background:${o.c}22;border:1px solid ${o.c};color:${o.c};border-radius:10px;padding:10px 6px;cursor:pointer;font-size:11.5px;font-weight:700">${o.label}</button>`
-  ).join("");
-  window.pickBrand=function(k){
+  document.getElementById('voteGrid').innerHTML=opts.map(o=>
+    `<button style="background:${o.c}22;border:1px solid ${o.c};color:${o.c}" onclick="pick('${o.k}')">${o.label}</button>`).join("");
+  window.pick=function(k){
     if(localStorage.getItem(KEY+"_done"))return;
     d[k]++;localStorage.setItem(KEY,JSON.stringify(d));localStorage.setItem(KEY+"_done","1");
     const top=opts.slice().sort((a,b)=>d[b.k]-d[a.k])[0];
-    document.getElementById("brandOut").innerHTML=`你选了<b style="color:${opts.find(o=>o.k===k).c}">${opts.find(o=>o.k===k).label}</b>。<br>大家最想做成大品牌的是 <b style="color:${top.c}">${top.label}</b>。`;
+    document.getElementById('voteOut').innerHTML=`你选了<b style="color:${opts.find(o=>o.k===k).c}">${opts.find(o=>o.k===k).label}</b>。大家最想先补的是 <b style="color:${top.c}">${top.label}</b>。`;
   };
 })();
 </script>
-</body>
-</html>
+</body></html>

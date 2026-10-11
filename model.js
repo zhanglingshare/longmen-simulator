@@ -1,51 +1,49 @@
-/* 龙门产业风洞 · 统一模型内核
- * 生态县版：基期217.62亿，2030目标约350亿
- * 五条路：南昆山民宿升级 / 生态农业 / 康养旅游 / 融深融穗 / 低碳新能源
- */
-window.HT = (function(){
-  const BASE = 217.62;          // 2025 GDP（亿元）
-  const TARGET = 330;           // 2030 参考目标（年均约7%）
-  const NOISE_SD = 18;           // 加性全局噪声（亿元）
-  const PATHS = [
-    {name:"南昆山民宿升级", mu:38, sd:12},
-    {name:"生态农业品牌",   mu:22, sd:8},
-    {name:"康养温泉旅游",   mu:25, sd:10},
-    {name:"融深融穗通道",   mu:15, sd:7},
-    {name:"低碳新能源",     mu:12, sd:6}
+/* 龙门产业决策风洞 · 统一模型内核
+   口径：2025年GDP 217.62亿；2030参考目标330亿。
+   公开数据锚点 + 作者假设参数，非官方预测。 */
+(function(global){
+  const BASE=217.62, TARGET=330, NOISE_SD=18;
+
+  // 五条路：μ=5年累计增量期望(亿)，σ=波动
+  const PATHS=[
+    {k:"film",  n:"功能膜新材料",   mu:30, sigma:12},
+    {k:"bed",   n:"一张床·南昆山留宿", mu:32, sigma:11},
+    {k:"spring",n:"温泉康养",      mu:22, sigma:9},
+    {k:"agri",  n:"生态农业品牌",   mu:16, sigma:7},
+    {k:"road",  n:"融深融穗通道",   mu:12, sigma:6}
   ];
-  function rng(seed){let s=seed;return function(){s=(s*9301+49297)%233280;return s/233280;};}
-  function normal(r){return (r()+r()+r()+r())-2;}
-  function run(seed,N,overrides){
-    N=N||10000;
-    const r=rng(seed||42);
-    const paths=PATHS.map((p,i)=>{
-      if(overrides && overrides[i]!=null) return Object.assign({},p,{mu:overrides[i]});
-      return p;
-    });
-    const results=[];
-    for(let k=0;k<N;k++){
+
+  // 确定性伪随机（固定种子可复现）
+  function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+  function gauss(rng){let u=0,v=0;while(u===0)u=rng();while(v===0)v=rng();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+
+  function run(seed=42,N=10000){
+    const rng=mulberry32(seed), samples=[];
+    for(let i=0;i<N;i++){
       let y=BASE;
-      paths.forEach(p=>{ y+=p.mu+normal(r)*p.sd; });
-      y+=normal(r)*NOISE_SD;
-      results.push(y);
+      for(const p of PATHS) y+=p.mu+p.sigma*gauss(rng);
+      y+=NOISE_SD*gauss(rng);
+      samples.push(y);
     }
-    results.sort((a,b)=>a-b);
-    const p10=results[Math.floor(N*0.10)];
-    const p50=results[Math.floor(N*0.50)];
-    const p90=results[Math.floor(N*0.90)];
-    const hit=results.filter(x=>x>=TARGET).length/N*100;
-    // 相关系数（路径mu变化对结果）
-    const base=runOnce(BASE,paths,rng(seed||42));
-    const coefs=paths.map((p,i)=>{
-      const up=runOnce(BASE,paths.map((q,j)=>j===i?{mu:q.mu*1.2}:q),rng(seed||42));
-      return (up-p50)/(p50||1);
-    });
-    return {p10,p50,p90,hit,results,coefs,paths,BASE,TARGET};
+    samples.sort((a,b)=>a-b);
+    const q=p=>samples[Math.min(N-1,Math.floor(p*N))];
+    const p10=q(0.10),p50=q(0.50),p90=q(0.90);
+    let hit=0;samples.forEach(x=>{if(x>=TARGET)hit++;});
+    return {samples,p10,p50,p90,hit:hit/N*100,target:TARGET,base:BASE,paths:PATHS};
   }
-  function runOnce(base,paths,r){
-    let y=base;
-    paths.forEach(p=>{y+=p.mu;});
-    return y;
-  }
-  return {run,BASE,TARGET,PATHS};
-})();
+
+  // 硬数据锚点（公开统计）
+  const FACTS={
+    gdp:217.62, growth:7.4, pop:35.31, forest:76,
+    ind:{p1:44.4,p1pct:20.4,p2:63.2,p2pct:29.0,p3:110,p3pct:50.5},
+    indGrowth:{p1:4.6,p2:14.9,p3:6.8},
+    tourism:{rev:43,visits:900,price:477,priceChg:-1.75,visitsChg:8.54},
+    yonghan:{visitsChg:9.21,revChg:1.25,priceChg:-7.29},
+    nksGrowth:3.17,
+    indAbove:5.1,
+    target2026:{regInd:150,regIndNow:119.5,need:25.5},
+    film:{projects:68,invest:140,lines:620}
+  };
+
+  global.HT={run,FACTS,BASE,TARGET,PATHS};
+})(window);

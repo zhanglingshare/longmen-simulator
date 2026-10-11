@@ -1,97 +1,110 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>龙门基本面</title>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<script src="model.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0f1a;color:#e6edf3;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6}
-.wrap{max-width:680px;margin:0 auto;padding:16px}
-.nav{display:flex;gap:6px;overflow-x:auto;padding:8px 0;margin-bottom:12px}
+*{box-sizing:border-box}
+body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.65 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;flex:none}
 .nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
-.nav a.on{background:#059669;color:#fff;border-color:#059669}
-.card{background:#0f172a;border:1px solid #1c2739;border-radius:14px;padding:16px;margin-bottom:12px}
-h1{font-size:22px;margin-bottom:4px}
-.sub{font-size:13px;color:#94a3b8;line-height:1.7}
-.stat{display:inline-block;text-align:center;width:32%;padding:10px 0;background:#131c2b;border-radius:10px;margin:1%}
-.stat .v{font-size:18px;font-weight:800;color:#fbbf24}
-.stat .l{font-size:11px;color:#94a3b8;margin-top:2px}
-.chart{width:100%;height:260px;margin-top:10px}
-.src{font-size:11px;color:#475569;margin-top:8px}
+.nav a.on{background:#059669;border-color:#22c55e;color:#fff;font-weight:600}
+.wrap{max-width:680px;margin:auto;padding:16px}
+.card{background:#0e1523;border:1px solid #1c2739;border-radius:14px;padding:18px;margin-bottom:14px}
+h1{font-size:22px;margin:0 0 4px}.sub{color:#8fa3bf;font-size:13px}
+h2{font-size:16px;margin:0 0 10px}
+.kpi{display:inline-block;text-align:center;width:31%;padding:10px 0;background:#131c2b;border-radius:10px;margin:1%}
+.kpi .v{font-size:18px;font-weight:800;color:#fbbf24}.kpi .l{font-size:11px;color:#94a3b8}
+.chart{width:100%;height:260px;margin-top:8px}
 .deep{font-size:13px;line-height:2;color:#c8d3e0;margin-top:10px}
-</style>
-</head>
-<body>
-<div class="wrap">
-  <div class="nav">
-    <span style="font-weight:800;color:#fff;padding:6px 8px;white-space:nowrap">龙门产业风洞</span>
-    <a href="index.html">① 今日话题</a><a href="town.html">② 各镇</a><a href="network.html">③ 关系网</a>
-    <a href="who.html" class="on">④ 基本面</a><a href="choices.html">⑤ 五条路</a>
-    <a href="future.html">⑥ 未来</a><a href="windtunnel.html">⑦ 风洞</a><a href="blindspot.html">⑧ 被忽略</a><a href="report.html">⑨ 报告</a>
-  </div>
+.warn{border-left:3px solid #f59e0b;background:#1a1206;border-radius:0 8px 8px 0;padding:9px 12px;margin-top:10px;font-size:12.5px;color:#fcd34d;line-height:1.85}
+.src{font-size:11px;color:#5b6b82;margin-top:10px;line-height:1.8}
+</style></head><body>
 
+<div class="nav">
+  <b>龙门产业风洞</b>
+  <a href="index.html">① 今日话题</a><a href="town.html">② 各镇</a><a href="network.html">③ 关系网</a>
+  <a href="who.html" class="on">④ 基本面</a><a href="choices.html">⑤ 五条路</a>
+  <a href="future.html">⑥ 未来</a><a href="windtunnel.html">⑦ 风洞</a><a href="blindspot.html">⑧ 被忽略</a><a href="report.html">⑨ 报告</a>
+</div>
+
+<div class="wrap">
   <h1>龙门现在在哪</h1>
-  <p class="sub">大湾区的生态后花园。217亿，不大，但每一块都连着山、连着水。</p>
+  <p class="sub">大湾区的生态后花园。217.62亿，不大，但每一块都连着山、连着水。</p>
 
   <div class="card" style="margin-top:12px">
-    <h2 style="font-size:15px;margin-bottom:10px">📊 基本盘</h2>
-    <div class="stat"><div class="v">217.6亿</div><div class="l">GDP（2025）</div></div>
-    <div class="stat"><div class="v">+7.4%</div><div class="l">增速</div></div>
-    <div class="stat"><div class="v">31万</div><div class="l">常住人口</div></div>
-    <div class="stat"><div class="v">76%</div><div class="l">森林覆盖率</div></div>
-    <div class="stat"><div class="v">330亿</div><div class="l">2030参考目标</div></div>
-    <div class="stat"><div class="v">~7万</div><div class="l">人均GDP</div></div>
+    <h2>📊 基本盘</h2>
+    <div class="kpi"><div class="v">217.62亿</div><div class="l">GDP 2025</div></div>
+    <div class="kpi"><div class="v">+7.4%</div><div class="l">增速</div></div>
+    <div class="kpi"><div class="v">35.31万</div><div class="l">常住人口</div></div>
+    <div class="kpi"><div class="v">76%</div><div class="l">森林覆盖率</div></div>
+    <div class="kpi"><div class="v">~6.2万</div><div class="l">人均GDP</div></div>
+    <div class="kpi"><div class="v">330亿</div><div class="l">2030参考目标</div></div>
   </div>
 
   <div class="card">
-    <h2 style="font-size:15px;margin-bottom:4px">📈 GDP这些年怎么爬上来的</h2>
-    <div id="gdpChart" class="chart"></div>
-    <div class="deep">
-      龙门GDP从2020年的约160亿爬到2025年的217亿，五年涨了约57亿。增速7.4%在惠州各县里不算慢——但基数小，每涨一个点都是真金白银。
-    </div>
-  </div>
-
-  <div class="card">
-    <h2 style="font-size:15px;margin-bottom:4px">🥧 三块家底各占多少</h2>
+    <h2>🥧 三块家底各占多少（可反算）</h2>
     <div id="indChart" class="chart"></div>
     <div class="deep">
-      龙门不是工业县。一产占比高是特色不是短板——农业是国家战略，连着31万人的生计和大湾区的菜篮子。二产靠平陵工业园，三产靠南昆山民宿和温泉。
+      一产 <b style="color:#84cc16">44.4亿（20.4%）</b>、二产 <b style="color:#f97316">63.2亿（29.0%）</b>、三产 <b style="color:#38bdf8">110亿（50.5%）</b>，加总217.6亿，对得上。<br>
+      一产占比高是<b>特色不是短板</b>——农业是国家战略，连着35万人的生计和大湾区的菜篮子。三产占一半，主要靠南昆山民宿、温泉和旅游。
     </div>
   </div>
 
   <div class="card">
-    <h2 style="font-size:15px;margin-bottom:4px">🌲 龙门和别的县不一样</h2>
-    <div class="deep">
-      惠城在算"怎么到1500亿"，博罗在算"怎么到1600亿"。龙门不这么算。<br><br>
-      龙门的家底是<b style="color:#4ade80">76%的森林覆盖率</b>——这是大湾区最后一块生态屏障。南昆山在这，温泉在这，年桔在这，瑶族乡在这。<br><br>
-      它要做的不是"补齐工业"，是<b style="color:#fbbf24">把绿水青山真的变成金山银山</b>——让南昆山的民宿不只夏天满房，让年桔从论斤卖变成论品牌卖，让温泉从冬天火变成四季都有人来。
+    <h2>⚠️ 两个关键背离（别藏）</h2>
+    <div id="divChart" class="chart"></div>
+    <div class="warn">
+      <b>背离一：</b>二产增加值 +14.9%，但规上工业总产值只 +5.1%。差额大概率来自建筑业，以及功能膜新投产尚未满产。两个数不是打架，是口径不同——二产=工业+建筑业。<br><br>
+      <b>背离二：</b>全县游客 +8.54%，但南昆山核心景区只 +3.17%。新增的人没上南昆山，去哪了？答案在永汉——低价一日游。
     </div>
   </div>
 
-  <div style="text-align:center;font-size:11px;color:#475569;margin-top:20px;line-height:1.8">
-    龙门产业决策风洞 · Demo &nbsp;|&nbsp; 张凌 博士<br>
-    数据来源：龙门县政府工作报告、统计公报公开数据
+  <div class="card">
+    <h2>🎯 2026目标有多激进</h2>
+    <div id="targetChart" class="chart"></div>
+    <div class="deep">
+      2026年规上工业目标 <b style="color:#f87171">150亿</b>，现在119.5亿，需要一年增 <b style="color:#f87171">25.5%</b>——而2025年实际只增5.1%。<b>目标增速是实际增速的5倍。</b><br>
+      这根轨道和功能膜绑死：68宗项目、140亿投资、620条涂布线。功能膜能不能按时达产，决定这25.5%能不能兑现。
+    </div>
   </div>
+
+  <div class="src">数据来源：龙门县政府工作报告、统计公报公开数据。增速为不变价口径；模型参数为作者假设，非官方预测。</div>
 </div>
 <script>
-echarts.init(document.getElementById('gdpChart')).setOption({
-  backgroundColor:'transparent',
-  grid:{left:40,right:20,top:20,bottom:30},
-  xAxis:{type:'category',data:['2020','2021','2022','2023','2024','2025'],axisLabel:{color:'#64748b'}},
-  yAxis:{type:'value',axisLabel:{color:'#64748b'}},
-  series:[{type:'line',data:[160,172,185,196,205,217.6],smooth:true,itemStyle:{color:'#059669'},areaStyle:{color:'#05966922'}}]
-});
+const F=HT.FACTS;
 echarts.init(document.getElementById('indChart')).setOption({
   backgroundColor:'transparent',
-  series:[{type:'pie',radius:['40%','70%'],label:{color:'#cbd5e1',fontSize:12},
+  tooltip:{trigger:'item'},
+  series:[{type:'pie',radius:['42%','70%'],label:{color:'#cbd5e1',fontSize:12,formatter:'{b}\n{d}%'},
     data:[
-      {value:22,name:'一产·农业',itemStyle:{color:'#84cc16'}},
-      {value:32,name:'二产·工业',itemStyle:{color:'#f97316'}},
-      {value:46,name:'三产·文旅服务',itemStyle:{color:'#38bdf8'}}
+      {value:F.ind.p1,name:'一产 44.4亿',itemStyle:{color:'#84cc16'}},
+      {value:F.ind.p2,name:'二产 63.2亿',itemStyle:{color:'#f97316'}},
+      {value:F.ind.p3,name:'三产 110亿',itemStyle:{color:'#38bdf8'}}
     ]}]
 });
+echarts.init(document.getElementById('divChart')).setOption({
+  backgroundColor:'transparent',
+  grid:{left:90,right:30,top:20,bottom:30},
+  xAxis:{type:'value',axisLabel:{color:'#64748b',formatter:'{value}%'}},
+  yAxis:{type:'category',data:['规上工业','二产增加值','南昆山游客','全县游客'],axisLabel:{color:'#cbd5e1',fontSize:11}},
+  series:[{type:'bar',data:[
+    {value:5.1,itemStyle:{color:'#f59e0b'}},
+    {value:14.9,itemStyle:{color:'#f97316'}},
+    {value:3.17,itemStyle:{color:'#a78bfa'}},
+    {value:8.54,itemStyle:{color:'#38bdf8'}}
+  ],label:{show:true,position:'right',color:'#cbd5e1',formatter:'{c}%'}}]
+});
+echarts.init(document.getElementById('targetChart')).setOption({
+  backgroundColor:'transparent',
+  grid:{left:50,right:30,top:30,bottom:30},
+  xAxis:{type:'category',data:['2025实际增速','2026需要增速'],axisLabel:{color:'#cbd5e1',fontSize:12}},
+  yAxis:{type:'value',axisLabel:{color:'#64748b',formatter:'{value}%'}},
+  series:[{type:'bar',data:[
+    {value:5.1,itemStyle:{color:'#22c55e'}},
+    {value:25.5,itemStyle:{color:'#ef4444'}}
+  ],barWidth:'45%',label:{show:true,position:'top',color:'#cbd5e1',formatter:'{c}%'}}]
+});
 </script>
-</body>
-</html>
+</body></html>

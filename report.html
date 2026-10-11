@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>龙门产业风洞 · 一页报告</title>
+<title>龙门一页报告</title>
+<script src="model.js"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.7 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
@@ -10,19 +11,17 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.7 -apple-system,"Ping
 .nav a.on{background:#059669;border-color:#22c55e;color:#fff;font-weight:600}
 .wrap{max-width:680px;margin:auto;padding:16px}
 .card{background:#0e1523;border:1px solid #1c2739;border-radius:14px;padding:18px;margin-bottom:14px}
-h1{font-size:22px;margin-bottom:4px}
+h1{font-size:22px;margin:0 0 4px}.sub{color:#8fa3bf;font-size:13px}
 h2{font-size:16px;margin:0 0 10px}
-.sub{color:#8fa3bf;font-size:13px}
 .kpi{display:inline-block;text-align:center;width:31%;padding:10px 0;background:#131c2b;border-radius:10px;margin:1%}
-.kpi .v{font-size:18px;font-weight:800;color:#fbbf24}
-.kpi .l{font-size:11px;color:#94a3b8}
+.kpi .v{font-size:18px;font-weight:800;color:#fbbf24}.kpi .l{font-size:11px;color:#94a3b8}
 .row{font-size:13.5px;line-height:2;color:#c8d3e0;margin-top:8px}
-.red{color:#f87171}.green{color:#4ade80}.yellow{color:#fbbf24}.blue{color:#60a5fa}
+.red{color:#f87171}.green{color:#4ade80}.yellow{color:#fbbf24}.blue{color:#60a5fa}.purple{color:#c084fc}
 </style></head><body>
 
 <div class="nav">
   <b>龙门产业风洞</b>
-  <a href="index.html">① 今日话题</a><a href="town.html">② 各镇</a><a href="network.html">③ 关系网</a>
+  <a href="index.html">① 今日话题</a><a href="town.html">② 一张床</a><a href="network.html">③ 关系网</a>
   <a href="who.html">④ 基本面</a><a href="choices.html">⑤ 五条路</a>
   <a href="future.html">⑥ 未来</a><a href="windtunnel.html">⑦ 风洞</a><a href="blindspot.html">⑧ 被忽略</a><a href="report.html" class="on">⑨ 报告</a>
 </div>
@@ -33,43 +32,61 @@ h2{font-size:16px;margin:0 0 10px}
 
   <div class="card" style="margin-top:12px">
     <h2>📊 现在在哪</h2>
-    <div class="kpi"><div class="v">217.6亿</div><div class="l">GDP 2025</div></div>
+    <div class="kpi"><div class="v">217.62亿</div><div class="l">GDP 2025</div></div>
     <div class="kpi"><div class="v">+7.4%</div><div class="l">增速</div></div>
     <div class="kpi"><div class="v">76%</div><div class="l">森林覆盖率</div></div>
+    <div class="row">
+      一产44.4亿（20.4%）、二产63.2亿（29.0%）、三产110亿（50.5%），加总对得上。这是一个<b class="green">生态县</b>，不是工业县。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🛏️ 命门：一张床</h2>
+    <div class="row">
+      一年900万游客，是常住人口的<b class="yellow">25.5倍</b>，日均外来2.47万人。但客单价477元、在跌<b class="red">1.75%</b>；永汉游客涨9.21%、客单价却掉<b class="red">7.29%</b>——新增的全是低价一日游。<br><br>
+      龙门不缺人来，缺的是<b class="purple">人住下来、钱留下来</b>。这就是"一张床"。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎞️ 第二本账：功能膜</h2>
+    <div class="row">
+      二产增加值 +14.9%、规上工业只 +5.1%，剪刀差来自功能膜新投产未满产。68宗项目、140亿投资、620条涂布线一旦达产，剪刀差才合上。<br><br>
+      但2026规上工业目标150亿，需要一年增<b class="red">25.5%</b>，是实际增速的5倍——全部压在功能膜达产上。
+    </div>
   </div>
 
   <div class="card">
     <h2>🎯 2030往哪去</h2>
     <div class="kpi"><div class="v">330亿</div><div class="l">参考目标</div></div>
-    <div class="kpi"><div class="v">~330亿</div><div class="l">模型中位数</div></div>
-    <div class="kpi"><div class="v">~49%</div><div class="l">达标概率</div></div>
-    <div class="row">
-      模型跑一万遍，2030年GDP最可能落在<span class="yellow">310-350亿</span>区间。不是到不了，是要靠南昆山民宿、年桔品牌、温泉康养这三件事真做成。
-    </div>
+    <div class="kpi"><div class="v" id="m50">—</div><div class="l">模型中位数</div></div>
+    <div class="kpi"><div class="v" id="mhit">—</div><div class="l">达标概率</div></div>
+    <div class="row">跑一万遍，2030最可能落在<b class="yellow">294-366亿</b>。不是到不了，是要靠"一张床"和"功能膜"两本账都做平。</div>
   </div>
 
   <div class="card">
-    <h2>🔑 龙门最该先做什么</h2>
+    <h2>🔑 最该先做的三件事</h2>
     <div class="row">
-      <b class="yellow">第一：让南昆山民宿从夏天卖到四季。</b> 旺季满房、淡季空房是通病。淡季填满，不靠涨价也能多赚钱。<br><br>
-      <b class="yellow">第二：让年桔从论斤卖变成论品牌卖。</b> 好东西一直在，问题是怎么从卖橘子变成卖体验、卖品牌。<br><br>
-      <b class="blue">第三：把广深客1.5小时车程变成周末消费力。</b> 路通了，人来了，钱才留下来。
+      <b class="purple">一、把一日游变成过夜游</b>——民宿从夏天卖到四季，客单价拉回来。<br>
+      <b class="yellow">二、让功能膜按时达产</b>——620条涂布线转起来，25.5%才有着落。<br>
+      <b class="blue">三、给好东西真正的变现通道</b>——年桔做品牌、农民画不再只靠冰箱贴。
     </div>
   </div>
 
   <div class="card">
     <h2>⚠️ 龙门不是什么</h2>
-    <div class="row">
-      龙门不是要变成第二个博罗，也不是要变成第二个惠城。<br>
-      惠城是城区，博罗是工业县，龙门是<span class="green">生态县</span>。<br>
-      龙门的本钱是76%的森林覆盖率——这是大湾区最后一块生态屏障。它要做的不是补工业短板，是把绿水青山真的变成金山银山。
-    </div>
+    <div class="row">不是第二个惠城，也不是第二个博罗。惠城是城区、博罗是工业县、龙门是生态县。它要做的不是补工业，是<b class="green">把绿水青山真的变成金山银山</b>。</div>
   </div>
 
   <div class="card" style="border-color:#1c2739">
     <div style="font-size:11px;color:#5b6b82;line-height:1.8">
-      数据来源：龙门县政府工作报告、统计公报公开数据。模型参数为作者假设，非官方预测。阅读/转发/点赞按公开来源热度合理估算，非平台后台真实统计。
+      数据来源：龙门县政府工作报告、统计公报、文旅与工信公开数据。客单价=旅游收入÷游客人次（混合口径）；县级公报通常不公布过夜人次，故以永汉剪刀差为"留不住"主证据。模型参数为作者假设，非官方预测；阅读/转发/点赞按公开来源热度合理估算，非平台后台真实统计。
     </div>
   </div>
 </div>
+<script>
+const r=HT.run(42,10000);
+document.getElementById('m50').textContent=Math.round(r.p50)+'亿';
+document.getElementById('mhit').textContent=Math.round(r.hit)+'%';
+</script>
 </body></html>
