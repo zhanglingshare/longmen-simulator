@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>龙门的关系网</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0f1a;color:#e6edf3;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6}
+.wrap{max-width:680px;margin:0 auto;padding:16px}
+.nav{display:flex;gap:6px;overflow-x:auto;padding:8px 0;margin-bottom:12px}
+.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#059669;color:#fff;border-color:#059669}
+.card{background:#0f172a;border:1px solid #1c2739;border-radius:14px;padding:16px;margin-bottom:12px}
+h1{font-size:22px;margin-bottom:4px}
+.sub{font-size:13px;color:#94a3b8;line-height:1.7}
+#chart{width:100%;height:420px}
+.tip{font-size:13px;line-height:2;color:#c8d3e0;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="nav">
+    <span style="font-weight:800;color:#fff;padding:6px 8px;white-space:nowrap">龙门产业风洞</span>
+    <a href="index.html">① 今日话题</a>
+    <a href="town.html">② 各镇吃喝玩乐</a>
+    <a href="network.html" class="on">③ 世界怎么长</a>
+    <a href="who.html">④ 基本面</a>
+    <a href="choices.html">⑤ 五条路</a>
+    <a href="future.html">⑥ 未来</a>
+    <a href="windtunnel.html">⑦ 风洞</a>
+    <a href="blindspot.html">⑧ 被忽略的</a>
+    <a href="report.html">⑨ 报告</a>
+  </div>
+
+  <h1>龙门的关系网</h1>
+  <p class="sub">看不懂图记住这三个：南昆山、广州深圳的游客、年桔。</p>
+
+  <div class="card" style="margin-top:12px">
+    <div id="chart"></div>
+  </div>
+
+  <div class="card">
+    <div class="tip">
+      <b style="color:#fca5a5">📍 南昆山</b>——龙门的命门，北回归线上的绿洲。<br>
+      <b style="color:#93c5fd">📍 广州深圳的游客</b>——每周末上来的人，是龙门的衣食父母。<br>
+      <b style="color:#fbbf24">📍 年桔/西溪笋</b>——山里的好东西，怎么卖出溢价？<br><br>
+      龙门和博罗不一样：博罗连着东莞的工厂，龙门连着广州深圳的周末。
+    </div>
+  </div>
+</div>
+<script>
+const chart=echarts.init(document.getElementById('chart'));
+chart.setOption({
+  backgroundColor:'transparent',
+  series:[{
+    type:'graph',layout:'force',
+    force:{repulsion:300,edgeLength:80},
+    label:{show:true,color:'#e6edf3',fontSize:11},
+    data:[
+      {name:'南昆山',symbolSize:50,itemStyle:{color:'#a78bfa'}},
+      {name:'永汉民宿',symbolSize:35,itemStyle:{color:'#f97316'}},
+      {name:'温泉',symbolSize:30,itemStyle:{color:'#fbbf24'}},
+      {name:'年桔',symbolSize:28,itemStyle:{color:'#22c55e'}},
+      {name:'广州深圳客',symbolSize:40,itemStyle:{color:'#3b82f6'}},
+      {name:'蓝田瑶族',symbolSize:22,itemStyle:{color:'#ec4899'}},
+      {name:'县城龙城',symbolSize:28,itemStyle:{color:'#94a3b8'}},
+      {name:'生态农业',symbolSize:25,itemStyle:{color:'#84cc16'}}
+    ],
+    links:[
+      {source:'南昆山',target:'永汉民宿'},{source:'南昆山',target:'温泉'},
+      {source:'广州深圳客',target:'永汉民宿'},{source:'广州深圳客',target:'温泉'},
+      {source:'广州深圳客',target:'南昆山'},
+      {source:'年桔',target:'广州深圳客'},{source:'生态农业',target:'年桔'},
+      {source:'县城龙城',target:'永汉民宿'},{source:'蓝田瑶族',target:'南昆山'}
+    ],
+    lineStyle:{color:'#475569',width:1.5,curveness:0.1}
+  }]
+});
+</script>
+</body>
+</html>

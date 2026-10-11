@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>龙门产业风洞</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<script src="model.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0f1a;color:#e6edf3;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6}
+.wrap{max-width:680px;margin:0 auto;padding:16px}
+.nav{display:flex;gap:6px;overflow-x:auto;padding:8px 0;margin-bottom:12px}
+.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#059669;color:#fff;border-color:#059669}
+.card{background:#0f172a;border:1px solid #1c2739;border-radius:14px;padding:16px;margin-bottom:12px}
+h1{font-size:22px;margin-bottom:4px}
+.sub{font-size:13px;color:#94a3b8;line-height:1.7}
+h2{font-size:16px;margin-bottom:10px}
+.chip{display:inline-block;background:#1c2739;color:#93a4bd;border-radius:20px;padding:4px 10px;font-size:11px;margin:2px}
+button{cursor:pointer;font-family:inherit}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="nav">
+    <span style="font-weight:800;color:#fff;padding:6px 8px;white-space:nowrap">龙门产业风洞</span>
+    <a href="index.html" class="on">① 今日话题</a>
+    <a href="town.html">② 各镇吃喝玩乐</a>
+    <a href="network.html">③ 世界怎么长</a>
+    <a href="who.html">④ 基本面</a>
+    <a href="choices.html">⑤ 五条路</a>
+    <a href="future.html">⑥ 未来</a>
+    <a href="windtunnel.html">⑦ 风洞</a>
+    <a href="blindspot.html">⑧ 被忽略的</a>
+    <a href="report.html">⑨ 报告</a>
+  </div>
+
+  <h1>今日龙门话题</h1>
+  <p class="sub">扫一遍公开渠道，按热度排。龙门是大湾区的生态后花园。</p>
+
+  <!-- 你是龙门哪里人 -->
+  <div class="card" style="margin-top:12px;border-color:#059669">
+    <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px">🏘️ 你是龙门哪里人？</div>
+    <div style="font-size:12.5px;color:#94a3b8;margin-bottom:10px">10个镇街乡，每个都有自己的活法。</div>
+    <div id="townGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"></div>
+    <div id="townOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1;line-height:1.6"></div>
+  </div>
+
+  <!-- 龙门骄傲 -->
+  <div class="card" style="border-color:#fbbf24">
+    <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px">🏆 向外人介绍龙门，你最先说哪样？</div>
+    <div style="font-size:12.5px;color:#94a3b8;margin-bottom:10px">龙门是龙门。南昆山、温泉、年桔——这是我们的家底。</div>
+    <div id="proudGrid" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+    <div id="proudOut" style="margin-top:10px;font-size:12.5px;color:#cbd5e1;line-height:1.6"></div>
+  </div>
+
+  <div class="card" style="text-align:center;padding:30px 16px">
+    <div style="font-size:14px;color:#64748b">今日话题数据即将上线</div>
+    <div style="font-size:12px;color:#475569;margin-top:6px">每日自动更新一次，覆盖政府公开信息、南方+/惠州日报、点评/小红书/抖音公开打卡</div>
+  </div>
+
+  <div style="text-align:center;font-size:11px;color:#475569;margin-top:20px;line-height:1.8">
+    龙门产业决策风洞 · Demo &nbsp;|&nbsp; 张凌 博士<br>
+    数据来源：龙门县政府公开信息、统计公报、南方+/惠州日报等公开渠道
+  </div>
+</div>
+
+<script>
+// 你是龙门哪里人
+(function(){
+  const TOWNS=[
+    {n:"龙城",say:"县城所在地，龙门的门面。"},
+    {n:"平陵",say:"工业园在这，龙门的工业家底。"},
+    {n:"永汉",say:"南昆山脚下，民宿和温泉最集中。"},
+    {n:"麻榨",say:"山里的镇子，年桔主产区。"},
+    {n:"龙华",say:"西溪笋、青梅，山里的味道。"},
+    {n:"龙江",say:"路溪石硖龙眼，古村老味道。"},
+    {n:"龙田",say:"挨着县城，城郊农业。"},
+    {n:"地派",say:"温泉在这，森林覆盖率最高。"},
+    {n:"龙潭",say:"最山里的镇，生态最好。"},
+    {n:"蓝田瑶族乡",say:"瑶族乡，龙门唯一的少数民族乡。"}
+  ];
+  document.getElementById("townGrid").innerHTML=TOWNS.map(t=>
+    `<button onclick="pickTown('${t.n}')" style="background:#05966922;border:1px solid #05966944;color:#bbf7d0;border-radius:8px;padding:8px 4px;cursor:pointer;font-size:12px;font-weight:700">${t.n}</button>`
+  ).join("");
+  window.pickTown=function(n){
+    const t=TOWNS.find(x=>x.n===n);if(!t)return;
+    document.getElementById("townOut").innerHTML=`你是<b style="color:#4ade80">${n}人</b>——${t.say}`;
+  };
+})();
+</script>
+<script>
+// 龙门骄傲
+(function(){
+  const KEY="longmen_proud_v1";
+  const opts=[
+    {k:"nks",label:"⛰️ 南昆山",c:"#a78bfa",say:"北回归线上的绿洲，大湾区避暑后花园。"},
+    {k:"spring",label:"♨️ 温泉",c:"#f97316",say:"龙门温泉水质好，冬天最舒服。"},
+    {k:"orange",label:"🍊 年桔",c:"#fbbf24",say:"龙门年桔，过年的那口甜。"},
+    {k:"eco",label:"🌲 生态",c:"#22c55e",say:"森林覆盖率76%，大湾区生态屏障。"},
+    {k:"yao",label:"瑶族",c:"#ec4899",say:"蓝田瑶族乡，龙门唯一少数民族乡。"}
+  ];
+  let d=JSON.parse(localStorage.getItem(KEY)||'{}');
+  opts.forEach(o=>{if(typeof d[o.k]!=="number")d[o.k]=0;});
+  document.getElementById("proudGrid").innerHTML=opts.map(o=>
+    `<button onclick="pickProud('${o.k}')" style="flex:1;min-width:70px;background:${o.c}22;border:1px solid ${o.c};color:${o.c};border-radius:10px;padding:10px 6px;cursor:pointer;font-size:11.5px;font-weight:700">${o.label}</button>`
+  ).join("");
+  window.pickProud=function(k){
+    if(localStorage.getItem(KEY+"_done"))return;
+    d[k]++;localStorage.setItem(KEY,JSON.stringify(d));localStorage.setItem(KEY+"_done","1");
+    const top=opts.slice().sort((a,b)=>d[b.k]-d[a.k])[0];
+    document.getElementById("proudOut").innerHTML=`你选了<b style="color:#fbbf24">${opts.find(o=>o.k===k).label}</b>。<br>大家最常向外人提起的是 <b style="color:${top.c}">${top.label}</b>——${top.say}<br>龙门是龙门，这就是我们的家底。`;
+  };
+})();
+</script>
+</body>
+</html>
