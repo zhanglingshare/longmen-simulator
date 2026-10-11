@@ -1,80 +1,131 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>让每一个重大决策，先跑一遍 · 龙门产业风洞</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.7 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
 .nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;overflow-x:auto}
-.nav b{font-size:14px;margin-right:6px;flex:none}
+.nav span{font-weight:800;color:#fff;padding:6px 8px;white-space:nowrap}
 .nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
 .nav a.on{background:#059669;border-color:#22c55e;color:#fff;font-weight:600}
 .wrap{max-width:880px;margin:auto;padding:18px}
-.hero{text-align:center;padding:44px 22px;background:radial-gradient(ellipse at top,#0c2a1a 0%,#0a0f1a 70%);border:1px solid #1c2739;border-radius:16px;margin-bottom:14px}
+.hero{text-align:center;padding:46px 22px;background:radial-gradient(ellipse at top,#0c2a1a 0%,#0a0f1a 70%);border:1px solid #1c2739;border-radius:16px;margin-bottom:14px}
 .hero .kick{font-size:12px;letter-spacing:3px;color:#4ade80;margin-bottom:14px}
-.hero h1{font-size:25px;line-height:1.5;margin:0}
-.hero p{font-size:13px;color:#9aa9bd;margin:14px 0 0}
-.card{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:18px;margin-bottom:14px}
-.card h2{font-size:16px;margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid #1c2739}
-.quote{border-left:3px solid #4ade80;background:#0a0f1a;border-radius:0 8px 8px 0;padding:9px 12px;margin:9px 0;font-size:12.5px;color:#d7f0dd;line-height:1.85}
+.hero h1{font-size:26px;line-height:1.5;margin:0}
+.hero p{font-size:13.5px;color:#9aa9bd;margin:14px 0 0;line-height:1.8}
+.card{background:#0e1523;border:1px solid #1c2739;border-radius:12px;padding:19px;margin-bottom:14px}
+.card h2{font-size:16.5px;margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid #1c2739}
+.quote{border-left:3px solid #4ade80;background:#0a0f1a;border-radius:0 8px 8px 0;padding:10px 13px;margin:9px 0;font-size:13px;color:#d7f0dd;line-height:1.9}
 .quote b{color:#86efac}
+.deep{font-size:13.5px;line-height:2;color:#c8d3e0}
 .why{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 @media(max-width:700px){.why{grid-template-columns:1fr}}
-.why .step{background:#0a0f1a;border:1px solid #1c2739;border-radius:10px;padding:14px}
-.why .step .n{font-size:11px;font-weight:800;color:#4ade80;letter-spacing:1px}
-.why .step h3{font-size:13.5px;margin:6px 0;color:#fbbf24}
-.why .step p{font-size:12px;color:#a9b6c9;margin:0;line-height:1.85}
+.step{background:#0a0f1a;border:1px solid #1c2739;border-radius:10px;padding:14px}
+.step .n{font-size:11px;font-weight:800;color:#4ade80;letter-spacing:1px}
+.step h3{font-size:13.5px;margin:6px 0;color:#fbbf24}
+.step p{font-size:12px;color:#a9b6c9;margin:0;line-height:1.85}
 .grid6{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
 @media(max-width:700px){.grid6{grid-template-columns:1fr 1fr}}
 .feat{background:#0a0f1a;border:1px solid #1c2739;border-radius:10px;padding:13px}
 .feat b{font-size:12.8px;color:#e6edf3;display:block;margin-bottom:4px}
 .feat span{font-size:11px;color:#8fa3bf;line-height:1.7}
-.closing{text-align:center;padding:34px 24px;background:linear-gradient(160deg,#0a1a0e,#0a0f1a);border:1px solid #14532d;border-radius:14px;margin-bottom:14px}
-.closing .big{font-size:15px;line-height:2.1;color:#e6edf3}.closing .big b{color:#4ade80}
-.sign{font-size:12px;color:#8fa3bf;margin-top:18px}.sign b{color:#fbbf24}
+.chart{width:100%;height:250px;margin-top:6px}
+.check{font-size:13px;line-height:2.1;color:#cbd5e1}
+.check .yes{color:#4ade80;font-weight:700}.check .plan{color:#fbbf24;font-weight:700}
+.closing{text-align:center;padding:36px 24px;background:linear-gradient(160deg,#0a1a0e,#0a0f1a);border:1px solid #14532d;border-radius:14px;margin-bottom:14px}
+.closing .big{font-size:15.5px;line-height:2.1;color:#e6edf3}.closing .big b{color:#4ade80}
+.sign{font-size:12.5px;color:#8fa3bf;margin-top:18px;line-height:1.9}.sign b{color:#fbbf24}
 .btn{background:#059669;color:#fff;border:0;padding:11px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;margin:4px}
 .btn.ghost{background:transparent;border:1px solid #2b3c5a;color:#cbd5e1}
 </style></head><body>
 
 <div class="nav">
-    <span style="font-weight:800;color:#fff;padding:6px 8px;white-space:nowrap">龙门产业风洞</span>
-    <a href="index.html">① 今日话题</a><a href="town.html">🏘️ 各镇吃喝玩乐</a><a href="network.html">② 关系网</a><a href="who.html">③ 基本面</a><a href="choices.html">④ 五条路</a><a href="future.html">⑤ 未来</a><a href="windtunnel.html">⑥ 风洞</a><a href="blindspot.html">⑦ 被忽略</a><a href="report.html">⑧ 报告</a><a href="ending.html" class="on">⑨ 结语</a>
-  </div>
+  <span>龙门产业风洞</span>
+  <a href="index.html">① 今日话题</a><a href="town.html">🏘️ 各镇吃喝玩乐</a><a href="network.html">② 关系网</a><a href="who.html">③ 基本面</a><a href="choices.html">④ 五条路</a><a href="future.html">⑤ 未来</a><a href="windtunnel.html">⑥ 风洞</a><a href="blindspot.html">⑦ 被忽略</a><a href="report.html">⑧ 报告</a><a href="ending.html" class="on">⑨ 结语</a>
+</div>
 
 <div class="wrap">
   <div class="hero">
     <div class="kick">REGIONAL DECISION WIND TUNNEL</div>
     <h1>让龙门的每一个重大决策<br>先在风洞里跑一遍</h1>
-    <p>不是预测未来，是把假设摆到台面上，看系统怎么响应。</p>
+    <p>不是预测未来，是把假设摆到台面上，看系统怎么响应。<br>让绿水青山，一笔一笔算成金山银山。</p>
   </div>
 
   <div class="card">
     <h2>🌲 桥、道、床——三个县三种命门</h2>
-    <div class="quote">惠城的命门是<b>桥</b>——江北和江南，通勤天天过江。</div>
-    <div class="quote">博罗的命门是<b>道</b>——连着东莞，产业沿通道流进来。</div>
+    <div class="quote">惠城的命门是<b>桥</b>——江北江南，通勤天天过江，堵的是日常。</div>
+    <div class="quote">博罗的命门是<b>道</b>——连着东莞，产业顺着通道流进来。</div>
     <div class="quote">龙门的命门是<b>床</b>——25倍人流涌进来，却留不住人过夜。</div>
+    <div class="deep" style="margin-top:10px">三个县没有高低，只有"题不一样"。城区算通勤、工业县算通道、生态县算留宿——同一套风洞，换一个县，就换一道命门。</div>
+    <div id="cmpGdp" class="chart"></div>
+    <div id="cmpThird" class="chart"></div>
+  </div>
+
+  <div class="card">
+    <h2>🇨🇳 这件事，在"绿水青山就是金山银山"的蓝图里</h2>
+    <div class="deep">
+      数字中国、生态文明、乡村振兴与县域高质量发展，方向其实很清楚：好山好水要能变成老百姓摸得着的收入。<br><br>
+      对龙门这样森林覆盖率76%的生态县，关键不是"要不要保护生态"，而是<b style="color:#4ade80">怎么在守好生态的同时，让生态养得起人、留得住人</b>——多住一晚的民宿、卖出溢价的年桔、能接棒的农民画，都是"两山"转化的具体一笔。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>💡 我们为什么想做这件事</h2>
+    <div class="quote"><b>给做决策的人：</b>一个项目晚两年、一条雨季总塌方的山路、一股过于集中的周末客流，会怎样牵动全县？开工前先在风洞里压一压，比事后补救从容。</div>
+    <div class="quote"><b>给在龙门生活的人：</b>你上班的平陵、你吃饭的县城、你周末去的南昆山，都在这张网里。看懂它，就看懂了自己的日子和机会。</div>
+    <div class="deep" style="margin-top:8px">把复杂的账"讲成人话"，让决策者和普通人看的是同一套数——这是这件事最想做到的。</div>
+  </div>
+
+  <div class="card">
+    <h2>🧭 这台风洞，怎么用（三步）</h2>
+    <div class="why">
+      <div class="step"><div class="n">STEP 1</div><h3>看清现在</h3><p>从今日话题、关系网到基本面，先看龙门站在哪、靠什么吃饭。</p></div>
+      <div class="step"><div class="n">STEP 2</div><h3>拨一拨看响应</h3><p>改过夜率、达产进度、中断天数，当场看结果怎么变。</p></div>
+      <div class="step"><div class="n">STEP 3</div><h3>比较再拍板</h3><p>哪条路牵动最大、哪件事先做，把方案放在一起比。</p></div>
+    </div>
   </div>
 
   <div class="card">
     <h2>🎯 龙门两本账，三步棋</h2>
     <div class="why">
-      <div class="step"><div class="n">STEP 1</div><h3>把一日游变成过夜游</h3><p>民宿从夏天卖到四季，客单价拉回来。</p></div>
-      <div class="step"><div class="n">STEP 2</div><h3>让功能膜按时达产</h3><p>620条涂布线转起来，25.5%增速有着落。</p></div>
-      <div class="step"><div class="n">STEP 3</div><h3>给好东西变现通道</h3><p>年桔做品牌、农民画不再只靠冰箱贴。</p></div>
+      <div class="step"><div class="n">棋 1</div><h3>把一日游变成过夜游</h3><p>民宿从夏天卖到四季，客单价拉回来。</p></div>
+      <div class="step"><div class="n">棋 2</div><h3>让功能膜按时达产</h3><p>620条涂布线转起来，25.5%增速有着落。</p></div>
+      <div class="step"><div class="n">棋 3</div><h3>给好东西变现通道</h3><p>年桔做品牌、农民画不再只靠冰箱贴。</p></div>
     </div>
+  </div>
+
+  <div class="card">
+    <h2>📡 首页话题、各镇去处和当季农品，是怎么来的</h2>
+    <div class="deep">
+      前端是一个静态网页，本身不直接"刷全网"。它读到的，是每天<b style="color:#4ade80">汇总一次的公开信息快照</b>：政府工作报告与统计公报、各镇公开介绍、南方+/惠州日报等媒体，以及微博、抖音、头条等公开热榜，命中"龙门、南昆山、永汉"等本地关键词才收录。<br><br>
+      农品严格按当月真实时令挂出——10月只上胡须鸡、秋蜜、灵芝、高山茶、笋干，年桔标"挂果期、春节成熟"，夏季水果不出现。所有阅读、转发、点赞、想去人数，都标注为<b style="color:#fbbf24">按公开热度的合理估算，非平台后台真实统计</b>。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🚧 这只是一个开始：正式版要更扎实</h2>
+    <div class="check">
+      <span class="yes">✔ 已具备：</span>九页叙事、统一计算内核、可公开修改的参数、可复现的结果、数据来源标注。<br>
+      <span class="plan">▸ 计划中：</span>逐条产业链补齐证据、参数与原始来源一一对应、低证据关系做稳健性检验。<br>
+      <span class="plan">▸ 计划中：</span>接入过夜率/入住率等一手调研，让"一张床"从假设变成可验证的结论。<br>
+      <span class="plan">▸ 计划中：</span>更多公开数据自动校验，结论随数据更新，而不是写死在页面里。
+    </div>
+    <div class="deep" style="margin-top:10px;color:#94a3b8;font-size:12.5px">这里不打"现在多少分、将来多少分"的主观分数——只列清楚：哪些已经做扎实，哪些还要继续补。</div>
   </div>
 
   <div class="card">
     <h2>🧭 这台风洞能帮你看什么</h2>
     <div class="grid6">
       <div class="feat"><b>① 今日话题</b><span>最近24小时在聊什么</span></div>
-      <div class="feat"><b>② 一张床</b><span>25倍人流、客单价、永汉剪刀差</span></div>
-      <div class="feat"><b>③ 关系网</b><span>南昆山、广深客、年桔</span></div>
-      <div class="feat"><b>④ 基本面</b><span>217亿、两个背离、目标激进性</span></div>
-      <div class="feat"><b>⑤ 五条路</b><span>一张床、功能膜、温泉、农业、通道</span></div>
-      <div class="feat"><b>⑥ 未来</b><span>跑一万遍，看落在哪</span></div>
-      <div class="feat"><b>⑦ 风洞</b><span>塌方脉冲+恢复，不是慢性失血</span></div>
-      <div class="feat"><b>⑧ 被忽略</b><span>农民画、客单价、五倍目标</span></div>
-      <div class="feat"><b>⑨ 一页报告</b><span>把龙门讲清楚</span></div>
+      <div class="feat"><b>🏘️ 各镇吃喝玩乐</b><span>11镇街、当季农品</span></div>
+      <div class="feat"><b>② 关系网</b><span>南昆山、广深客、年桔</span></div>
+      <div class="feat"><b>③ 基本面</b><span>217亿、两个背离、目标激进性</span></div>
+      <div class="feat"><b>④ 五条路</b><span>一张床、功能膜、温泉、农业、通道</span></div>
+      <div class="feat"><b>⑤ 未来</b><span>跑很多遍，看落在哪</span></div>
+      <div class="feat"><b>⑥ 风洞</b><span>塌方脉冲+恢复，不是慢性失血</span></div>
+      <div class="feat"><b>⑦ 被忽略</b><span>农民画、客单价、五倍目标</span></div>
+      <div class="feat"><b>⑧ 一页报告</b><span>把龙门讲清楚</span></div>
     </div>
   </div>
 
@@ -88,7 +139,38 @@ body{margin:0;background:#080b12;color:#e6edf3;font:14px/1.7 -apple-system,"Ping
       <a class="btn" href="index.html">重新看一遍</a>
       <a class="btn ghost" href="windtunnel.html">🎲 你来当一次县长</a>
     </div>
-    <div class="sign">龙门产业决策风洞 · Demo &nbsp;|&nbsp; <b>张凌 博士</b></div>
+    <div class="sign">
+      <b>张凌 博士</b>（高校副教授·南粤优秀教师）独立完成，无基金资助，MIT 协议开源。<br>
+      欢迎各地复制到自己的区县，一起"先算后干"。
+    </div>
   </div>
 </div>
+
+<script>
+const axis={axisLabel:{color:'#64748b'},splitLine:{lineStyle:{color:'#1c2739'}}};
+// GDP 对比
+echarts.init(document.getElementById('cmpGdp')).setOption({
+ backgroundColor:'transparent',grid:{left:46,right:20,top:28,bottom:24},
+ title:{text:'三县 GDP（亿元，2025）',textStyle:{color:'#cbd5e1',fontSize:12.5},left:6,top:2},
+ xAxis:Object.assign({type:'category',data:['惠城','博罗','龙门'],axisLabel:{color:'#cbd5e1'}},{}),
+ yAxis:Object.assign({type:'value'},axis),
+ series:[{type:'bar',barWidth:38,data:[
+   {value:1203,itemStyle:{color:'#3b82f6'}},{value:1005,itemStyle:{color:'#22c55e'}},
+   {value:217.6,itemStyle:{color:'#a78bfa'}}],
+   label:{show:true,position:'top',color:'#e2e8f0',fontSize:11}}],
+ tooltip:{trigger:'axis'}
+});
+// 三产占比对比
+echarts.init(document.getElementById('cmpThird')).setOption({
+ backgroundColor:'transparent',grid:{left:46,right:20,top:28,bottom:24},
+ title:{text:'三县第三产业占比（%）',textStyle:{color:'#cbd5e1',fontSize:12.5},left:6,top:2},
+ xAxis:{type:'category',data:['惠城','博罗','龙门'],axisLabel:{color:'#cbd5e1'}},
+ yAxis:Object.assign({type:'value',max:80},axis),
+ series:[{type:'bar',barWidth:38,data:[
+   {value:70,itemStyle:{color:'#3b82f6'}},{value:34.7,itemStyle:{color:'#22c55e'}},
+   {value:50.5,itemStyle:{color:'#a78bfa'}}],
+   label:{show:true,position:'top',formatter:'{c}%',color:'#e2e8f0',fontSize:11}}],
+ tooltip:{trigger:'axis'}
+});
+</script>
 </body></html>
