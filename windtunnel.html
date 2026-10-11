@@ -24,6 +24,10 @@ h2{font-size:16px;margin:0 0 8px}
 .kpi{display:inline-block;text-align:center;width:31%;padding:8px 0;background:#0a0f1a;border-radius:10px;margin:1%}
 .kpi .v{font-size:18px;font-weight:800;color:#fbbf24}.kpi .l{font-size:10.5px;color:#94a3b8}
 .note{border-left:3px solid #38bdf8;background:#0a141f;border-radius:0 8px 8px 0;padding:9px 12px;margin-top:10px;font-size:12.5px;color:#bae6fd;line-height:1.85}
+.bridge{border-radius:11px;padding:13px 15px;margin:12px 0;font-size:12.5px;line-height:1.85}
+.b-orange{background:#1a1206;border:1px solid #f59e0b55;color:#fde68a}
+.likebar{display:flex;justify-content:center;margin:14px 0 4px;background:rgba(15,23,42,.96);border:1px solid #059669;border-radius:24px;padding:9px 20px;gap:22px}
+.likebar button{background:none;border:none;color:#e2e8f0;font-size:14px;cursor:pointer;font-family:inherit}
 </style></head><body>
 
 <div class="nav">
@@ -77,6 +81,13 @@ h2{font-size:16px;margin:0 0 8px}
       拨一下滑块就看到：这两件事任何一件掉链子，达标率会明显往下走。
     </div>
   </div>
+
+  <div class="bridge b-orange">🔍 <b>风洞压一压，决策者该追问什么？</b><br>雨季塌方是"突然断、慢慢恢复"，功能膜是"掉链子、全年受损"——两类风险性质不同，预案也该不同：一个要备抢通力量和短期缓冲，一个要盯投产节点和达产节奏。压测不是为了吓谁，而是让"万一"发生时，心里有底、手上有招。</div>
+
+  <div class="likebar">
+    <button onclick="likePage()">👍 <span id="pcount">0</span></button>
+    <button onclick="sharePage()">🔁 转给朋友</button>
+  </div>
 </div>
 <script>
 const daysS=document.getElementById('days'),filmS=document.getElementById('film'),delayS=document.getElementById('delay'),stayS=document.getElementById('stay');
@@ -114,5 +125,16 @@ function draw(){
 }
 [daysS,filmS,delayS,stayS].forEach(s=>s.oninput=draw);
 draw();
+
+// 点赞/转发（本机计数，不伪装全站）
+var lk="like_"+location.pathname,ln=parseInt(localStorage.getItem(lk)||"0");pcount.textContent=ln;
+function likePage(){ln++;localStorage.setItem(lk,ln);pcount.textContent=ln;}
+function sharePage(){
+ const m=document.createElement("div");
+ m.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";
+ m.onclick=()=>m.remove();
+ m.innerHTML='<div style="background:#0f172a;padding:20px;border-radius:14px;text-align:center"><div style="color:#fff;font-size:14px;margin-bottom:12px">截图二维码，发给朋友/群</div><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(location.href)+'" style="width:200px;height:200px;background:#fff;padding:8px;border-radius:8px"><div style="color:#94a3b8;font-size:12px;margin-top:12px">扫码打开</div></div>';
+ document.body.appendChild(m);navigator.clipboard&&navigator.clipboard.writeText(location.href);
+}
 </script>
 </body></html>

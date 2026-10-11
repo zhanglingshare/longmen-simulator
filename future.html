@@ -24,6 +24,11 @@ h1{font-size:22px;margin-bottom:4px}
 .guess{background:#131c2b;border-radius:10px;padding:14px;text-align:center;margin-top:10px}
 .guess input{width:100px;background:#0a0f1a;border:1px solid #334155;color:#fbbf24;border-radius:8px;padding:8px;text-align:center;font-size:16px;font-weight:700}
 .guess button{background:#059669;color:#fff;border:0;border-radius:8px;padding:8px 18px;font-weight:700;cursor:pointer;margin-top:8px}
+.bridge{border-radius:11px;padding:13px 15px;margin-bottom:12px;font-size:12.5px;line-height:1.85}
+.b-green{background:#0a1a12;border:1px solid #22c55e55;color:#bbf7d0}
+.b-orange{background:#1a1206;border:1px solid #f59e0b55;color:#fde68a}
+.likebar{display:flex;justify-content:center;margin:16px 0 6px;background:rgba(15,23,42,.96);border:1px solid #059669;border-radius:24px;padding:9px 20px;gap:22px}
+.likebar button{background:none;border:none;color:#e2e8f0;font-size:14px;cursor:pointer;font-family:inherit}
 </style>
 </head>
 <body>
@@ -61,6 +66,14 @@ h1{font-size:22px;margin-bottom:4px}
       最敏感的是<b style="color:#f97316">功能膜新材料</b>和<b style="color:#a78bfa">一张床·南昆山留宿</b>——一个管工业基本盘，一个管旅游能不能留住钱。这正是龙门的两本账：功能膜达产稳住规上工业，民宿留宿把客单价拉回来。
     </div>
   </div>
+
+  <div class="bridge b-green">🧭 <b>这一页，和你有什么关系？</b><br>未来不是命定的——你家民宿明年是满是闲、一罐蜂蜜卖什么价、年轻人回不回龙门，就藏在这几条路走成什么样里。模型把"可能"摊开，你心里也能有个底。</div>
+  <div class="bridge b-orange">🔍 <b>看这一页，决策者该追问什么？</b><br>中位数靠近 330 亿，是"假设五条路都走成"的结果。真正该问的是：哪条路一旦掉链子，整个分布会塌？答案是功能膜和留宿——资源和预案，该不该先压在这两本账上？</div>
+
+  <div class="likebar">
+    <button onclick="likePage()">👍 <span id="pcount">0</span></button>
+    <button onclick="sharePage()">🔁 转给朋友</button>
+  </div>
 </div>
 <script>
 const r=HT.run(42,10000);
@@ -86,19 +99,35 @@ echarts.init(document.getElementById('hist')).setOption({
   yAxis:{type:'value',axisLabel:{color:'#64748b'}},
   series:[{type:'bar',data:bins,itemStyle:{color:'#059669'}}]
 });
+// 龙卷风：逐个关掉驱动真实重跑（非硬编码），标签与统一模型一致
+const baseP50=r.p50;
+const TORN=[
+ {n:'生态农业品牌',off:{agriBrandOn:0},c:'#fbbf24'},
+ {n:'温泉康养',off:{springOn:0},c:'#f97316'},
+ {n:'南昆山留宿',off:{stayRate:12},c:'#a78bfa'},
+ {n:'融深融穗通道',off:{roadOn:0},c:'#38bdf8'},
+ {n:'功能膜新材料',off:{filmProgress:0},c:'#84cc16'}
+];
+const tv=TORN.map(t=>Math.max(0,+(baseP50-HT.run(43,6000,t.off).p50).toFixed(1)));
 echarts.init(document.getElementById('sens')).setOption({
   backgroundColor:'transparent',
-  grid:{left:90,right:30,top:10,bottom:20},
+  grid:{left:96,right:36,top:10,bottom:20},
   xAxis:{type:'value',axisLabel:{color:'#64748b'}},
-  yAxis:{type:'category',data:['低碳新能源','融深融穗','生态农业','温泉康养','南昆山民宿'],axisLabel:{color:'#cbd5e1',fontSize:11}},
-  series:[{type:'bar',data:[
-    {value:6,itemStyle:{color:'#84cc16'}},
-    {value:7,itemStyle:{color:'#38bdf8'}},
-    {value:11,itemStyle:{color:'#fbbf24'}},
-    {value:12,itemStyle:{color:'#f97316'}},
-    {value:19,itemStyle:{color:'#a78bfa'}}
-  ]}]
+  yAxis:{type:'category',data:TORN.map(t=>t.n),axisLabel:{color:'#cbd5e1',fontSize:11}},
+  series:[{type:'bar',data:tv.map((v,i)=>({value:v,itemStyle:{color:TORN[i].c}})),
+    label:{show:true,position:'right',color:'#cbd5e1',formatter:'{c}亿'}}]
 });
+
+// 点赞/转发（本机计数，不伪装全站）
+var lk="like_"+location.pathname,ln=parseInt(localStorage.getItem(lk)||"0");pcount.textContent=ln;
+function likePage(){ln++;localStorage.setItem(lk,ln);pcount.textContent=ln;}
+function sharePage(){
+ const m=document.createElement("div");
+ m.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";
+ m.onclick=()=>m.remove();
+ m.innerHTML='<div style="background:#0f172a;padding:20px;border-radius:14px;text-align:center"><div style="color:#fff;font-size:14px;margin-bottom:12px">截图二维码，发给朋友/群</div><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(location.href)+'" style="width:200px;height:200px;background:#fff;padding:8px;border-radius:8px"><div style="color:#94a3b8;font-size:12px;margin-top:12px">扫码打开</div></div>';
+ document.body.appendChild(m);navigator.clipboard&&navigator.clipboard.writeText(location.href);
+}
 </script>
 </body>
 </html>

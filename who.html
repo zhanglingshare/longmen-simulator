@@ -20,6 +20,11 @@ h2{font-size:16px;margin:0 0 10px}
 .deep{font-size:13px;line-height:2;color:#c8d3e0;margin-top:10px}
 .warn{border-left:3px solid #f59e0b;background:#1a1206;border-radius:0 8px 8px 0;padding:9px 12px;margin-top:10px;font-size:12.5px;color:#fcd34d;line-height:1.85}
 .src{font-size:11px;color:#5b6b82;margin-top:10px;line-height:1.8}
+.bridge{border-radius:11px;padding:13px 15px;margin:12px 0;font-size:12.5px;line-height:1.85}
+.b-green{background:#0a1a12;border:1px solid #22c55e55;color:#bbf7d0}
+.b-orange{background:#1a1206;border:1px solid #f59e0b55;color:#fde68a}
+.likebar{display:flex;justify-content:center;margin:14px 0 4px;background:rgba(15,23,42,.96);border:1px solid #059669;border-radius:24px;padding:9px 20px;gap:22px}
+.likebar button{background:none;border:none;color:#e2e8f0;font-size:14px;cursor:pointer;font-family:inherit}
 </style></head><body>
 
 <div class="nav">
@@ -68,7 +73,14 @@ h2{font-size:16px;margin:0 0 10px}
     </div>
   </div>
 
+  <div class="bridge b-green">🧭 <b>这些数字，和你有什么关系？</b><br>217 亿不是冷冰冰的总数——它是你在镇上开的店、山里种的果、温泉民宿里的一张张床。看看三块家底怎么分，就知道龙门靠什么吃饭、你靠什么吃饭。</div>
+  <div class="bridge b-orange">🔍 <b>看基本面，决策者该追问什么？</b><br>两个"背离"最值得盯：二产增 14.9%、规上工业却只增 5.1%；游客涨 8.5%、南昆山只涨 3.2%。数字背后是"靠什么在拉动、人到底去了哪"——这比单看总数，更能判断家底实不实。</div>
+
   <div class="src">数据来源：龙门县政府工作报告、统计公报公开数据。增速为不变价口径；模型参数为作者假设，非官方预测。</div>
+  <div class="likebar">
+    <button onclick="likePage()">👍 <span id="pcount">0</span></button>
+    <button onclick="sharePage()">🔁 转给朋友</button>
+  </div>
 </div>
 <script>
 const F=HT.FACTS;
@@ -104,5 +116,16 @@ echarts.init(document.getElementById('targetChart')).setOption({
     {value:25.5,itemStyle:{color:'#ef4444'}}
   ],barWidth:'45%',label:{show:true,position:'top',color:'#cbd5e1',formatter:'{c}%'}}]
 });
+
+// 点赞/转发（本机计数，不伪装全站）
+var lk="like_"+location.pathname,ln=parseInt(localStorage.getItem(lk)||"0");pcount.textContent=ln;
+function likePage(){ln++;localStorage.setItem(lk,ln);pcount.textContent=ln;}
+function sharePage(){
+ const m=document.createElement("div");
+ m.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";
+ m.onclick=()=>m.remove();
+ m.innerHTML='<div style="background:#0f172a;padding:20px;border-radius:14px;text-align:center"><div style="color:#fff;font-size:14px;margin-bottom:12px">截图二维码，发给朋友/群</div><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(location.href)+'" style="width:200px;height:200px;background:#fff;padding:8px;border-radius:8px"><div style="color:#94a3b8;font-size:12px;margin-top:12px">扫码打开</div></div>';
+ document.body.appendChild(m);navigator.clipboard&&navigator.clipboard.writeText(location.href);
+}
 </script>
 </body></html>
