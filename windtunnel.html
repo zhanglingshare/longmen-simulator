@@ -122,7 +122,7 @@ function draw(){
       markLine:{data:[{yAxis:100,label:{formatter:'正常',color:'#64748b'}}],lineStyle:{color:'#475569',type:'dashed'}}}]
   });
   const net=(HT.shockTour(D)*100).toFixed(1);
-  recText.innerHTML= D===0?'无中断，客流保持正常。':`中断${D}天，短期客流谷底约<b style="color:#f87171">${Math.round(Math.min(...data))}</b>，抢通后3-5周回正；折算冲击当年净客流损失约<b style="color:#fbbf24">${net}%</b>（与GDP同一口径），次年起回到增长趋势，模型保守地不假设长期口碑损失。`;
+  recText.innerHTML= D===0?'无中断，客流保持正常。':`中断${D}天，短期客流谷底约<b style="color:#f87171">${Math.round(Math.min(...data))}</b>，抢通后3-5周回正；折算冲击当年净客流损失约<b style="color:#fbbf24">${net}%</b>（与GDP同一口径），次年起回到增长趋势，模型保守地不假设长期口碑损失。（图中12周恢复曲线为示意形态，损失以模型口径为准）`;
 }
 [daysS,filmS,delayS,stayS].forEach(s=>s.oninput=draw);
 draw();

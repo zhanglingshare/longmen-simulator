@@ -52,7 +52,6 @@
         const ramp=ri>=0?FILM.ramp[Math.min(4,ri)]:0;
         const filmVA=FILM.invest*0.9*FILM.vaRate*ramp*(sc.filmProgress/100)*filmRes;
         const p2=BP.p2*Math.pow(1.05,y)+filmVA;
-        p2;
         // —— 一产：品牌溢价（互补于通道/旅游），量稳质升 ——
         const agriG=(sc.agriBrandOn?0.035*tourRes:0.008)*(sc.roadOn?1:0.5);
         p1=BP.p1*Math.pow(1+agriG,y)*(y===SHOCK_YEAR?(1-shockAgri(sc.disruptDays)):1)*(1+0.012*gauss(rng));
