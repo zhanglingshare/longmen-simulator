@@ -1,11 +1,12 @@
 {
   "schema_version": 2,
   "region": "longmen",
-  "updated": "2026-10-12 19:33",
-  "fetched_at": "2026-10-12 19:33",
+  "updated": "2026-10-13 07:51",
+  "fetched_at": "2026-10-13 07:51",
   "frequency": "每日更新一次",
-  "count": 13,
-  "note": "话题按编辑关注程度排序，标注关注档（高/较高/中）与来源级别；本页不展示平台后台真实阅读、转发、点赞数据。话题均来自公开渠道，每日更新。",
+  "count": 14,
+  "stats": [],
+  "note": "话题按编辑关注程度排序，标注关注档（高/较高/中）与来源级别；每条显示原报道时间、最近抓取与核验状态（官方原文或≥2独立来源=已核验，单源媒体/本地=待核实），缺失标「待核实」。本页不展示平台后台真实阅读、转发、点赞数据。话题均来自公开渠道，每日更新。",
   "items": [
     {
       "title": "龙门工业园明确2026目标：力争新引进项目25宗、总投资75亿元以上",
@@ -18,11 +19,13 @@
       "url": "https://www.longmen.gov.cn/hzlmcyzyy/gkmlpt/content/5/5855/mpost_5855998.html",
       "summary": "园区以前沿新材料、新能源、医药健康食品为主导，深化与深圳龙岗产业协作。",
       "published_at": null,
-      "fetched_at": "2026-10-12 19:33",
-      "verified_status": "pending"
+      "event_date": null,
+      "fetched_at": "2026-10-13 07:51",
+      "verified_status": "已核验",
+      "fate": null
     },
     {
-      "title": "第四届国际胶粘论坛举办，龙门功能膜已集聚68宗、总投资超140亿元",
+      "title": "第四届国际胶粘论坛举办，龙门功能膜已集聚61宗、涂布生产线超620条",
       "cat": "industry",
       "emoji": "🎞️",
       "tier": "较高",
@@ -30,10 +33,12 @@
       "live": false,
       "source": "龙门县人民政府",
       "url": "https://www.longmen.gov.cn/lmxrmzfmhwz/zwfw/ggfw/zsyz/zszx/content/mpost_5799286.html",
-      "summary": "功能性薄膜项目50宗、涂布生产线超620条，加快形成原膜—涂布—模切完整链条。",
+      "summary": "累计引进功能膜上下游产业项目61宗，加快形成原膜—涂布—模切完整链条，“华南膜城”品牌持续打响。",
       "published_at": null,
-      "fetched_at": "2026-10-12 19:33",
-      "verified_status": "pending"
+      "event_date": null,
+      "fetched_at": "2026-10-13 07:51",
+      "verified_status": "已核验",
+      "fate": null
     },
     {
       "title": "龙门温泉旅游热度攀升，特色康养游受青睐",
@@ -46,8 +51,10 @@
       "url": "https://www.longmen.gov.cn/lmxrmzfmhwz/zwgk/zwdt/zwyw/content/mpost_5864208.html",
       "summary": "度假区推出国潮奇妙游、亲子摸鱼、民俗表演等活动，康养度假体验更丰富。",
       "published_at": null,
-      "fetched_at": "2026-10-12 19:33",
-      "verified_status": "pending"
+      "event_date": null,
+      "fetched_at": "2026-10-13 07:51",
+      "verified_status": "已核验",
+      "fate": null
     },
     {
       "title": "功能膜新材料企业到龙门考察投资环境",
@@ -60,8 +67,10 @@
       "url": "https://www.longmen.gov.cn/lmxrmzfmhwz/zwfw/ggfw/zsyz/zszx/content/mpost_5859973.html",
       "summary": "9月24日东莞某功能膜企业高层到访，看好交通区位、园区配套与集群优势。",
       "published_at": null,
-      "fetched_at": "2026-10-12 19:33",
-      "verified_status": "pending"
+      "event_date": null,
+      "fetched_at": "2026-10-13 07:51",
+      "verified_status": "已核验",
+      "fate": null
     },
     {
       "title": "龙门农民画文创产业化提速，丝巾地毯礼盒等衍生品扩容",
@@ -74,8 +83,10 @@
       "url": "https://www.huizhou.gov.cn/zwgk/wgk/jggk/jytaxxgkzl/shijytabl/content/mpost_5829142.html",
       "summary": "多幅作品入选全国乡土绘画展，专项政策与政校企协同机制推动非遗IP转化。",
       "published_at": null,
-      "fetched_at": "2026-10-12 19:33",
-      "verified_status": "pending"
+      "event_date": null,
+      "fetched_at": "2026-10-13 07:51",
+      "verified_status": "已核验",
+      "fate": null
     },
     {
       "title": "龙门供销社国庆农特产品展销迎来客流高峰",
@@ -88,8 +99,10 @@
       "url": "https://www.longmen.gov.cn/lmxrmzfmhwz/zwgk/zwdt/content/mpost_5865965.html",
       "summary": "龙门丝苗米、南昆毛茶、龙门蜂蜜等整齐陈列，游客一站式购齐龙门手信。",
       "published_at": null,
-      "fetched_at": "2026-10-12 19:33",
-      "verified_status": "pending"
+      "event_date": null,
+      "fetched_at": "2026-10-13 07:51",
+      "verified_status": "已核验",
+      "fate": null
     },
     {
       "title": "国道G355线龙门龙华至油田段改建工程推进",
@@ -102,8 +115,10 @@
       "url": "https://www.longmen.gov.cn/hzlmggzyzx/gkmlpt/content/5/5839/mpost_5839947.html",
       "summary": "项目沿现状国道扩建、局部改新线，监理与检测招标陆续完成。",
       "published_at": null,
-      "fetched_at": "2026-10-12 19:33",
-      "verified_status": "pending"
+      "event_date": null,
+      "fetched_at": "2026-10-13 07:51",
+      "verified_status": "已核验",
+      "fate": null
     },
     {
       "title": "龙门启动农村公路危桥改建项目",
@@ -116,8 +131,10 @@
       "url": "https://www.huizhou.gov.cn/hzzyjy/gkmlpt/content/5/5854/post_5854260.html",
       "summary": "农村公路危桥改建项目施工招标计划发布，持续夯实山区出行安全基础。",
       "published_at": null,
-      "fetched_at": "2026-10-12 19:33",
-      "verified_status": "pending"
+      "event_date": null,
+      "fetched_at": "2026-10-13 07:51",
+      "verified_status": "已核验",
+      "fate": null
     },
     {
       "title": "惠州“粤菜师傅”厨艺技能大赛暨国庆美食嘉年华启幕",
@@ -130,8 +147,10 @@
       "url": "https://www.longmen.gov.cn/hzlmgxs/gkmlpt/content/5/5862/mpost_5862502.html",
       "summary": "龙门供销社携80余款农特产品参展，以“粤菜师傅”工程拓宽农产品展销与就业渠道。",
       "published_at": null,
-      "fetched_at": "2026-10-12 19:33",
-      "verified_status": "pending"
+      "event_date": null,
+      "fetched_at": "2026-10-13 07:51",
+      "verified_status": "已核验",
+      "fate": null
     },
     {
       "title": "环南昆山—罗浮山引领区国庆迎客约91万人次，过夜游客增长62%",
@@ -144,8 +163,10 @@
       "url": "https://i.ifeng.com/c/8x50aIXKknM",
       "summary": "过夜游客23万人次、旅游总收入4.6亿元，比2023年同期分别增长38%、62%、48%。",
       "published_at": null,
-      "fetched_at": "2026-10-12 19:33",
-      "verified_status": "pending"
+      "event_date": null,
+      "fetched_at": "2026-10-13 07:51",
+      "verified_status": "待核实",
+      "fate": null
     },
     {
       "title": "南昆罗浮双峰秀，南昆山生态游玩法上新",
@@ -158,8 +179,26 @@
       "url": "http://m.toutiao.com/group/7694083309307003435/",
       "summary": "观音潭、天堂顶、玻璃栈道、丛林穿越等项目人气旺，亲子与徒步体验多元。",
       "published_at": null,
-      "fetched_at": "2026-10-12 19:33",
-      "verified_status": "pending"
+      "event_date": null,
+      "fetched_at": "2026-10-13 07:51",
+      "verified_status": "待核实",
+      "fate": null
+    },
+    {
+      "title": "国庆后错峰正当时，南昆山温泉民宿推出特惠套餐",
+      "cat": "tourism",
+      "emoji": "🍂",
+      "tier": "中",
+      "srcLevel": "媒体报道",
+      "live": false,
+      "source": "抖音",
+      "url": "https://www.iesdouyin.com/share/video/7694860373091121062",
+      "summary": "南昆山温泉民宿推出错峰特惠，园林阳台房含双早、私汤公汤与泳池，秋日泡汤更清静实惠。",
+      "published_at": null,
+      "event_date": null,
+      "fetched_at": "2026-10-13 07:51",
+      "verified_status": "待核实",
+      "fate": null
     },
     {
       "title": "中药替代农药种出生态年桔，龙江镇试验园挂果长势良好",
@@ -172,8 +211,10 @@
       "url": "http://nyncj.huizhou.gov.cn/zwzc/xwzx/fpzx/content/mpost_5860139.html",
       "summary": "年桔树上青绿幼果正处挂果期、春节前后才成熟，生态种植试验稳步推进。",
       "published_at": null,
-      "fetched_at": "2026-10-12 19:33",
-      "verified_status": "pending"
+      "event_date": null,
+      "fetched_at": "2026-10-13 07:51",
+      "verified_status": "待核实",
+      "fate": null
     },
     {
       "title": "南昆山慕思嘉华温泉酒店推出国庆山野度假主题活动",
@@ -186,8 +227,10 @@
       "url": "https://m.huizhou.bendibao.com/xiuxian/113380.shtm",
       "summary": "国风雅集、古风闯关、花船游船、篝火晚会与草坪音乐会，吃住玩全包。",
       "published_at": null,
-      "fetched_at": "2026-10-12 19:33",
-      "verified_status": "pending"
+      "event_date": null,
+      "fetched_at": "2026-10-13 07:51",
+      "verified_status": "待核实",
+      "fate": null
     }
   ]
 }
