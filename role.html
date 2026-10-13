@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>龙门产业风洞 · 你在网里哪个位置</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#080b12;color:#e6edf3;font:14px/1.6 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.nav{position:sticky;top:0;z-index:50;display:flex;gap:5px;align-items:center;padding:9px 14px;background:rgba(8,11,18,.95);border-bottom:1px solid #1b2434;backdrop-filter:blur(8px);overflow-x:auto}
+.nav b{font-size:14px;margin-right:6px;flex:none}
+.nav a{background:#131c2b;color:#93a4bd;border:1px solid #22304a;padding:6px 12px;border-radius:20px;font-size:12.5px;text-decoration:none;white-space:nowrap;flex:none}
+.nav a.on{background:#15803d;border-color:#22c55e;color:#fff;font-weight:600}
+.wrap{max-width:1200px;margin:auto;padding:20px 16px}
+h1{font-size:22px;margin-bottom:4px}
+.sub{color:#8fa3bf;font-size:13px;margin-bottom:16px}
+.roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:16px}
+.rc{background:#0e1523;border:1px solid #1c2739;border-radius:10px;padding:14px;cursor:pointer;text-align:center;transition:.2s}
+.rc:hover{border-color:#22c55e}
+.rc.on{border-color:#22c55e;background:#0f1f18;box-shadow:0 0 12px rgba(34,197,94,.15)}
+.rc .i{font-size:28px}
+.rc .t{font-size:14px;font-weight:700;margin-top:4px}
+.rc .s{font-size:11px;color:#7d8fa8;margin-top:2px}
+.grid2{display:grid;grid-template-columns:1.2fr 1fr;gap:14px}
+@media(max-width:800px){.grid2{grid-template-columns:1fr}}
+.card{background:#0e1523;border:1px solid #1c2739;border-radius:10px;padding:14px;margin-bottom:10px}
+.card b{font-size:13px;color:#cbd5e1}
+.mut{color:#64748b;font-size:12px}
+.worry{background:#1a1015;border-left:3px solid #f87171;padding:8px 10px;margin:6px 0;border-radius:4px;font-size:12.5px;color:#fca5a5}
+.chk{display:flex;gap:8px;align-items:flex-start;padding:8px;border:1px solid #1c2739;border-radius:6px;margin:6px 0;cursor:pointer;transition:.15s}
+.chk:hover{border-color:#22c55e}
+.chk.on{border-color:#22c55e;background:#0f1f18}
+.chk input{margin-top:3px}
+.chk .t{font-size:13px;font-weight:600;color:#e6edf3}
+.chk .d{font-size:12px;color:#8fa3bf;margin:2px 0}
+.chk .g{font-size:11px;color:#4ade80}
+.cmp{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #1c2739;font-size:12.5px}
+.cmp .l{color:#8fa3bf}
+.cmp .r.cy{color:#fbbf24;font-weight:600}
+.met{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #1c2739;font-size:12.5px}
+.met .n{color:#8fa3bf}
+.met .a{color:#94a3b8}
+.met .b{color:#4ade80;font-weight:700}
+svg{width:100%;height:auto;background:radial-gradient(ellipse at 50% 45%,#0a1626,#060910);border-radius:10px}
+.disc{margin-top:16px;font-size:11px;color:#5b6b8b;line-height:1.6;padding:10px;background:#0a0f1a;border-radius:8px}
+</style></head><body>
+
+<div class="nav">
+  <b>龙门产业风洞</b>
+  <a href="index.html">① 今日话题</a>
+  <a href="town.html">各镇吃喝玩乐</a>
+  <a href="network.html">② 世界怎么长</a>
+  <a href="role.html" class="on">🎭 你在网里</a>
+  <a href="who.html">③ 基本面</a>
+  <a href="choices.html">④ 五条路</a>
+  <a href="future.html">⑤ 未来</a>
+  <a href="windtunnel.html">⑥ 风洞</a>
+  <a href="blindspot.html">⑦ 忽略了什么</a>
+  <a href="report.html">⑧ 报告</a>
+  <a href="ending.html">⑨ 结语</a>
+</div>
+
+<div class="wrap">
+  <h1>🌲 你在龙门这张网里，是哪个点？</h1>
+  <p class="sub">认领一种活法 → 看你的位置 → 你担心什么 → 勾个桥，看结构怎么变</p>
+
+  <div class="roles" id="roleBox"></div>
+
+  <div class="grid2">
+    <div class="card">
+      <b>你的局部网络</b> <span class="mut" id="egoTip">先选一种活法</span>
+      <svg id="svg" viewBox="0 0 800 600"></svg>
+    </div>
+    <div>
+      <div class="card"><b>我的处境</b><div id="posBox"></div></div>
+      <div class="card"><b>我可能在担心什么</b><div id="worBox"></div></div>
+      <div class="card"><b>可能存在哪些机会</b><span class="mut"> 勾选看结构变化</span><div id="chBox"></div></div>
+      <div class="card"><b>结构指标 · 搭桥前 → 搭桥后</b><div id="metBox"></div></div>
+    </div>
+  </div>
+
+  <div class="disc"><b>边界声明</b>：本页为<b>静态结构估算</b>——按公开镇街/产业关系重算连接数，不推演时间、不估算产值。不是预测。<br>
+  数据来源：龙门县统计公报、管委会公开报告、南方+/惠州日报。</div>
+</div>
+
+<script>
+const NODES=[
+{id:"nk",name:"南昆山",x:200,y:150,t:"tour"},
+{id:"yh",name:"永汉",x:300,y:250,t:"tour"},
+{id:"dp",name:"地派",x:150,y:350,t:"tour"},
+{id:"lt",name:"龙城",x:450,y:300,t:"city"},
+{id:"ll",name:"龙江",x:550,y:200,t:"agri"},
+{id:"lt2",name:"龙潭",x:350,y:450,t:"agri"},
+{id:"mz",name:"麻榨",x:200,y:450,t:"agri"},
+{id:"pt",name:"平陵",x:500,y:400,t:"ind"},
+{id:"lt3",name:"龙田",x:400,y:200,t:"agri"},
+{id:"lt4",name:"蓝田瑶族乡",x:600,y:100,t:"tour"},
+{id:"njj",name:"南昆山民宿",x:180,y:100,t:"tour"},
+{id:"wq",name:"温泉度假村",x:280,y:200,t:"tour"},
+{id:"ng",name:"年桔基地",x:550,y:250,t:"agri"},
+{id:"lm",name:"林下经济",x:300,y:400,t:"agri"},
+{id:"rx",name:"生态工业",x:520,y:350,t:"ind"},
+{id:"w1",name:"游客",x:250,y:180,t:"people"},
+{id:"w2",name:"县城居民",x:450,y:350,t:"people"},
+{id:"w3",name:"农户",x:400,y:450,t:"people"},
+{id:"w4",name:"返乡青年",x:500,y:150,t:"people"},
+];
+const EDGES=[
+["nk","yh"],["nk","njj"],["yh","wq"],["yh","w1"],
+["dp","nk"],["dp","wq"],
+["lt","w2"],["lt","pt"],["lt","rx"],
+["ll","ng"],["ll","lt4"],
+["lt2","lm"],["lt2","mz"],
+["mz","lt2"],["pt","rx"],["pt","lt"],
+["lt3","ng"],["lt3","ll"],
+["lt4","w4"],["ng","w3"],["lm","w3"],
+["w1","nk"],["w2","lt"],["w3","ll"],["w4","lt4"],
+["wq","dp"],["njj","nk"],["rx","pt"],
+];
+const NM={};NODES.forEach((n,i)=>NM[n.id]=i);
+const EI=EDGES.map(e=>[NM[e[0]],NM[e[1]]]).filter(e=>e[0]!=null&&e[1]!=null);
+const COLORS={tour:"#a78bfa",agri:"#84cc16",ind:"#22c55e",city:"#3b82f6",people:"#f97316"};
+
+const ROLES=[
+{k:"tour",i:"♨️",t:"民宿老板",s:"永汉/南昆山这一层",
+ nodes:["nk","yh","njj","wq","w1"],
+ worry:["夏天周末满房，冬天工作日空。","广州深圳客人来两天就走，过夜率不高。","民宿越开越多，价格战开始了。"],
+ opp:[{t:"南昆山-永汉温泉连线",d:"爬山+泡汤玩两天",g:"过夜率+1"},
+      {t:"冬季温泉套餐",d:"周末全家来",g:"淡季入住+1"},
+      {t:"小红书达人探店",d:"口碑传播",g:"曝光+1"}]},
+{k:"agri",i:"🍊",t:"果农/茶农",s:"年桔、竹笋、蜂蜜这一层",
+ nodes:["ll","ng","lt3","w3","lm"],
+ worry:["龙门年桔要到春节前后才熟，现在挂果期。","好东西运出去，路远成本高。","年轻人不愿意回来种地。"],
+ opp:[{t:"年桔品牌化",d:"从卖果到卖品牌",g:"单价+1"},
+      {t:"采摘体验游",d:"城里人山里摘果",g:"额外收入+1"},
+      {t:"冷链出山",d:"笋干蜂蜜卖到大湾区",g:"销路+1"}]},
+{k:"ind",i:"🏭",t:"生态企业",s:"平陵产业园这一层",
+ nodes:["pt","rx","lt"],
+ worry:["龙门工业基础薄，产业链短。","离广州深圳远，物流成本高。","好人才不愿意来山区。"],
+ opp:[{t:"接大湾区生态工业外溢",d:"把无污染企业引进来",g:"产业链+1"},
+      {t:"县域物流补短板",d:"货出得去",g:"物流成本-1"},
+      {t:"本地技能培训",d:"留住人",g:"就业+1"}]},
+{k:"people",i:"🏘️",t:"县城居民",s:"龙城街上过日子的人",
+ nodes:["lt","w2"],
+ worry:["县城就这么大，买东西要跑惠州。","孩子读书、老人看病资源不够。","年轻人都往惠州深圳走了。"],
+ opp:[{t:"县城商业升级",d:"在家门口有地方逛",g:"消费+1"},
+      {t:"医疗教育补短板",d:"不用跑大城市",g:"留人+1"},
+      {t:"乡村振兴示范点",d:"环境更好",g:"幸福感+1"}]},
+{k:"youth",i:"🎓",t:"返乡青年",s:"回到龙门创业的年轻人",
+ nodes:["lt4","w4","nk"],
+ worry:["回来能做什么？民宿已经卷了。","流量不稳定，夏天忙冬天闲。","家人不理解为什么回来。"],
+ opp:[{t:"农旅短视频",d:"把龙门拍成内容",g:"粉丝+1"},
+      {t:"农产品直播",d:"年桔蜂蜜直接卖",g:"销量+1"},
+      {t:"瑶族文化体验",d:"差异化玩法",g:"独特性+1"}]},
+];
+
+let picked={};
+function nIdx(rk){return ROLES.find(r=>r.k===rk).nodes.map(n=>NM[n]).filter(i=>i!=null)}
+function ego(i){
+  const rs=ROLES[i];const idx=new Set(nIdx(rs.k));
+  const hotE=new Set(EI.map((e,k)=>k).filter(k=>idx.has(EI[k][0])||idx.has(EI[k][1])));
+  let h="";
+  EI.forEach((e,k)=>{const a=NODES[e[0]],b=NODES[e[1]];const hot=hotE.has(k);
+    h+=`<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="${hot?COLORS[rs.k]:'#1e2b40'}" stroke-width="${hot?1.8:.7}" opacity="${hot?.9:.3}"/>`;});
+  NODES.forEach((n,j)=>{const on=idx.has(j);const r=on?10:5;
+    h+=`<circle cx="${n.x}" cy="${n.y}" r="${r}" fill="${on?COLORS[n.t]:'#2a3a52'}" opacity="${on?1:.35}"/>`;
+    if(on)h+=`<text x="${n.x}" y="${n.y+r+12}" text-anchor="middle" font-size="10" fill="#cbd5e1">${n.name}</text>`;});
+  document.getElementById("svg").innerHTML=h;
+  document.getElementById("egoTip").textContent=rs.t+" · 关注 "+idx.size+" 个主体，"+hotE.size+" 条关系";
+}
+function pos(i){const rs=ROLES[i];const idx=nIdx(rs.k);
+  const deg=idx.map(j=>EI.filter(e=>e[0]===j||e[1]===j).length);
+  const avg=deg.reduce((a,b)=>a+b,0)/Math.max(deg.length,1);
+  const allAvg=(2*EI.length)/NODES.length;
+  document.getElementById("posBox").innerHTML=[["主体数",idx.length+" 个"],["平均连接",avg.toFixed(1)+" 条"],["全网均值",allAvg.toFixed(1)+" 条"],["你的连接是全网",(avg/allAvg).toFixed(1)+"倍"]].map(r=>`<div class="cmp"><span class="l">${r[0]}</span><span class="r cy">${r[1]}</span></div>`).join("");}
+function worry(i){document.getElementById("worBox").innerHTML=ROLES[i].worry.map(w=>`<div class="worry">${w}</div>`).join("");}
+function opp(i){const b=document.getElementById("chBox");b.innerHTML="";
+  ROLES[i].opp.forEach((o,oi)=>{const d=document.createElement("div");
+    d.className="chk"+(picked[i+"_"+oi]?" on":"");
+    d.innerHTML=`<input type="checkbox" ${picked[i+"_"+oi]?"checked":""}><div><div class="t">${o.t}</div><div class="d">${o.d}</div><div class="g">结构变化：${o.g}</div></div>`;
+    const inp=d.querySelector("input");
+    d.onclick=ev=>{if(ev.target!==inp)inp.checked=!inp.checked;picked[i+"_"+oi]=inp.checked;d.classList.toggle("on",inp.checked);metric(i)};
+    b.appendChild(d);});}
+function metric(i){const n=Object.keys(picked).filter(k=>k.startsWith(i+"_")&&picked[k]).length;
+  document.getElementById("metBox").innerHTML=[["跨板块连接","基线",`+${n} 条`],["链条密度","基线",n>=2?"明显提升":n>=1?"一点":"无变化"],["替代链路","—",`+${n} 条`]].map(r=>`<div class="met"><span class="n">${r[0]}</span><span><span class="a">${r[1]}</span> → <span class="b">${r[2]}</span></span></div>`).join("")+`<div class="mut" style="margin-top:6px">静态结构重算，不推演时间</div>`;}
+function pick(i){ego(i);pos(i);worry(i);opp(i);metric(i);
+  document.querySelectorAll("#roleBox .rc").forEach((el,k)=>el.classList.toggle("on",k===i));}
+const rb=document.getElementById("roleBox");
+ROLES.forEach((r,i)=>{const d=document.createElement("div");d.className="rc";
+  d.innerHTML=`<div class="i">${r.i}</div><div class="t">${r.t}</div><div class="s">${r.s}</div>`;
+  d.onclick=()=>pick(i);rb.appendChild(d);});
+pick(0);
+</script></body></html>
