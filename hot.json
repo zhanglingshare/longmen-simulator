@@ -1,8 +1,8 @@
 {
   "schema_version": 2,
   "region": "longmen",
-  "updated": "2026-10-25 07:29",
-  "fetched_at": "2026-10-25 07:29",
+  "updated": "2026-10-26 07:25",
+  "fetched_at": "2026-10-26 07:25",
   "frequency": "每日更新一次",
   "count": 9,
   "stats": [
@@ -16,91 +16,47 @@
   "note": "话题按编辑关注程度排序，标注关注档（高/较高/中）与来源级别；每条显示原报道时间、最近抓取与核验状态（官方原文或≥2独立来源=已核验，单源媒体/本地=待核实），缺失标「待核实」。本页不展示平台后台真实阅读、转发、点赞数据。话题均来自公开渠道，每日更新。",
   "items": [
     {
-      "title": "市县联动开展白沙河水库水生生物增殖放流，230余万尾本土鱼苗入库",
+      "title": "龙门县召开第四次全国农业普查领导小组会议暨清查摸底工作推进会",
       "cat": "agriculture",
-      "emoji": "🐟",
+      "emoji": "📊",
       "tier": "较高",
       "srcLevel": "官方发布",
       "live": false,
       "source": "龙门县人民政府·政务动态",
-      "url": "https://www.longmen.gov.cn/lmxrmzfmhwz/zwgk/zwdt/content/mpost_5878505.html",
-      "summary": "10月21日，惠州市渔业研究推广中心牵头，在龙门县白沙河水库组织开展2026年中央农业生态资源保护—水生生物增殖放流活动；本轮全市4座水库共投放鳙鱼、光倒刺鲃、广东鲂、鲮鱼等本土区域性鱼种230余万尾，兼顾水质净化与生态修复。",
-      "published_at": "2026-10-23",
+      "url": "https://www.longmen.gov.cn/lmxrmzfmhwz/zwgk/zwdt/content/mpost_5876342.html",
+      "summary": "10月21日，龙门县召开第四次全国农业普查领导小组第二次全体会议暨清查摸底工作推进会，县委副书记、县长王洋出席并讲话。会议强调要提高政治站位，摸清农业家底，以高质量普查为乡村振兴和农业品牌建设夯实数据基础。",
+      "published_at": "2026-10-21",
       "event_date": "2026-10-21",
-      "fetched_at": "2026-10-25 07:29",
+      "fetched_at": "2026-10-26 07:25",
       "verified_status": "已核验",
       "fate": {
         "kind": "info",
         "ident": "agriculture",
-        "objects": "库区生态、渔民",
+        "objects": "农户与农业主体",
         "direction": "利好",
-        "assumption": "放流数量为官方公开口径"
+        "assumption": "会议信息以官方发布为准"
       }
     },
     {
-      "title": "进舱加压、吸氧修复：龙门县第二人民医院高压氧科开科，补齐康复诊疗短板",
+      "title": "南昆山联合开展校园周边食品安全专项检查，守护师生“舌尖上的安全”",
       "cat": "livelihood",
-      "emoji": "🏥",
+      "emoji": "🍎",
       "tier": "较高",
       "srcLevel": "官方发布",
       "live": false,
-      "source": "龙门县人民政府·政务公开",
-      "url": "https://www.longmen.gov.cn/gkmlpt/content/5/5876/post_5876181.html?jump=true",
-      "summary": "作为龙门县民生实事之一，龙门县第二人民医院（永汉镇中心卫生院）高压氧科已于10月8日揭牌开科，崭新的大型高压氧舱投用，为脑卒中后康复、眩晕耳鸣等患者提供“进舱加压、吸氧修复”诊疗，补齐县域康复诊疗短板。",
-      "published_at": "2026-10-21",
-      "event_date": "2026-10-08",
-      "fetched_at": "2026-10-25 07:29",
+      "source": "龙门县人民政府·政务动态",
+      "url": "https://www.longmen.gov.cn/lmxrmzfmhwz/zwgk/zwdt/content/mpost_5878430.html",
+      "summary": "10月13日，南昆山管委会联合市场监督管理所对学校周边食品经营店铺及药店开展专项检查；近两个月累计开展检查20余次、覆盖60余间经营商家，以部门联动之力筑牢食品药品安全防线。",
+      "published_at": "2026-10-23",
+      "event_date": "2026-10-13",
+      "fetched_at": "2026-10-26 07:25",
       "verified_status": "已核验",
       "fate": {
         "kind": "info",
         "ident": "livelihood",
-        "objects": "县域患者",
-        "direction": "利好",
-        "assumption": "科室信息以官方发布为准"
-      }
-    },
-    {
-      "title": "金秋传暖意 银发沐温情：龙城街道联合龙门县税务局开展重阳敬老共建活动",
-      "cat": "gossip",
-      "emoji": "🌼",
-      "tier": "较高",
-      "srcLevel": "官方发布",
-      "live": false,
-      "source": "龙门县人民政府·政务动态",
-      "url": "https://www.longmen.gov.cn/lmxrmzfmhwz/zwgk/zwdt/content/mpost_5878554.html",
-      "summary": "10月23日，龙城街道城内社区新时代文明实践站联合国家税务总局龙门县税务局开展重阳敬老共建活动，龙门县龙城市场监督管理所、街道社工站协助参与，为长者送上祝福与暖心服务，践行“我为群众办实事”。",
-      "published_at": "2026-10-24",
-      "event_date": "2026-10-23",
-      "fetched_at": "2026-10-25 07:29",
-      "verified_status": "已核验",
-      "fate": {
-        "kind": "life",
-        "ident": "gossip",
-        "objects": "老年居民",
+        "objects": "师生与游客",
         "direction": "中性",
-        "assumption": "活动信息以官方发布为准"
-      }
-    },
-    {
-      "title": "农民画进社区 童心绘出幸福色：文艺赋美乡村惠民系列活动龙门专场开讲",
-      "cat": "gossip",
-      "emoji": "🎨",
-      "tier": "较高",
-      "srcLevel": "官方发布",
-      "live": false,
-      "source": "龙门县人民政府·政务动态",
-      "url": "https://www.longmen.gov.cn/lmxrmzfmhwz/zwgk/zwdt/content/mpost_5878562.html",
-      "summary": "10月24日下午，2026年惠州市“文艺赋美乡村”惠民系列活动（龙门专场）·龙门农民画培训在东郊场社区开展，活动由惠州市文化广电旅游体育局指导、惠州市文化馆与龙门县文化广电旅游体育局主办，让民间艺术走进社区、走进孩子身边。",
-      "published_at": "2026-10-24",
-      "event_date": "2026-10-24",
-      "fetched_at": "2026-10-25 07:29",
-      "verified_status": "已核验",
-      "fate": {
-        "kind": "life",
-        "ident": "gossip",
-        "objects": "社区居民、青少年",
-        "direction": "中性",
-        "assumption": "活动信息以官方发布为准"
+        "assumption": "检查信息以官方发布为准"
       }
     },
     {
@@ -112,10 +68,10 @@
       "live": false,
       "source": "惠州市人民政府",
       "url": "https://www.huizhou.gov.cn/zwgk/hzsz/xqyw/content/post_5871287.html",
-      "summary": "龙门县坚定不移实施工业强县战略，将惠州龙门产业园区作为县域工业发展主阵地、经济增长主引擎，锚定功能膜新材料、新能源、医药健康食品三大主导产业，五年来园区累计新签约项目147宗、总投资278亿元，累计入园企业267家、总投资超379亿元，正全力打造“湾区龙门·华南膜城”。",
+      "summary": "龙门县坚定不移实施工业强县战略，锚定功能膜新材料、新能源、医药健康食品三大主导产业，五年来园区累计新签约项目147宗、总投资278亿元，累计入园企业267家、总投资超379亿元，全力打造“湾区龙门·华南膜城”。",
       "published_at": "2026-10-14",
       "event_date": "2026",
-      "fetched_at": "2026-10-25 07:29",
+      "fetched_at": "2026-10-26 07:25",
       "verified_status": "已核验",
       "fate": {
         "kind": "info",
@@ -126,29 +82,117 @@
       }
     },
     {
-      "title": "龙城街道送安全上门：外卖骑手与老年居民同堂学交规",
-      "cat": "livelihood",
-      "emoji": "🛵",
+      "title": "龙田镇开展扫黑除恶主题宣传活动，筑牢基层平安防线",
+      "cat": "city",
+      "emoji": "🛡️",
       "tier": "较高",
       "srcLevel": "官方发布",
       "live": false,
       "source": "龙门县人民政府·政务动态",
-      "url": "https://www.longmen.gov.cn/lmxrmzfmhwz/zwgk/zwdt/content/mpost_5878558.html",
-      "summary": "龙城街道开展交通安全宣传培训，工作人员结合本地近期典型交通事故案例，用通俗语言讲解闯红灯、逆向行驶、不戴头盔等违法行为的后果，针对外卖骑手与中老年群体出行特点精准提醒，从源头筑牢出行安全防线。",
-      "published_at": "2026-10-24",
-      "event_date": "2026-10-24",
-      "fetched_at": "2026-10-25 07:29",
+      "url": "https://www.longmen.gov.cn/lmxrmzfmhwz/zwgk/zwdt/content/mpost_5878299.html",
+      "summary": "10月21日，龙田镇平安法治办联合辖区派出所、村网格员及驻村工作队，在石龙头村委开展扫黑除恶主题宣传活动，采取集中宣讲、面对面答疑、以案释法等形式，切实提升群众认知度与参与度。",
+      "published_at": "2026-10-23",
+      "event_date": "2026-10-21",
+      "fetched_at": "2026-10-26 07:25",
       "verified_status": "已核验",
       "fate": {
         "kind": "info",
-        "ident": "livelihood",
-        "objects": "骑手与老年居民",
+        "ident": "city",
+        "objects": "辖区群众",
         "direction": "中性",
-        "assumption": "培训信息以官方发布为准"
+        "assumption": "活动信息以官方发布为准"
       }
     },
     {
-      "title": "县域副中心添便民窗口：龙门县政务服务中心永汉分中心打通服务“最后一公里”",
+      "title": "巧手悦生活 匠心润芳华：龙城街道太平门社区开展国企退休职工手工体验活动",
+      "cat": "gossip",
+      "emoji": "🖐️",
+      "tier": "较高",
+      "srcLevel": "官方发布",
+      "live": false,
+      "source": "龙门县人民政府·政务动态",
+      "url": "https://www.longmen.gov.cn/lmxrmzfmhwz/zwgk/zwdt/content/mpost_5878271.html",
+      "summary": "10月22日，龙城街道太平门社区在未来社区活动室开展国企退休职工手工体验活动，丰富退休职工精神文化生活，帮助拓宽社交圈、拉近邻里距离，营造互助和睦的社区氛围。",
+      "published_at": "2026-10-23",
+      "event_date": "2026-10-22",
+      "fetched_at": "2026-10-26 07:25",
+      "verified_status": "已核验",
+      "fate": {
+        "kind": "life",
+        "ident": "gossip",
+        "objects": "国企退休职工",
+        "direction": "中性",
+        "assumption": "活动信息以官方发布为准"
+      }
+    },
+    {
+      "title": "联动执法抓扬尘 精准管控护蓝天：县城管执法局开展扬尘污染联合整治",
+      "cat": "city",
+      "emoji": "🌤️",
+      "tier": "较高",
+      "srcLevel": "官方发布",
+      "live": false,
+      "source": "龙门县人民政府·政务动态",
+      "url": "https://www.longmen.gov.cn/lmxrmzfmhwz/zwgk/zwdt/content/mpost_5878241.html",
+      "summary": "按照县委、县政府大气污染防治和扬尘整治工作部署，县城管执法局联合交通运输局、公安交警大队、市生态环境局龙门分局及平陵执法队，聚焦重点线路扬尘污染源，在S259沿线开展扬尘污染联合执法排查整治，源头管控与路面查处同步推进。",
+      "published_at": "2026-10-23",
+      "event_date": "2026-10-23",
+      "fetched_at": "2026-10-26 07:25",
+      "verified_status": "已核验",
+      "fate": {
+        "kind": "info",
+        "ident": "city",
+        "objects": "沿线群众与环境",
+        "direction": "中性",
+        "assumption": "行动信息以官方发布为准"
+      }
+    },
+    {
+      "title": "幼儿园到龙门县博物馆开展研学文化实践，小小“文物修复师”上线",
+      "cat": "gossip",
+      "emoji": "🏺",
+      "tier": "较高",
+      "srcLevel": "官方发布",
+      "live": false,
+      "source": "龙门县人民政府·政务动态",
+      "url": "https://www.longmen.gov.cn/lmxrmzfmhwz/zwgk/zwdt/content/mpost_5877950.html",
+      "summary": "孩子们在老师和讲解员带领下参观一楼历史文化陈列展厅，了解龙门历史文化与民俗风情，随后到二楼活动教室参加文物修复手工体验、扮演“小小文物修复师”，让幼儿感受家乡历史文化魅力、增强文物保护意识。",
+      "published_at": "2026-10-23",
+      "event_date": "2026-10-23",
+      "fetched_at": "2026-10-26 07:25",
+      "verified_status": "已核验",
+      "fate": {
+        "kind": "life",
+        "ident": "gossip",
+        "objects": "青少年儿童",
+        "direction": "中性",
+        "assumption": "活动信息以官方发布为准"
+      }
+    },
+    {
+      "title": "金秋“泡汤”正当时：龙门温泉旅游热度攀升，特色康养游受青睐",
+      "cat": "tourism",
+      "emoji": "♨️",
+      "tier": "较高",
+      "srcLevel": "官方发布",
+      "live": false,
+      "source": "龙门县人民政府·政务公开",
+      "url": "https://www.longmen.gov.cn/gkmlpt/content/5/5864/post_5864480.html?jump=true",
+      "summary": "依托优质天然温泉资源，龙门各大温泉酒店、度假区以“温泉+”多元业态持续释放文旅消费潜力，吸引大批游客泡汤休闲、康养度假；金秋气温渐凉，温泉康养游热度延续、假期满房频现。",
+      "published_at": "2026-10-08",
+      "event_date": "2026-10",
+      "fetched_at": "2026-10-26 07:25",
+      "verified_status": "已核验",
+      "fate": {
+        "kind": "life",
+        "ident": "tourism",
+        "objects": "温泉游客",
+        "direction": "中性",
+        "assumption": "热度为公开渠道合理估算"
+      }
+    },
+    {
+      "title": "县域副中心添便民窗口：龙门县政务服务中心永汉分中心投用",
       "cat": "livelihood",
       "emoji": "🏛️",
       "tier": "较高",
@@ -156,10 +200,10 @@
       "live": false,
       "source": "龙门县人民政府·政务要闻",
       "url": "https://www.longmen.gov.cn/gkmlpt/content/5/5876/mpost_5876180.html",
-      "summary": "龙门县政务服务中心永汉分中心投用，宽敞明亮的大厅设置16个业务服务窗口，集中受理公安、市场监管、人社、社保、医保、卫健、残联、民政八大类政务服务事项，覆盖群众日常办事需求，把服务送到县域副中心居民家门口。",
+      "summary": "龙门县政务服务中心永汉分中心设置16个业务服务窗口，集中受理公安、市场监管、人社、社保、医保、卫健、残联、民政八大类政务服务事项，把服务送到县域副中心居民家门口。",
       "published_at": "2026-10-21",
       "event_date": "2026-10-16",
-      "fetched_at": "2026-10-25 07:29",
+      "fetched_at": "2026-10-26 07:25",
       "verified_status": "已核验",
       "fate": {
         "kind": "info",
@@ -167,50 +211,6 @@
         "objects": "永汉及周边居民",
         "direction": "利好",
         "assumption": "窗口信息以官方发布为准"
-      }
-    },
-    {
-      "title": "人民银行惠州市分行赴龙门县开展县域国库服务座谈，畅通财税务库银联动",
-      "cat": "city",
-      "emoji": "🤝",
-      "tier": "较高",
-      "srcLevel": "官方发布",
-      "live": false,
-      "source": "龙门县人民政府·政务动态",
-      "url": "https://www.longmen.gov.cn/lmxrmzfmhwz/zwgk/zwdt/content/mpost_5877991.html",
-      "summary": "人民银行惠州市分行副行长张晓东带队国库科赴龙门县开展县域国库服务座谈，进一步夯实县域国库业务基础，畅通财、税、库、银协同联动渠道，切实解决国库业务运行堵点难点。",
-      "published_at": "2026-10-23",
-      "event_date": "2026-10-23",
-      "fetched_at": "2026-10-25 07:29",
-      "verified_status": "已核验",
-      "fate": {
-        "kind": "info",
-        "ident": "city",
-        "objects": "财税务库银机构",
-        "direction": "中性",
-        "assumption": "座谈信息以官方发布为准"
-      }
-    },
-    {
-      "title": "省级非遗舞蹈《舞火狗》登台“音汇两岸”音乐会，瑶族文化惊艳全场",
-      "cat": "tourism",
-      "emoji": "🎶",
-      "tier": "中",
-      "srcLevel": "媒体报道",
-      "live": false,
-      "source": "惠州日报/今日惠州网",
-      "url": "http://e.hznews.com/hzrb/pc/content/202610/20/content_1134010.html",
-      "summary": "两岸青年以音乐为纽带唱响两岸一家亲，流行金曲、原创民乐、潮流摇滚、温情民谣轮番上演，龙门省级非遗舞蹈《舞火狗》登台演绎，尽显瑶族文化底蕴，传统与新潮碰撞交融。",
-      "published_at": "2026-10-20",
-      "event_date": "2026-10",
-      "fetched_at": "2026-10-25 07:29",
-      "verified_status": "待核实",
-      "fate": {
-        "kind": "life",
-        "ident": "tourism",
-        "objects": "观众、文化爱好者",
-        "direction": "中性",
-        "assumption": "演出信息以媒体报道为准"
       }
     }
   ]
