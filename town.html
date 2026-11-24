@@ -41,7 +41,14 @@ h1{font-size:21px;margin:0}.sub{color:#8fa3bf;font-size:12.5px;margin:4px 0 0}
 .next{text-align:center;margin-top:18px}.next a{background:#059669;color:#fff;padding:11px 24px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block}
 .likebar{display:flex;justify-content:center;margin:20px 0;background:rgba(15,23,42,.96);border:1px solid #059669;border-radius:24px;padding:9px 20px;gap:22px}
 .likebar button{background:none;border:none;color:#e2e8f0;font-size:14px;cursor:pointer}
-</style></head><body>
+</style><link rel="stylesheet" href="ui/premium.css">
+<script>/* premium 样式偶发 503：失败自动重试一次 */
+(function(){var r={};Array.prototype.forEach.call(
+document.querySelectorAll('link[rel="stylesheet"][href*="premium"]'),
+function(l){l.addEventListener("error",function(){if(r[l.href])return;r[l.href]=1;
+var s=document.createElement("link");s.rel="stylesheet";
+s.href=l.href.split("?")[0]+"?retry="+Date.now();document.head.appendChild(s);});});})();</script>
+</head><body>
 
 <div class="nav">
     <span style="font-weight:800;color:#fff;padding:6px 8px;white-space:nowrap">龙门产业风洞</span>

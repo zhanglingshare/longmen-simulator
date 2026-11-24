@@ -40,7 +40,14 @@ h1{font-size:22px;margin-bottom:4px}
 .met .b{color:#4ade80;font-weight:700}
 svg{width:100%;height:auto;background:radial-gradient(ellipse at 50% 45%,#0a1626,#060910);border-radius:10px}
 .disc{margin-top:16px;font-size:11px;color:#5b6b8b;line-height:1.6;padding:10px;background:#0a0f1a;border-radius:8px}
-</style></head><body>
+</style><link rel="stylesheet" href="ui/premium.css">
+<script>/* premium 样式偶发 503：失败自动重试一次 */
+(function(){var r={};Array.prototype.forEach.call(
+document.querySelectorAll('link[rel="stylesheet"][href*="premium"]'),
+function(l){l.addEventListener("error",function(){if(r[l.href])return;r[l.href]=1;
+var s=document.createElement("link");s.rel="stylesheet";
+s.href=l.href.split("?")[0]+"?retry="+Date.now();document.head.appendChild(s);});});})();</script>
+</head><body>
 
 <div class="nav">
   <b>龙门产业风洞</b>
