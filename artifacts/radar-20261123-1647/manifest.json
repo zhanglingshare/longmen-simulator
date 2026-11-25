@@ -1,0 +1,109 @@
+{
+  "experiment": "longmen-radar-24h-collection",
+  "generated_at": "2026-11-23 16:49",
+  "result": "failed",
+  "params": {
+    "hours": 24,
+    "window_start": "2026-11-22 16:41",
+    "window_end": "2026-11-23 16:41",
+    "fetched_at": "2026-11-23 16:49",
+    "region": "longmen",
+    "local_keywords": [
+      "龙门",
+      "永汉",
+      "南昆山",
+      "龙城",
+      "龙江",
+      "蓝田",
+      "地派",
+      "平陵",
+      "龙华",
+      "龙潭",
+      "麻榨",
+      "龙田",
+      "西溪",
+      "南昆山"
+    ],
+    "sources": [
+      {
+        "name": "longmen.gov.cn 政务要闻（zwyw）",
+        "priority": 1,
+        "reachable": true,
+        "http": 200,
+        "status": "ok",
+        "eligible_count": 0,
+        "detail": "列表可访问；窗口内无新稿，最新一篇发布于 2026-11-20"
+      },
+      {
+        "name": "longmen.gov.cn 部门动态（bmdt）",
+        "priority": 1,
+        "reachable": true,
+        "http": 200,
+        "status": "ok",
+        "eligible_count": 2,
+        "detail": "窗口内核验通过 2 条：教育智能体双榜题名、生态环境损害赔偿普法"
+      },
+      {
+        "name": "longmen.gov.cn 镇街动态（xzdt）",
+        "priority": 3,
+        "reachable": true,
+        "http": 200,
+        "status": "ok",
+        "eligible_count": 3,
+        "detail": "窗口内核验通过 3 条：密溪林场砂石企业安监、龙江竹木加工厂环保检查、麻榨燃气与施工安监"
+      },
+      {
+        "name": "longmen.gov.cn gkmlpt 部门公开目录",
+        "priority": 2,
+        "reachable": false,
+        "http": 200,
+        "status": "failed",
+        "eligible_count": 0,
+        "error": "目录首页为 JS 单页应用壳（21219 字节），无服务端渲染的 post 链接，未能枚举部门条目；页面仅返回 CSS/JS 引用，公告/公示类亦无法逐条核验"
+      },
+      {
+        "name": "huizhou.gov.cn 县情要闻（xqyw）",
+        "priority": 4,
+        "reachable": true,
+        "http": 200,
+        "status": "ok",
+        "eligible_count": 0,
+        "detail": "窗口内无龙门本级稿；最新龙门相关稿发布于 2026-11-18（全域慢游），窗口外"
+      },
+      {
+        "name": "南方+ static.nfnews.com",
+        "priority": 4,
+        "reachable": true,
+        "http": 200,
+        "status": "ok",
+        "eligible_count": 0,
+        "detail": "检索及跑线记者作品集可访问；最新龙门稿为 2026-11-21（就业驿站锦旗），窗口外；窗口内无龙门本级新稿"
+      },
+      {
+        "name": "今日惠州网/惠州日报 www.hznews.com",
+        "priority": 4,
+        "reachable": true,
+        "http": 200,
+        "status": "ok",
+        "eligible_count": 0,
+        "detail": "要闻、惠报信息栏目可访问；窗口内无龙门条目；站内检索接口不可用（返回 610 字节空页）"
+      }
+    ]
+  },
+  "seed": "lm-radar-20261123-1641",
+  "samples": 5,
+  "duration_sec": 480,
+  "artifacts": [
+    {
+      "path": "hot.json",
+      "sha256": "b83641a6301dfab64f16fc7b11499f88eaabca7fe51cb68f505a16cd0dff7c90",
+      "bytes": 6412
+    },
+    {
+      "path": "life.json",
+      "sha256": "87f915024005e43c111805f45005b32ff79f7beaf69c2bd81f389dfeca457fb2",
+      "bytes": 6820
+    }
+  ],
+  "note": "result=failed：窗口内合格条目 5 条，未达 8 条下限；gkmlpt 部门公开目录为前端 SPA 未能枚举；本地媒体窗口内无龙门本级新稿，如实记 0。未凑数、未以旧稿或他县稿充数。本目录 hot.json/life.json 为实验副本，仓库根目录 hot.json、life.json 保持原样未改动。manifest.json 自身哈希/字节数由调用方在产物目录用 sha256sum/stat 现算上报，不做自引用登记。"
+}

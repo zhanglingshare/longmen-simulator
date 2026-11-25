@@ -1,0 +1,122 @@
+{
+  "schema_version": 2,
+  "region": "longmen",
+  "updated": "2026-11-23 16:48",
+  "fetched_at": "2026-11-23 16:48",
+  "frequency": "每日更新一次",
+  "count": 5,
+  "stats": [],
+  "note": "话题按编辑关注程度排序，标注关注档（高/较高/中）与来源级别；每条显示原报道时间、最近抓取与核验状态。本页不展示平台后台真实阅读、转发、点赞数据。本窗口（2026-11-22 16:41 至 2026-11-23 16:41，近 24 小时）内可溯源龙门本地合格条目 5 条，来自县政府门户部门动态与镇街动态；已剔除会议通知、理论学习传达类、公示公告、发包招标、人事任免、工会慰问及窗口外旧稿，未用他县稿或旧稿填充。本地媒体（南方+、今日惠州网/惠州日报）窗口内未检索到龙门本级新稿，如实记 0。",
+  "items": [
+    {
+      "title": "龙门 3 项成果入选省优秀教育智能体及典型应用案例，开发—应用双榜题名",
+      "cat": "livelihood",
+      "emoji": "🎓",
+      "tier": "较高",
+      "srcLevel": "官方发布",
+      "live": false,
+      "source": "龙门县人民政府·部门动态",
+      "url": "http://www.longmen.gov.cn/lmxrmzfmhwz/zwgk/zwdt/bmdt/content/post_5899488.html",
+      "summary": "省教育厅公示全省中小学优秀教育智能体及典型应用案例名单，龙门县 3 项成果上榜（2 项智能体、1 项应用案例）。“SMART DEEP五智四悦”由龙江镇中心小学申报入选智能体名单，县教师发展中心牵头龙江、沙迳、永汉镇中心小学入选应用案例；另一项《说题小助手》由沙迳中心小学联合县教师发展中心、麻榨中心小学、永汉实验学校入选。县域 20 所学校、226 名教师使用，备课由 6 小时压至 2.5 小时。",
+      "published_at": "2026-11-23",
+      "event_date": null,
+      "fetched_at": "2026-11-23 16:48",
+      "verified_status": "已核验",
+      "fate": {
+        "kind": "info",
+        "ident": "livelihood",
+        "objects": "教育数字化成果",
+        "direction": "中性",
+        "assumption": "以部门发布为准"
+      }
+    },
+    {
+      "title": "送法进乡村：生态环境龙门分局联合麻榨中心村讲生态环境损害赔偿",
+      "cat": "city",
+      "emoji": "⚖️",
+      "tier": "中",
+      "srcLevel": "官方发布",
+      "live": false,
+      "source": "龙门县人民政府·部门动态",
+      "url": "http://www.longmen.gov.cn/lmxrmzfmhwz/zwgk/zwdt/bmdt/content/post_5899708.html",
+      "summary": "11 月 20 日，惠州市生态环境局龙门分局联合麻榨镇中心村委会走进中心村党群服务中心，开展《生态环境损害赔偿管理规定》普法宣传，围绕“什么是生态环境损害赔偿”“谁破坏、谁担责”向村民讲解，并为出行不便的老人入户送法上门。",
+      "published_at": "2026-11-23",
+      "event_date": "2026-11-20",
+      "fetched_at": "2026-11-23 16:48",
+      "verified_status": "已核验",
+      "fate": {
+        "kind": "info",
+        "ident": "city",
+        "objects": "基层普法",
+        "direction": "中性",
+        "assumption": "以部门发布为准"
+      }
+    },
+    {
+      "title": "密溪林场深入辖区砂石生产企业开展安全生产专项检查",
+      "cat": "city",
+      "emoji": "⚠️",
+      "tier": "中",
+      "srcLevel": "官方发布",
+      "live": false,
+      "source": "龙门县人民政府·镇街动态",
+      "url": "http://www.longmen.gov.cn/lmxrmzfmhwz/zwgk/zwdt/xzdt/content/post_5899888.html",
+      "summary": "11 月 19 日，密溪林场带队深入辖区砂石生产企业，实地查看砂石加工区、堆放场区、运输通道等重点区域，核查设备防护、扬尘管控、边坡稳定、临时用电与消防设施配置，现场反馈问题并明确整改措施、责任人及完成时限。",
+      "published_at": "2026-11-23",
+      "event_date": "2026-11-19",
+      "fetched_at": "2026-11-23 16:48",
+      "verified_status": "已核验",
+      "fate": {
+        "kind": "info",
+        "ident": "city",
+        "objects": "企业安全生产检查",
+        "direction": "中性",
+        "assumption": "以部门发布为准"
+      }
+    },
+    {
+      "title": "龙江镇逐户摸排竹木加工厂，专项核查烘干炉与环保整改",
+      "cat": "city",
+      "emoji": "🌲",
+      "tier": "中",
+      "srcLevel": "官方发布",
+      "live": false,
+      "source": "龙门县人民政府·镇街动态",
+      "url": "http://www.longmen.gov.cn/lmxrmzfmhwz/zwgk/zwdt/xzdt/content/post_5899411.html",
+      "summary": "近日，龙江镇对辖区竹木加工厂开展专项检查，逐户摸排营业执照、位置信息、负责人、用工人数等基础资料并完善企业台账，重点核查烘干炉设置情况，对排查发现的问题现场提出整改意见，督促企业压实环保主体责任、按时完成整治。",
+      "published_at": "2026-11-22",
+      "event_date": null,
+      "fetched_at": "2026-11-23 16:48",
+      "verified_status": "已核验",
+      "fate": {
+        "kind": "info",
+        "ident": "city",
+        "objects": "竹木加工行业环保监管",
+        "direction": "中性",
+        "assumption": "以镇街发布为准"
+      }
+    },
+    {
+      "title": "麻榨镇排查燃气供应站与在建工地，守牢燃气和施工领域安全底线",
+      "cat": "city",
+      "emoji": "🔥",
+      "tier": "中",
+      "srcLevel": "官方发布",
+      "live": false,
+      "source": "龙门县人民政府·镇街动态",
+      "url": "http://www.longmen.gov.cn/lmxrmzfmhwz/zwgk/zwdt/xzdt/content/post_5899403.html",
+      "summary": "11 月 21 日上午，麻榨镇城建办深入镇燃气供应站及在建工地开展安全生产专项检查，核查气瓶摆放、检验标识、存放间距、通风防爆设施，以及施工围挡、场地清理、临时用电和作业防护，对发现的问题督促现场整改或明确限期整改时限。",
+      "published_at": "2026-11-22",
+      "event_date": "2026-11-21",
+      "fetched_at": "2026-11-23 16:48",
+      "verified_status": "已核验",
+      "fate": {
+        "kind": "info",
+        "ident": "city",
+        "objects": "燃气与施工领域安全检查",
+        "direction": "中性",
+        "assumption": "以镇街发布为准"
+      }
+    }
+  ]
+}
